@@ -1,0 +1,15 @@
+node_modules/
+
+.env
+.env.local
+
+dist/
+build/
+
+Backend/uploads/
+
+Frontend/public/earings/
+Frontend/public/rental/
+Frontend/public/Bangles/
+Frontend/public/rings/
+Frontend/public/kids/
