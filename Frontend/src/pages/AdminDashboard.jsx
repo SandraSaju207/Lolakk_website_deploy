@@ -5,6 +5,8 @@ import useNotifications from "../hooks/useNotifications";
 import { Notifications } from "../components/Notifications";
 import { Table } from "../components/Table";
 
+const API = import.meta.env.VITE_API_URL;
+
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");
 
@@ -25,7 +27,7 @@ export default function AdminDashboard() {
   const [editingProduct, setEditingProduct] = useState(null); // Added for Edit Logic
 
   // BASE URL
-  axios.defaults.baseURL = "http://localhost:5000";
+  axios.defaults.baseURL = "${API}";
 
   // Form States for Modal
   const [formData, setFormData] = useState({
@@ -374,7 +376,7 @@ if (productType === "bracelets") {
 
                   <div className="h-40 w-full mb-3 rounded-lg overflow-hidden bg-black/60 border border-white/5 relative">
                     {p.image ? (
-                      <img src={`http://localhost:5000${p.image}`} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+                      <img src={`${API}${p.image}`} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
                     ) : (
                       <div className="flex items-center justify-center h-full text-gray-600 text-xs italic">No Image</div>
                     )}
@@ -411,7 +413,7 @@ if (productType === "bracelets") {
             {trendingProducts.map((p) => (
               <div key={p._id} className="p-5 rounded-2xl bg-white/5 border border-[#d4af37]/30 backdrop-blur-md">
                  <div className="w-full h-32 bg-white/10 rounded-lg mb-4 overflow-hidden">
-                    <img src={`http://localhost:5000${p.image}`} alt={p.name} className="w-full h-full object-cover" />
+                    <img src={`${API}${p.image}`} alt={p.name} className="w-full h-full object-cover" />
                  </div>
                  <h3 className="text-white font-semibold">{p.name}</h3>
                  <p className="text-[#d4af37] text-sm uppercase tracking-widest mt-1">{p.type}</p>

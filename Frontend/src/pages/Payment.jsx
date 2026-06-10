@@ -36,7 +36,7 @@ useEffect(() => {
   const fetchAddresses = async () => {
     try {
       const res = await axios.get(
-  "http://localhost:5000/api/user/me",
+  "${API}/api/user/me",
   {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -121,7 +121,7 @@ const defaultAddress =
       // CREATE ORDER
       const orderResponse = await fetch(
         
-        "http://localhost:5000/api/payments/create-order",
+        "${API}/api/payments/create-order",
         {
           method: "POST",
           headers: {
@@ -184,7 +184,7 @@ const options = {
   customerEmail: user.email,
 });
     const verifyResponse = await fetch(
-      "http://localhost:5000/api/payments/verify-payment",
+      "${API}/api/payments/verify-payment",
       {
         method: "POST",
         headers: {

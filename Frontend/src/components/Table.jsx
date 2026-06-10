@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+const API = import.meta.env.VITE_API_URL;
+
 
 export function Table({ data, type, refresh }) {
   const [search, setSearch] = useState("");
@@ -16,7 +18,7 @@ export function Table({ data, type, refresh }) {
 
   const updateStatus = async (id, status) => {
     await fetch(
-  `http://localhost:5000/api/${
+  `${API}/api/${
     type === "order" ? "orders" : "rentals"
   }/${id}`,
   {
@@ -32,7 +34,7 @@ export function Table({ data, type, refresh }) {
   expectedDeliveryDate
 ) => {
   await fetch(
-    `http://localhost:5000/api/orders/${id}`,
+    `${API}/api/orders/${id}`,
     {
       method: "PUT",
       headers: {

@@ -10,7 +10,7 @@ const INITIAL_FILTERS = {
 };
 
 // Base URL for your backend
-const API_URL = "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Rings() {
   const [loading, setLoading] = useState(true);

@@ -8,6 +8,8 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+const API = import.meta.env.VITE_API_URL;
+
 export default function Cart() {
   const [addresses, setAddresses] = useState([]);
   const [cart, setCart] = useState([]);
@@ -25,7 +27,7 @@ export default function Cart() {
   useEffect(() => {
     const fetchAddresses = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/user/me", {
+        const res = await fetch("${API}/api/user/me", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -94,7 +96,7 @@ export default function Cart() {
     try {
       setLoading(true);
 
-      const res = await fetch("http://localhost:5000/api/user/me", {
+      const res = await fetch("${API}/api/user/me", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -124,7 +126,7 @@ const orderTotal = productTotal + deliveryCharge;
 
       // CREATE RAZORPAY ORDER
       const orderResponse = await fetch(
-        "http://localhost:5000/api/payments/create-order",
+        "${API}/api/payments/create-order",
         {
           method: "POST",
           headers: {
@@ -159,7 +161,7 @@ const orderTotal = productTotal + deliveryCharge;
         handler: async function (response) {
           try {
             const verifyResponse = await fetch(
-              "http://localhost:5000/api/payments/verify-payment",
+              "${API}/api/payments/verify-payment",
               {
                 method: "POST",
                 headers: {

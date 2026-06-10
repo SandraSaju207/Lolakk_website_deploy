@@ -3,7 +3,9 @@ import { ShoppingBag } from "lucide-react";
 import axios from "axios";
 import Navbar from "../components/Navbar"; // ✅ USE YOUR EXISTING NAVBAR
 
-const API_URL = "http://localhost:5000";
+const API = import.meta.env.VITE_API_URL;
+
+const API_URL = API;
 
 const INITIAL_FILTERS = {
   itemType: "all",

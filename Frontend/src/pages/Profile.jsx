@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const API_URL = "http://localhost:5000";
+const API = import.meta.env.VITE_API_URL;
+
+const API_URL = API;
 
 export default function Profile() {
   const [user, setUser] = useState({
@@ -93,7 +95,7 @@ useEffect(() => {
       const token = localStorage.getItem("token");
 
 const res = await axios.get(
-  "http://localhost:5000/api/user/me",
+  "${API}/api/user/me",
   {
     headers: {
       Authorization: `Bearer ${token}`,

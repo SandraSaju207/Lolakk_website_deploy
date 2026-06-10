@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { ShoppingBag } from "lucide-react";
 import axios from "axios";
+const API = import.meta.env.VITE_API_URL;
 
-const API_URL = "http://localhost:5000";
+const API_URL = API;
 
 const INITIAL_FILTERS = {
   itemType: "all",
@@ -10,6 +11,8 @@ const INITIAL_FILTERS = {
   style: "all",
    price: "all",
 };
+
+
 
 export default function BraceletsBangles() {
   const [products, setProducts] = useState([]);

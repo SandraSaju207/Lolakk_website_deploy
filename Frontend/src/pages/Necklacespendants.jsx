@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { ShoppingBag } from "lucide-react"; // ✅ added (you were using it)
 import axios from "axios";
 
-const API_URL = "http://localhost:5000";
+const API = import.meta.env.VITE_API_URL;
+
+const API_URL = API;
 
 const INITIAL_FILTERS = {
   category: "all",

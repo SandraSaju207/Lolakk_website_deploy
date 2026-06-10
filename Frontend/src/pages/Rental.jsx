@@ -4,7 +4,7 @@ import QRCode from "qrcode";
 import axios from "axios";
 
 // ✅ BASE URL CONFIGURATION
-axios.defaults.baseURL = "http://localhost:5000";
+const API = import.meta.env.VITE_API_URL;
 
 const INITIAL_FILTERS = {
   category: "all",
@@ -48,7 +48,7 @@ export default function Rental() {
   type: (p.style || "unknown").toLowerCase(),
 
   duration: ["1", "3", "7", "15"],
-  image: `http://localhost:5000${p.image}`,
+  image: `${API}${p.image}`,
   createdAt: p.createdAt,
 }));
         

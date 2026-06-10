@@ -71,20 +71,20 @@ app.use(
 // STATIC FILES
 // ==============================
 
-app.use(
-  "/uploads",
-  express.static(
-    path.join(process.cwd(), "uploads"),
-    {
-      setHeaders: (res) => {
-        res.set(
-          "Cross-Origin-Resource-Policy",
-          "cross-origin"
-        );
-      },
-    }
-  )
-);
+// app.use(
+//   "/uploads",
+//   express.static(
+//     path.join(process.cwd(), "uploads"),
+//     {
+//       setHeaders: (res) => {
+//         res.set(
+//           "Cross-Origin-Resource-Policy",
+//           "cross-origin"
+//         );
+//       },
+//     }
+//   )
+// );
 
 // ==============================
 // SOCKET.IO

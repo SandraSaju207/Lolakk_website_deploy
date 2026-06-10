@@ -14,39 +14,39 @@ export const getProducts = async (req, res) => {
 export const addProduct = async (req, res) => {
   try {
     const {
-  name,
-  stock,
-  type,
-  price,
-  trending,
-  audience,
-  extra,
-  description,
-  materialType,
-  itemType,
-  style
-} = req.body;
+      name,
+      stock,
+      type,
+      price,
+      trending,
+      audience,
+      extra,
+      description,
+      materialType,
+      itemType,
+      style
+    } = req.body;
 
-    // Check if an image was uploaded via multer
-    // We store the relative path so it's easy to serve later
-    const imagePath = req.file ? `/uploads/${req.file.filename}` : "/uploads/placeholder.jpg";
+    const imagePath = req.file ? req.file.path : "";
 
     const product = new Product({
-  name,
-  stock: Number(stock),
-  price: Number(price),
-  type,
-  style,
-  itemType,
-  trending: trending === 'true' || trending === true,
-  audience,
-  extra,
-  description,
-  materialType,
-  image: imagePath
-});
+      name,
+      stock: Number(stock),
+      price: Number(price),
+      type,
+      style,
+      itemType,
+      trending: trending === 'true' || trending === true,
+      audience,
+      extra,
+      description,
+      materialType,
+      image: imagePath
+    });
+
     const savedProduct = await product.save();
     res.status(201).json(savedProduct);
+
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -76,7 +76,9 @@ export const updateProduct = async (req, res) => {
 
     // 2. If a new image was uploaded, update the image path
     if (req.file) {
-      updateData.image = `/uploads/${req.file.filename}`;
+      if (req.file) {
+  updateData.image = req.file.path;
+}
     }
 
     const updatedProduct = await Product.findByIdAndUpdate(

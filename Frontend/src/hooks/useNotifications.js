@@ -6,7 +6,7 @@ export default function useNotifications() {
 
   useEffect(() => {
     // Connect to the backend
-    const socket = io("http://localhost:5000", {
+    const socket = io("${API}", {
       transports: ["websocket", "polling"] // Force clean connection attempt
     });
 
