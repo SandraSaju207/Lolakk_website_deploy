@@ -6,9 +6,11 @@ export default function useNotifications() {
 
   useEffect(() => {
     // Connect to the backend
-    const socket = io("${API}", {
-      transports: ["websocket", "polling"] // Force clean connection attempt
-    });
+    const API = import.meta.env.VITE_API_URL;
+
+const socket = io(API, {
+  transports: ["websocket", "polling"]
+});
 
     socket.on("connect", () => {
       console.log("Connected to Notification Server");

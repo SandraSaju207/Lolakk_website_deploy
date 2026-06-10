@@ -6,6 +6,7 @@ import { Notifications } from "../components/Notifications";
 import { Table } from "../components/Table";
 
 const API = import.meta.env.VITE_API_URL;
+console.log("API URL:", API);
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -27,7 +28,7 @@ export default function AdminDashboard() {
   const [editingProduct, setEditingProduct] = useState(null); // Added for Edit Logic
 
   // BASE URL
-  axios.defaults.baseURL = "${API}";
+  axios.defaults.baseURL = API;
 
   // Form States for Modal
   const [formData, setFormData] = useState({
@@ -65,11 +66,15 @@ export default function AdminDashboard() {
   // ===================== BACKEND SYNC =====================
   const fetchAll = async () => {
     try {
-      const [orderRes, rentalRes, productRes] = await Promise.all([
-        axios.get("/api/orders"),
-        axios.get("/api/rentals"),
-        axios.get("/api/products")
-      ]);
+     const [orderRes, rentalRes, productRes] = await Promise.all([
+  axios.get("/api/orders"),
+  axios.get("/api/rentals"),
+  axios.get("/api/products")
+]);
+
+console.log("Orders Response:", orderRes.data);
+console.log("Rentals Response:", rentalRes.data);
+console.log("Products Response:", productRes.data);
       
       setOrders(orderRes.data);
       console.log("Orders:", orderRes.data);
@@ -231,10 +236,21 @@ if (productType === "bracelets") {
   };
 
   // Safe calculations
-  const revenue = orders?.reduce((sum, o) => sum + (o.total || 0), 0);
-  const activeRentals = rentals?.filter(r => r.status !== "Returned").length;
-  const lowStock = products?.filter(p => p.stock < 5).length;
-  const trendingProducts = products?.filter(p => p.trending === true);
+const revenue = Array.isArray(orders)
+  ? orders.reduce((sum, o) => sum + (o.total || 0), 0)
+  : 0;
+
+const activeRentals = Array.isArray(rentals)
+  ? rentals.filter(r => r.status !== "Returned").length
+  : 0;
+
+const lowStock = Array.isArray(products)
+  ? products.filter(p => p.stock < 5).length
+  : 0;
+
+const trendingProducts = Array.isArray(products)
+  ? products.filter(p => p.trending === true)
+  : [];
 
   return (
     <AdminLayout activeTab={activeTab} setActiveTab={setActiveTab}>

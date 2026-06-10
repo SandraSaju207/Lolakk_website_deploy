@@ -13,6 +13,9 @@ export const getProducts = async (req, res) => {
 // @desc    Add a new product with Image Upload
 export const addProduct = async (req, res) => {
   try {
+    console.log("BODY:", req.body);
+    console.log("FILE:", req.file);
+
     const {
       name,
       stock,
@@ -48,6 +51,7 @@ export const addProduct = async (req, res) => {
     res.status(201).json(savedProduct);
 
   } catch (err) {
+    console.error("ADD PRODUCT ERROR:", err);
     res.status(400).json({ message: err.message });
   }
 };
