@@ -8,6 +8,9 @@ import { Table } from "../components/Table";
 const API = import.meta.env.VITE_API_URL;
 console.log("API URL:", API);
 
+const getImage = (img) =>
+  img?.startsWith("http") ? img : `${API}${img}`;
+
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");
 
@@ -392,7 +395,11 @@ const trendingProducts = Array.isArray(products)
 
                   <div className="h-40 w-full mb-3 rounded-lg overflow-hidden bg-black/60 border border-white/5 relative">
                     {p.image ? (
-                      <img src={`${API}${p.image}`} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+                      <img
+  src={getImage(p.image)}
+  alt={p.name}
+  className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+/>
                     ) : (
                       <div className="flex items-center justify-center h-full text-gray-600 text-xs italic">No Image</div>
                     )}
@@ -429,7 +436,7 @@ const trendingProducts = Array.isArray(products)
             {trendingProducts.map((p) => (
               <div key={p._id} className="p-5 rounded-2xl bg-white/5 border border-[#d4af37]/30 backdrop-blur-md">
                  <div className="w-full h-32 bg-white/10 rounded-lg mb-4 overflow-hidden">
-                    <img src={`${API}${p.image}`} alt={p.name} className="w-full h-full object-cover" />
+                  <img src={getImage(p.image)} alt={p.name} className="w-full h-full object-cover" />
                  </div>
                  <h3 className="text-white font-semibold">{p.name}</h3>
                  <p className="text-[#d4af37] text-sm uppercase tracking-widest mt-1">{p.type}</p>
