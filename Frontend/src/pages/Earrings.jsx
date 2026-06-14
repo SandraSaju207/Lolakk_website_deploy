@@ -29,12 +29,22 @@ export default function Earrings() {
   useEffect(() => {
     const fetchEarrings = async () => {
       try {
-        const res = await axios.get(`${API_URL}/api/products`);
+       const res = await axios.get(`${API_URL}/api/products`);
 
-        const earringData = res.data.filter(
-          (p) => p.type === "earrings" || p.category === "earrings"
-        );
+console.log("API_URL:", API_URL);
+console.log("FULL RESPONSE:", res);
+console.log("DATA:", res.data);
+console.log("IS ARRAY:", Array.isArray(res.data));
 
+const products = Array.isArray(res.data)
+  ? res.data
+  : res.data.products || [];
+
+const earringData = products.filter(
+  (p) => p.type === "earrings" || p.category === "earrings"
+);
+
+setEarrings(earringData);
         setEarrings(earringData);
       } catch (err) {
         console.error("Error fetching earrings:", err);
