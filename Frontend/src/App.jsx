@@ -9,7 +9,7 @@ import Register from "./pages/Registration.jsx";
 import Feedback from "./pages/Feedback.jsx";
 import Footer from "./components/Footer.jsx";
 import Rings from "./pages/Rings.jsx";
-import Kids from "./pages/kids.jsx";
+import Kids from "./pages/Kids.jsx";
 
 import Earrings from "./pages/Earrings.jsx";
 import BraceletsBangles from "./pages/Braceletsbangles.jsx";
