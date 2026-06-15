@@ -217,72 +217,7 @@ export default function Trending() {
   </button>
 </div>
 
-
-
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
-
-        {/* SIDEBAR FILTER */}
-         <div className="hidden md:block space-y-8 sticky top-32 h-fit">
-
-          {/* CATEGORY */}
-          <div>
-            <h3 className="text-sm uppercase mb-4 text-amber-500">
-              Category
-            </h3>
-
-            {["all", "rings", "earrings", "necklaces", "bracelets","kids","rentals"].map((item) => (
-              <button
-                key={item}
-                onClick={() => updateFilter("category", item)}
-                className={`block mb-3 text-sm ${
-                  filters.category === item
-                    ? "text-amber-400 font-bold"
-                    : "text-gray-400"
-                }`}
-              >
-                {item}
-              </button>
-            ))}
-          </div>
-
-          {/* PRICE */}
-          <div>
-            <h3 className="text-sm uppercase mb-4 text-amber-500">
-              Price
-            </h3>
-
-            {[
-  { label: "All", value: "all" },
-  { label: "Below ₹500", value: "low" },
-  { label: "₹500 - ₹1000", value: "mid" },
-  { label: "Above ₹1000", value: "high" },
-].map((p) => (
-              <button
-                key={p.value}
-                onClick={() => updateFilter("price", p.value)}
-                className={`block mb-3 text-sm ${
-                  filters.price === p.value
-                    ? "text-amber-400 font-bold"
-                    : "text-gray-400"
-                }`}
-              >
-                {p.label}
-              </button>
-            ))}
-          </div>
-
-          {/* CLEAR */}
-          {isFiltered && (
-            <button
-              onClick={clearAllFilters}
-              className="text-red-400 text-xs uppercase"
-            >
-              Clear Filters
-            </button>
-          )}
-        </div>
-
-        {/* MOBILE FILTERS */}
+     {/* MOBILE FILTERS */}
 {showFilters && (
   <div className="md:hidden mb-8 border border-white/10 rounded-xl p-5 bg-zinc-900/80">
 
@@ -352,16 +287,81 @@ export default function Trending() {
   </div>
 )}
 
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+
+        {/* SIDEBAR FILTER */}
+         <div className="hidden md:block space-y-8 sticky top-32 h-fit">
+
+          {/* CATEGORY */}
+          <div>
+            <h3 className="text-sm uppercase mb-4 text-amber-500">
+              Category
+            </h3>
+
+            {["all", "rings", "earrings", "necklaces", "bracelets","kids","rentals"].map((item) => (
+              <button
+                key={item}
+                onClick={() => updateFilter("category", item)}
+                className={`block mb-3 text-sm ${
+                  filters.category === item
+                    ? "text-amber-400 font-bold"
+                    : "text-gray-400"
+                }`}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+
+          {/* PRICE */}
+          <div>
+            <h3 className="text-sm uppercase mb-4 text-amber-500">
+              Price
+            </h3>
+
+            {[
+  { label: "All", value: "all" },
+  { label: "Below ₹500", value: "low" },
+  { label: "₹500 - ₹1000", value: "mid" },
+  { label: "Above ₹1000", value: "high" },
+].map((p) => (
+              <button
+                key={p.value}
+                onClick={() => updateFilter("price", p.value)}
+                className={`block mb-3 text-sm ${
+                  filters.price === p.value
+                    ? "text-amber-400 font-bold"
+                    : "text-gray-400"
+                }`}
+              >
+                {p.label}
+              </button>
+            ))}
+          </div>
+
+          {/* CLEAR */}
+          {isFiltered && (
+            <button
+              onClick={clearAllFilters}
+              className="text-red-400 text-xs uppercase"
+            >
+              Clear Filters
+            </button>
+          )}
+        </div>
+
+   
+
         {/* PRODUCTS */}
         <div className="md:col-span-3">
 
           {/* SORT */}
-          <div className="flex justify-between mb-8">
+          <div className="flex flex-col sm:flex-row sm:justify-between gap-4 mb-8">
             <p className="text-gray-500 text-sm">
               {sorted.length} products
             </p>
 
-            <div className="flex gap-2 text-xs">
+           <div className="flex flex-wrap gap-2 text-xs justify-end">
               {[
                 { label: "Popular", value: "popular" },
                 { label: "Latest", value: "latest" },
@@ -384,18 +384,18 @@ export default function Trending() {
           </div>
 
           {/* GRID */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
 
           {sorted.map((item) => (
               <div
                 key={item._id}
                 onClick={() => openModal(item)}
-                className="border border-white/10 rounded-xl overflow-hidden cursor-pointer bg-zinc-900/50 p-3"
+               className="border border-white/10 p-3 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition cursor-pointer"
               >
-                <img
-                  src={getImage(item.image)}
-                  className="h-44 sm:h-48 w-full object-cover rounded-lg"
-                />
+               <img
+  src={getImage(item.image)}
+  className="h-36 sm:h-44 md:h-48 w-full object-cover rounded-lg"
+/>
 
                <div className="pt-3">
                   <h3 className="text-white">{item.name}</h3>
