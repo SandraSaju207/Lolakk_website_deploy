@@ -519,7 +519,7 @@ const similarProducts = selectedProduct
         </div>
 
         {/* PRODUCTS */}
-        <div className="md:col-span-3">
+        <div className="md:col-span-2">
           {/* GRID */}
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
