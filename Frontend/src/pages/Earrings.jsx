@@ -526,7 +526,7 @@ const similarProducts = selectedProduct
             {sortedItems.map((item) => (
               <div
                 key={item._id}
-                className="border border-white/10 p-3 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition cursor-pointer"
+                className="border border-white/10 p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition cursor-pointer"
                 onClick={() => openModal(item)}
               >
                <img
@@ -534,22 +534,22 @@ const similarProducts = selectedProduct
   className="aspect-[4/5] w-full object-cover rounded-lg"
 />
 
-                <h3 className="text-white mt-2 font-medium">
+                <h3 className="text-white mt-4 font-medium">
                   {item.name}
                 </h3>
 
-                <p className="text-xl text-amber-400 mt-1">
+                <p className="text-2xl text-amber-400 mt-2">
                   ₹{item.price}
                 </p>
 
                 {/* ✅ ADDED BUTTONS */}
-                <div className="mt-2">
+                <div className="mt-4">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       openModal(item);
                     }}
-                    className="w-full bg-amber-500 text-black font-bold px-3 py-1.5 rounded hover:bg-amber-400 transition"
+                    className="w-full bg-amber-500 text-black font-bold px-4 py-2 rounded hover:bg-amber-400 transition"
                   >
                     Buy Now
                   </button>
