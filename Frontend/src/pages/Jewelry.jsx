@@ -41,8 +41,8 @@ export default function JewelryExperience() {
   return (
 <section
   id="jewelry"
-  className="w-full bg-black text-white relative"
->     
+  className="w-full bg-black text-white relative overflow-hidden"
+>    
       {/* SLIDER */}
 
   <div
@@ -57,17 +57,17 @@ export default function JewelryExperience() {
   className="w-full flex-shrink-0 flex flex-col lg:flex-row"
 >       
             {/* LEFT IMAGE */}
-<div className="w-full lg:w-1/2 h-[280px] sm:h-[400px] lg:h-[650px] overflow-hidden">
+<div className="w-full lg:w-1/2 h-[320px] sm:h-[450px] lg:h-[650px] overflow-hidden">
   <img
     src={slide.image}
-    className="w-full h-full object-cover transition duration-700"
+   className="w-full h-full object-cover"
     alt={slide.title}
   />
 </div>
 
             {/* RIGHT CONTENT */}
-<div className="w-full lg:w-1/2 h-[280px] sm:h-[400px] lg:h-[650px] bg-neutral-900 flex flex-col justify-center items-center px-6 text-center">
-  <h2 className="font-royal text-2xl sm:text-4xl lg:text-6xl tracking-wider uppercase mb-6">
+<div className="w-full lg:w-1/2 h-[320px] sm:h-[450px] lg:h-[650px] bg-neutral-900 flex flex-col justify-center items-center px-6 text-center">
+  <h2 className="font-royal text-xl sm:text-3xl lg:text-6xl tracking-[0.15em] uppercase mb-4 lg:mb-6">
     {slide.title}
   </h2>
 
@@ -86,14 +86,14 @@ export default function JewelryExperience() {
       {/* CONTROLS */}
       <button
         onClick={prev}
-        className="absolute left-5 top-1/2 -translate-y-1/2 text-white text-3xl"
+        className="absolute left-2 sm:left-5 top-1/2 -translate-y-1/2 text-white text-2xl sm:text-3xl z-10"
       >
         ‹
       </button>
 
       <button
         onClick={next}
-        className="absolute right-5 top-1/2 -translate-y-1/2 text-white text-3xl"
+       className="absolute right-2 sm:right-5 top-1/2 -translate-y-1/2 text-white text-2xl sm:text-3xl z-10"
       >
         ›
       </button>

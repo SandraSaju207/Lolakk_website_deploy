@@ -26,26 +26,43 @@ export default function Collection() {
   ];
 
   // 🔥 Parallax Mouse Effect
-  useEffect(() => {
-    const cards = document.querySelectorAll(".parallax-card");
+ useEffect(() => {
+  if (window.innerWidth < 1024) return;
 
-    cards.forEach((card) => {
-      card.addEventListener("mousemove", (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+  const cards = document.querySelectorAll(".parallax-card");
 
-        const rotateX = ((y / rect.height) - 0.5) * 10;
-        const rotateY = ((x / rect.width) - 0.5) * -10;
+  const handlers = [];
 
-        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-      });
+  cards.forEach((card) => {
+    const moveHandler = (e) => {
+      const rect = card.getBoundingClientRect();
 
-      card.addEventListener("mouseleave", () => {
-        card.style.transform = "rotateX(0deg) rotateY(0deg)";
-      });
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const rotateX = ((y / rect.height) - 0.5) * 10;
+      const rotateY = ((x / rect.width) - 0.5) * -10;
+
+      card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    };
+
+    const leaveHandler = () => {
+      card.style.transform = "rotateX(0deg) rotateY(0deg)";
+    };
+
+    card.addEventListener("mousemove", moveHandler);
+    card.addEventListener("mouseleave", leaveHandler);
+
+    handlers.push({ card, moveHandler, leaveHandler });
+  });
+
+  return () => {
+    handlers.forEach(({ card, moveHandler, leaveHandler }) => {
+      card.removeEventListener("mousemove", moveHandler);
+      card.removeEventListener("mouseleave", leaveHandler);
     });
-  }, []);
+  };
+}, []);
 
   return (
     <section id="collection" className="py-24 px-6 max-w-7xl mx-auto">
@@ -57,11 +74,11 @@ export default function Collection() {
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-        {products.map((item, index) => (
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10">
+          {products.map((item, index) => (
           <div
             key={item.id}
-            className="parallax-card float group relative aspect-[3/4] overflow-hidden rounded-xl bg-black/60 backdrop-blur border border-white/10 transition duration-500"
+className="parallax-card group relative aspect-[4/5] sm:aspect-[3/4] overflow-hidden rounded-xl bg-black/60 backdrop-blur border border-white/10 transition duration-500"
             style={{ animationDelay: `${index}s` }}
           >
             {/* Background */}
