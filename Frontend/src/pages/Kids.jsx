@@ -24,6 +24,7 @@ export default function KidsProducts() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [notification, setNotification] = useState(null);
+  const [showFilters, setShowFilters] = useState(false);
 
 const [cart, setCart] = useState([]);
 
@@ -217,10 +218,146 @@ const similarProducts = selectedProduct
           </p>
         </div>
 
+        <div className="md:hidden flex justify-between items-center mb-6">
+
+  <button
+    onClick={() => setShowFilters(true)}
+    className="flex items-center gap-2 px-4 py-2 border border-amber-500/30 rounded-full text-amber-400 bg-zinc-900"
+  >
+    ☰ Filters
+  </button>
+
+  <button
+    onClick={() =>
+      setSort(
+        sort === "latest"
+          ? "priceLow"
+          : sort === "priceLow"
+          ? "priceHigh"
+          : "latest"
+      )
+    }
+    className="px-4 py-2 border border-white/10 rounded-full text-gray-300 bg-zinc-900"
+  >
+    Sort
+  </button>
+
+</div>
+
+{showFilters && (
+  <>
+    <div
+      className="fixed inset-0 bg-black/70 z-[998]"
+      onClick={() => setShowFilters(false)}
+    />
+
+    <div
+      className="
+        fixed left-0 top-0
+        w-[70%]
+        max-w-[250px]
+        h-screen
+        bg-[#0b0b0b]
+        border-r border-amber-500/20
+        z-[999]
+        overflow-y-auto
+        p-5
+      "
+    >
+      <div className="flex justify-between items-center mb-8">
+        <h2 className="text-xl text-amber-400">
+          Filters
+        </h2>
+
+        <button
+          onClick={() => setShowFilters(false)}
+          className="text-white text-xl"
+        >
+          ✕
+        </button>
+      </div>
+
+      {/* TYPE */}
+      <div className="mb-8">
+        <h3 className="text-amber-500 text-sm uppercase mb-3">
+          Type
+        </h3>
+
+        {[
+          "all",
+          "hair_bow",
+          "hair_clip",
+          "hair_bun",
+          "kids_bangles",
+          "kids_necklace",
+        ].map((t) => (
+          <button
+            key={t}
+            onClick={() => {
+              updateFilter("itemType", t);
+              setShowFilters(false);
+            }}
+            className={`block text-sm mb-2 ${
+              filters.itemType === t
+                ? "text-amber-400 font-bold"
+                : "text-gray-400"
+            }`}
+          >
+            {{
+              all: "All",
+              hair_bow: "Hair Bow",
+              hair_clip: "Hair Clip",
+              hair_bun: "Hair Bun",
+              kids_bangles: "Kids Bangles",
+              kids_necklace: "Kids Necklace",
+            }[t]}
+          </button>
+        ))}
+      </div>
+
+      {/* PRICE */}
+      <div className="mb-8">
+        <h3 className="text-amber-500 text-sm uppercase mb-3">
+          Price
+        </h3>
+
+        {[
+          { label: "All", value: "all" },
+          { label: "Below ₹100", value: "below100" },
+          { label: "₹100 - ₹500", value: "100to500" },
+          { label: "Above ₹500", value: "above500" },
+        ].map((p) => (
+          <button
+            key={p.value}
+            onClick={() => {
+              updateFilter("price", p.value);
+              setShowFilters(false);
+            }}
+            className={`block text-sm mb-2 ${
+              filters.price === p.value
+                ? "text-amber-400 font-bold"
+                : "text-gray-400"
+            }`}
+          >
+            {p.label}
+          </button>
+        ))}
+      </div>
+
+      <button
+        onClick={clearFilters}
+        className="w-full py-3 bg-amber-500 text-black font-semibold rounded-xl"
+      >
+        Clear Filters
+      </button>
+    </div>
+  </>
+)}
+
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
 
           {/* FILTERS */}
-          <div className="space-y-8 sticky top-32 h-fit">
+         <div className="hidden md:block space-y-8 sticky top-32 h-fit">
 
             <div>
               <h3 className="text-amber-500 text-sm uppercase mb-3">
@@ -325,13 +462,13 @@ const similarProducts = selectedProduct
   </div>
 
   {/* GRID */}
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+ <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
    
 {sorted.map((item) => (
   <div
     key={item._id}
-    className="border border-white/10 p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition cursor-pointer"
+    className="border border-white/10 p-3 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition cursor-pointer"
     onClick={() => openModal(item)}
   >
     <img
@@ -340,7 +477,7 @@ const similarProducts = selectedProduct
           ? item.image
           : `${API_URL}${item.image}`
       }
-      className="h-64 w-full object-cover rounded-lg"
+      className="aspect-[4/5] w-full object-cover rounded-lg"
       alt={item.name}
     />
 
