@@ -24,7 +24,7 @@ export default function NecklacesPendants() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [notification, setNotification] = useState(null);
   const [cart, setCart] = useState([]);
-
+const [showFilters, setShowFilters] = useState(false);
   // ✅ PAGINATION STATE
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
@@ -239,6 +239,15 @@ const buyNow = (item) => {
         </div>
         <style jsx>{`
           @keyframes softGlow { 0%, 100% { opacity: 0.5; transform: scale(0.75); } 50% { opacity: 1; transform: scale(1); } }
+          @keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
           @keyframes iconBreathe { 0%, 100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.03); opacity: 1; } }
           @keyframes progressBar { 0% { transform: translateX(-100%); } 100% { transform: translateX(0%); } }
           .serif { font-family: 'Playfair Display', serif; }
@@ -264,9 +273,158 @@ const buyNow = (item) => {
         </p>
       </div>
 
+      <div className="md:hidden flex justify-between items-center mb-6">
+
+  <button
+    onClick={() => setShowFilters(true)}
+    className="flex items-center gap-2 px-4 py-2 border border-amber-500/30 rounded-full text-amber-400 bg-zinc-900"
+  >
+    ☰ Filters
+  </button>
+
+  <button
+    onClick={() =>
+      setSort(
+        sort === "latest"
+          ? "priceLow"
+          : sort === "priceLow"
+          ? "priceHigh"
+          : "latest"
+      )
+    }
+    className="px-4 py-2 border border-white/10 rounded-full text-gray-300 bg-zinc-900"
+  >
+    Sort
+  </button>
+
+</div>
+
+{showFilters && (
+  <>
+    {/* BACKDROP */}
+    <div
+      className="fixed inset-0 bg-black/70 z-[998]"
+      onClick={() => setShowFilters(false)}
+    />
+
+    {/* DRAWER */}
+    <div
+      className="
+        fixed left-0 top-0
+        w-[70%]
+        max-w-[250px]
+        h-screen
+        bg-[#0b0b0b]
+        border-r border-amber-500/20
+        z-[999]
+        overflow-y-auto
+        p-5
+        animate-[slideIn_.3s_ease]
+      "
+    >
+      <div className="flex justify-between items-center mb-8">
+        <h2 className="text-xl text-amber-400">
+          Filters
+        </h2>
+
+        <button
+          onClick={() => setShowFilters(false)}
+          className="text-white text-xl"
+        >
+          ✕
+        </button>
+      </div>
+
+      {/* CATEGORY */}
+      <div className="mb-8">
+        <h3 className="text-amber-500 text-sm uppercase mb-3">
+          Category
+        </h3>
+
+        {["all", "gold", "diamond", "gemstone"].map((item) => (
+          <button
+            key={item}
+            onClick={() => {
+              updateFilter("category", item);
+              setShowFilters(false);
+            }}
+            className={`block text-sm mb-2 ${
+              filters.category === item
+                ? "text-amber-400 font-bold"
+                : "text-gray-400"
+            }`}
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+
+      {/* STYLE */}
+      <div className="mb-8">
+        <h3 className="text-amber-500 text-sm uppercase mb-3">
+          Style
+        </h3>
+
+        {["all", "traditional", "modern", "casual"].map((item) => (
+          <button
+            key={item}
+            onClick={() => {
+              updateFilter("style", item);
+              setShowFilters(false);
+            }}
+            className={`block text-sm mb-2 ${
+              filters.style === item
+                ? "text-amber-400 font-bold"
+                : "text-gray-400"
+            }`}
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+
+      {/* PRICE */}
+      <div className="mb-8">
+        <h3 className="text-amber-500 text-sm uppercase mb-3">
+          Price
+        </h3>
+
+        {[
+          { label: "All", value: "all" },
+          { label: "Below ₹500", value: "below500" },
+          { label: "₹500 - ₹1000", value: "500to1000" },
+          { label: "Above ₹1000", value: "above1000" },
+        ].map((item) => (
+          <button
+            key={item.value}
+            onClick={() => {
+              updateFilter("price", item.value);
+              setShowFilters(false);
+            }}
+            className={`block text-sm mb-2 ${
+              filters.price === item.value
+                ? "text-amber-400 font-bold"
+                : "text-gray-400"
+            }`}
+          >
+            {item.label}
+          </button>
+        ))}
+      </div>
+
+      <button
+        onClick={clearAllFilters}
+        className="w-full py-3 bg-amber-500 text-black font-semibold rounded-xl"
+      >
+        Clear Filters
+      </button>
+    </div>
+  </>
+)}
+
       <div className="grid md:grid-cols-4 gap-10">
 
-       <div className="space-y-8 sticky top-12 self-start">
+      <div className="hidden md:block space-y-8 sticky top-12 self-start">
 
   {/* PRODUCT */}
   
@@ -380,12 +538,12 @@ const buyNow = (item) => {
           </div>
 
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
            {paginatedItems.map((item) => (
   <div
     key={item._id}
-    className="border border-white/10 p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition cursor-pointer"
+    className="border border-white/10 p-3 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition cursor-pointer"
     onClick={() => openModal(item)}
   >
     <img
@@ -394,7 +552,7 @@ const buyNow = (item) => {
           ? item.image
           : `${API_URL}${item.image}`
       }
-      className="h-64 w-full object-cover rounded-lg"
+      className="aspect-[4/5] w-full object-cover rounded-lg"
       alt={item.name}
     />
 
@@ -402,7 +560,7 @@ const buyNow = (item) => {
       {item.name}
     </h3>
 
-    <p className="text-2xl text-amber-400 mt-2">
+    <p className="text-xl text-amber-400 mt-2">
       ₹{item.price}
     </p>
 
