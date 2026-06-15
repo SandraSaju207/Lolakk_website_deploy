@@ -521,7 +521,7 @@ const similarProducts = selectedProduct
         {/* PRODUCTS */}
         <div className="md:col-span-3">
           {/* GRID */}
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
             {sortedItems.map((item) => (
               <div
@@ -529,11 +529,10 @@ const similarProducts = selectedProduct
                 className="border border-white/10 p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition cursor-pointer"
                 onClick={() => openModal(item)}
               >
-                <img
-                  src={getImage(item.image)}
-                  className="h-64 w-full object-cover rounded-lg"
-                  alt={item.name}
-                />
+               <img
+  src={getImage(item.image)}
+  className="aspect-[4/5] w-full object-cover rounded-lg"
+/>
 
                 <h3 className="text-white mt-4 font-medium">
                   {item.name}
