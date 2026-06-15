@@ -357,9 +357,9 @@ export default function Trending() {
 
           {/* SORT */}
           <div className="flex flex-col sm:flex-row sm:justify-between gap-4 mb-8">
-            <p className="text-gray-500 text-sm">
+            {/* <p className="text-gray-500 text-sm">
               {sorted.length} products
-            </p>
+            </p> */}
 
            <div className="flex flex-wrap gap-2 text-xs justify-end">
               {[
