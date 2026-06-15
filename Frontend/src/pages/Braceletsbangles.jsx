@@ -525,7 +525,7 @@ const filteredItems = products.filter((item) => {
  
 
           {/* GRID */}
-         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {paginatedItems.map((item) => (
               <div
   key={item._id}
@@ -534,7 +534,7 @@ const filteredItems = products.filter((item) => {
 >
                 <img
   src={getImage(item.image)}
-className="h-44 md:h-64 w-full object-cover rounded-lg"
+  className="aspect-[4/5] w-full object-cover rounded-lg"
 />
 
 <h3 className="text-white mt-4 font-medium">
