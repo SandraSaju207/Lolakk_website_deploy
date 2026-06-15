@@ -25,6 +25,7 @@ export default function Rings() {
   const [showModal, setShowModal] = useState(false);
   const [notification, setNotification] = useState(null);
   const [cart, setCart] = useState([]);
+  const [showFilters, setShowFilters] = useState(false);
 
   // ✨ NEW: Dynamic Rings State
   const [rings, setRings] = useState([]);
@@ -220,6 +221,7 @@ const sortedRings = [...filteredRings].sort((a, b) => {
   
 
 const paginatedRings = sortedRings;
+
   const similarProducts = selectedProduct
     ? rings.filter(
         (r) =>
@@ -258,13 +260,25 @@ const paginatedRings = sortedRings;
         <div className="mt-12 w-48 h-[1px] bg-white/5 rounded-full overflow-hidden relative">
           <div className="absolute inset-0 bg-amber-500 animate-[progressBar_2.5s_linear_forwards]"></div>
         </div>
-        <style jsx>{`
-          @keyframes softGlow { 0%, 100% { opacity: 0.5; transform: scale(0.75); } 50% { opacity: 1; transform: scale(1); } }
-          @keyframes iconBreathe { 0%, 100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.03); opacity: 1; } }
-          @keyframes progressBar { 0% { transform: translateX(-100%); } 100% { transform: translateX(0%); } }
-          .serif { font-family: 'Playfair Display', serif; }
-          .gold-gradient { background: linear-gradient(to right, #fbbf24, #fef3c7, #b45309); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        `}</style>
+       <style jsx>{`
+  .serif {
+    font-family: 'Playfair Display', serif;
+  }
+
+  .glass {
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(10px);
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+`}</style>
       </div>
     );
   }
@@ -311,68 +325,269 @@ const paginatedRings = sortedRings;
   </div>
 </div>
 
+      <div className="md:hidden flex justify-between items-center mb-6">
+
+  <button
+    onClick={() => setShowFilters(true)}
+    className="flex items-center gap-2 px-4 py-2 border border-amber-500/30 rounded-full text-amber-400 bg-zinc-900"
+  >
+    ☰ Filters
+  </button>
+
+  <button
+    onClick={() => setSort(
+      sort === "latest"
+        ? "priceLow"
+        : sort === "priceLow"
+        ? "priceHigh"
+        : "latest"
+    )}
+    className="px-4 py-2 border border-white/10 rounded-full text-gray-300 bg-zinc-900"
+  >
+    Sort
+  </button>
+
+</div>
+
      <div className="grid grid-cols-1 md:grid-cols-4 gap-10 items-start">
 
+      {showFilters && (
+  <>
+    {/* BACKDROP */}
+    <div
+      className="fixed inset-0 bg-black/70 z-[998]"
+      onClick={() => setShowFilters(false)}
+    />
+
+    {/* DRAWER */}
+    <div className="
+  fixed left-0 top-0
+  w-[85%] max-w-sm
+  h-screen
+  bg-[#0b0b0b]
+  border-r border-amber-500/20
+  z-[999]
+  overflow-y-auto
+  p-6
+  animate-[slideIn_.3s_ease]
+">
+      <div className="flex justify-between items-center mb-8">
+        <h2 className="text-xl serif text-amber-400">
+          Filters
+        </h2>
+
+        <button
+          onClick={() => setShowFilters(false)}
+          className="text-white text-xl"
+        >
+          ✕
+        </button>
+      </div>
+
+      {/* CATEGORY */}
+      <div className="mb-8">
+        <h3 className="text-amber-500 text-sm uppercase mb-3">
+          Category
+        </h3>
+
+        {["all", "gold", "diamond", "gemstone"].map((item) => (
+          <button
+            key={item}
+            onClick={() => {
+  updateFilter("category", item);
+  setShowFilters(false);
+}}
+            className={`block text-sm mb-2 ${
+              filters.category === item
+                ? "text-amber-400 font-bold"
+                : "text-gray-400"
+            }`}
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+
+      {/* TYPE */}
+      <div className="mb-8">
+        <h3 className="text-amber-500 text-sm uppercase mb-3">
+          Type
+        </h3>
+
+        {["all", "traditional", "modern", "casual"].map((item) => (
+          <button
+            key={item}
+            onClick={() => updateFilter("type", item)}
+            className={`block text-sm mb-2 ${
+              filters.type === item
+                ? "text-amber-400 font-bold"
+                : "text-gray-400"
+            }`}
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+
+      {/* SIZE */}
+      <div className="mb-8">
+        <h3 className="text-amber-500 text-sm uppercase mb-3">
+          Size
+        </h3>
+
+        <div className="flex flex-wrap gap-2">
+          {["all", 6, 7, 8, 9].map((item) => (
+            <button
+              key={item}
+              onClick={() =>
+                updateFilter("size", String(item))
+              }
+              className={`px-3 py-1 text-xs rounded-full border ${
+                String(filters.size) === String(item)
+                  ? "bg-amber-500 text-black border-amber-500"
+                  : "border-white/20 text-gray-400"
+              }`}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* PRICE */}
+      <div className="mb-8">
+        <h3 className="text-amber-500 text-sm uppercase mb-3">
+          Price
+        </h3>
+
+        {[
+          { label: "All", value: "all" },
+          { label: "Below ₹500", value: "low" },
+          { label: "₹500 - ₹1000", value: "mid" },
+          { label: "Above ₹1000", value: "high" },
+        ].map((p) => (
+          <button
+            key={p.value}
+            onClick={() =>
+              updateFilter("price", p.value)
+            }
+            className={`block text-sm mb-2 ${
+              filters.price === p.value
+                ? "text-amber-400 font-bold"
+                : "text-gray-400"
+            }`}
+          >
+            {p.label}
+          </button>
+        ))}
+      </div>
+
+      <button
+        onClick={clearAllFilters}
+        className="
+          w-full py-3
+          bg-amber-500
+          text-black
+          font-semibold
+          rounded-xl
+        "
+      >
+        Clear Filters
+      </button>
+    </div>
+  </>
+)}
+
         {/* SIDEBAR */}
-        {/* MOBILE FILTERS */}
-<div className="md:hidden mb-8">
-  <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
+      <div className="hidden md:block space-y-8 sticky top-32 h-fit">
+          <div>
+            <h3 className="text-amber-500 text-sm uppercase mb-3">Category</h3>
+            {["all", "gold", "diamond", "gemstone"].map((item) => (
+              <button
+                key={item}
+                onClick={() => updateFilter("category", item)}
+                className={`block text-sm mb-2 ${
+                  filters.category === item ? "text-amber-400 font-bold" : "text-gray-400"
+                }`}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
 
-    {/* Category */}
-    <select
-      value={filters.category}
-      onChange={(e) => updateFilter("category", e.target.value)}
-      className="bg-zinc-900 border border-white/10 text-white px-3 py-2 rounded-lg min-w-[140px]"
-    >
-      <option value="all">All Categories</option>
-      <option value="gold">Gold</option>
-      <option value="diamond">Diamond</option>
-      <option value="gemstone">Gemstone</option>
-    </select>
+          <div>
+            <h3 className="text-amber-500 text-sm uppercase mb-3">Type</h3>
+          {["all", "traditional", "modern", "casual"].map((item) => (
+              <button
+                key={item}
+                onClick={() => updateFilter("type", item)}
+                className={`block text-sm mb-2 ${
+                  filters.type === item ? "text-amber-400 font-bold" : "text-gray-400"
+                }`}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+          
+          <div>
+            <h3 className="text-amber-500 text-sm uppercase mb-3">Size</h3>
+            <div className="flex flex-wrap gap-2">
+                {["all", 6, 7, 8, 9].map((item) => (
+              <button
+                key={item}
+                onClick={() => updateFilter("size", String(item))}
+                className={`px-3 py-1 text-xs rounded-full border transition ${
+                String(filters.size) === String(item)? "bg-amber-500 text-black border-amber-500" : "border-white/20 text-gray-400 hover:border-amber-500 hover:text-amber-400"
+                }`}
+              >
+              {item === "all" ? "All" : item}
+              </button>
+          ))}
+          </div>
+          </div>    
 
-    {/* Type */}
-    <select
-      value={filters.type}
-      onChange={(e) => updateFilter("type", e.target.value)}
-      className="bg-zinc-900 border border-white/10 text-white px-3 py-2 rounded-lg min-w-[140px]"
-    >
-      <option value="all">All Types</option>
-      <option value="traditional">Traditional</option>
-      <option value="modern">Modern</option>
-      <option value="casual">Casual</option>
-    </select>
+          <div>
+  <h3 className="text-amber-500 text-sm uppercase mb-3">
+    Price
+  </h3>
 
-    {/* Size */}
-    <select
-      value={filters.size}
-      onChange={(e) => updateFilter("size", e.target.value)}
-      className="bg-zinc-900 border border-white/10 text-white px-3 py-2 rounded-lg min-w-[120px]"
+  {[
+    { label: "All", value: "all" },
+    { label: "Below ₹500", value: "low" },
+    { label: "₹500 - ₹1000", value: "mid" },
+    { label: "Above ₹1000", value: "high" },
+  ].map((p) => (
+    <button
+      key={p.value}
+      onClick={() => updateFilter("price", p.value)}
+      className={`block text-sm mb-2 ${
+        filters.price === p.value
+          ? "text-amber-400 font-bold"
+          : "text-gray-400"
+      }`}
     >
-      <option value="all">All Sizes</option>
-      <option value="6">6</option>
-      <option value="7">7</option>
-      <option value="8">8</option>
-      <option value="9">9</option>
-    </select>
-
-    {/* Price */}
-    <select
-      value={filters.price}
-      onChange={(e) => updateFilter("price", e.target.value)}
-      className="bg-zinc-900 border border-white/10 text-white px-3 py-2 rounded-lg min-w-[140px]"
-    >
-      <option value="all">All Prices</option>
-      <option value="low">Below ₹500</option>
-      <option value="mid">₹500 - ₹1000</option>
-      <option value="high">Above ₹1000</option>
-    </select>
-  </div>
+      {p.label}
+    </button>
+  ))}
 </div>
+
+          {isFiltered && (
+            <button onClick={clearAllFilters} className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-red-400/80 hover:text-red-400 transition-all border-b border-red-400/20 pb-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 6h18m-2 0v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6m3 0V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+              </svg>
+              Clear All Filters
+            </button>
+          )}
+        </div>
+
+  
 
         {/* PRODUCTS */}
         <div className="md:col-span-3">
-<div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-              {paginatedRings.map((ring) => (
+         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 gap-8">
+            {paginatedRings.map((ring) => (
   <div
   key={ring._id}
   className="border border-white/10 p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition-all group cursor-pointer relative overflow-hidden"
