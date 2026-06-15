@@ -41,7 +41,7 @@ export default function JewelryExperience() {
   return (
 <section
   id="jewelry"
-  className="min-h-screen w-full overflow-hidden bg-black text-white relative"
+  className="w-full overflow-hidden bg-black text-white relative"
 >      
       {/* SLIDER */}
 <div className="h-full scale-[0.7] md:scale-100 origin-center">
