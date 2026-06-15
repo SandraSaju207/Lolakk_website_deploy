@@ -18,8 +18,8 @@ export default function Rings() {
   const [sort, setSort] = useState("latest");
   const normalize = (val) => val?.toLowerCase();
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const itemsPerPage = 6;
 
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -57,12 +57,12 @@ export default function Rings() {
   const clearAllFilters = () => {
     setFilters(INITIAL_FILTERS);
     setSort("latest");
-    setCurrentPage(1);
+    // setCurrentPage(1);
   };
 
   const updateFilter = (key, value) => {
     setFilters({ ...filters, [key]: value });
-    setCurrentPage(1);
+    // setCurrentPage(1);
   };
 
   const openModal = (ring) => {
@@ -219,8 +219,7 @@ const sortedRings = [...filteredRings].sort((a, b) => {
 });
   
 
-  const paginatedRings = sortedRings.slice(0, currentPage * itemsPerPage);
-
+const paginatedRings = sortedRings;
   const similarProducts = selectedProduct
     ? rings.filter(
         (r) =>
@@ -315,93 +314,65 @@ const sortedRings = [...filteredRings].sort((a, b) => {
      <div className="grid grid-cols-1 md:grid-cols-4 gap-10 items-start">
 
         {/* SIDEBAR */}
-        <div className="space-y-8 sticky top-32 h-fit">
-          <div>
-            <h3 className="text-amber-500 text-sm uppercase mb-3">Category</h3>
-            {["all", "gold", "diamond", "gemstone"].map((item) => (
-              <button
-                key={item}
-                onClick={() => updateFilter("category", item)}
-                className={`block text-sm mb-2 ${
-                  filters.category === item ? "text-amber-400 font-bold" : "text-gray-400"
-                }`}
-              >
-                {item}
-              </button>
-            ))}
-          </div>
+        {/* MOBILE FILTERS */}
+<div className="md:hidden mb-8">
+  <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
 
-          <div>
-            <h3 className="text-amber-500 text-sm uppercase mb-3">Type</h3>
-          {["all", "traditional", "modern", "casual"].map((item) => (
-              <button
-                key={item}
-                onClick={() => updateFilter("type", item)}
-                className={`block text-sm mb-2 ${
-                  filters.type === item ? "text-amber-400 font-bold" : "text-gray-400"
-                }`}
-              >
-                {item}
-              </button>
-            ))}
-          </div>
-          
-          <div>
-            <h3 className="text-amber-500 text-sm uppercase mb-3">Size</h3>
-            <div className="flex flex-wrap gap-2">
-                {["all", 6, 7, 8, 9].map((item) => (
-              <button
-                key={item}
-                onClick={() => updateFilter("size", String(item))}
-                className={`px-3 py-1 text-xs rounded-full border transition ${
-                String(filters.size) === String(item)? "bg-amber-500 text-black border-amber-500" : "border-white/20 text-gray-400 hover:border-amber-500 hover:text-amber-400"
-                }`}
-              >
-              {item === "all" ? "All" : item}
-              </button>
-          ))}
-          </div>
-          </div>    
-
-          <div>
-  <h3 className="text-amber-500 text-sm uppercase mb-3">
-    Price
-  </h3>
-
-  {[
-    { label: "All", value: "all" },
-    { label: "Below ₹500", value: "low" },
-    { label: "₹500 - ₹1000", value: "mid" },
-    { label: "Above ₹1000", value: "high" },
-  ].map((p) => (
-    <button
-      key={p.value}
-      onClick={() => updateFilter("price", p.value)}
-      className={`block text-sm mb-2 ${
-        filters.price === p.value
-          ? "text-amber-400 font-bold"
-          : "text-gray-400"
-      }`}
+    {/* Category */}
+    <select
+      value={filters.category}
+      onChange={(e) => updateFilter("category", e.target.value)}
+      className="bg-zinc-900 border border-white/10 text-white px-3 py-2 rounded-lg min-w-[140px]"
     >
-      {p.label}
-    </button>
-  ))}
-</div>
+      <option value="all">All Categories</option>
+      <option value="gold">Gold</option>
+      <option value="diamond">Diamond</option>
+      <option value="gemstone">Gemstone</option>
+    </select>
 
-          {isFiltered && (
-            <button onClick={clearAllFilters} className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-red-400/80 hover:text-red-400 transition-all border-b border-red-400/20 pb-1">
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 6h18m-2 0v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6m3 0V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-              </svg>
-              Clear All Filters
-            </button>
-          )}
-        </div>
+    {/* Type */}
+    <select
+      value={filters.type}
+      onChange={(e) => updateFilter("type", e.target.value)}
+      className="bg-zinc-900 border border-white/10 text-white px-3 py-2 rounded-lg min-w-[140px]"
+    >
+      <option value="all">All Types</option>
+      <option value="traditional">Traditional</option>
+      <option value="modern">Modern</option>
+      <option value="casual">Casual</option>
+    </select>
+
+    {/* Size */}
+    <select
+      value={filters.size}
+      onChange={(e) => updateFilter("size", e.target.value)}
+      className="bg-zinc-900 border border-white/10 text-white px-3 py-2 rounded-lg min-w-[120px]"
+    >
+      <option value="all">All Sizes</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+    </select>
+
+    {/* Price */}
+    <select
+      value={filters.price}
+      onChange={(e) => updateFilter("price", e.target.value)}
+      className="bg-zinc-900 border border-white/10 text-white px-3 py-2 rounded-lg min-w-[140px]"
+    >
+      <option value="all">All Prices</option>
+      <option value="low">Below ₹500</option>
+      <option value="mid">₹500 - ₹1000</option>
+      <option value="high">Above ₹1000</option>
+    </select>
+  </div>
+</div>
 
         {/* PRODUCTS */}
         <div className="md:col-span-3">
-         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {paginatedRings.map((ring) => (
+<div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+              {paginatedRings.map((ring) => (
   <div
   key={ring._id}
   className="border border-white/10 p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition-all group cursor-pointer relative overflow-hidden"
@@ -410,7 +381,7 @@ const sortedRings = [...filteredRings].sort((a, b) => {
     <div className="overflow-hidden rounded-lg">
   <img
     src={ring.image.startsWith("http") ? ring.image : `${API_URL}${ring.image}`}
-    className="h-64 w-full object-cover group-hover:scale-105 transition-transform duration-500"
+    className="h-48 md:h-64 w-full object-cover group-hover:scale-105 transition-transform duration-500"
     alt={ring.name}
   />
 </div>
@@ -444,12 +415,12 @@ const sortedRings = [...filteredRings].sort((a, b) => {
   </div>
 ))}
           </div>
-          <button
+          {/* <button
   onClick={() => setCurrentPage((p) => p + 1)}
   className="mt-10 mx-auto block px-6 py-2 bg-amber-500 text-black rounded"
 >
   Load More
-</button>
+</button> */}
         </div>
       </div>
 
