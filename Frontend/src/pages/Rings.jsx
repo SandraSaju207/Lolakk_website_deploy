@@ -141,7 +141,7 @@ const addToCart = (ring) => {
     qty: 1
   }));
 
-  window.location.href = "/checkout";
+  window.location.href = "/payment";
 };
 
 const filteredRings = rings.filter((ring) => {
@@ -271,8 +271,7 @@ const sortedRings = [...filteredRings].sort((a, b) => {
   }
 
   return (
-   <section className="pt-32 pb-24 px-6 max-w-7xl mx-auto min-h-screen">
-
+<section className="pt-20 md:pt-32 pb-12 md:pb-24 px-4 md:px-6 max-w-7xl mx-auto min-h-screen">
       <style jsx>{`
         .serif { font-family: 'Playfair Display', serif; }
         .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); }
@@ -290,8 +289,8 @@ const sortedRings = [...filteredRings].sort((a, b) => {
 
   {/* SORTING MOVED HERE */}
   <div className="flex justify-end">
-    <div className="flex gap-3 text-xs uppercase">
-      {[
+<div className="flex flex-wrap justify-center md:justify-end gap-2 text-xs uppercase">
+        {[
         { label: "Latest", value: "latest" },
         { label: "Low → High", value: "priceLow" },
         { label: "High → Low", value: "priceHigh" },
@@ -312,10 +311,10 @@ const sortedRings = [...filteredRings].sort((a, b) => {
   </div>
 </div>
 
-     <div className="grid grid-cols-1 md:grid-cols-4 gap-10 items-start">
+     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-10 items-start">
 
         {/* SIDEBAR */}
-        <div className="space-y-8 sticky top-32 h-fit">
+        <div className="space-y-6 md:space-y-8 md:sticky md:top-32 h-fit">
           <div>
             <h3 className="text-amber-500 text-sm uppercase mb-3">Category</h3>
             {["all", "gold", "diamond", "gemstone"].map((item) => (
@@ -400,7 +399,7 @@ const sortedRings = [...filteredRings].sort((a, b) => {
 
         {/* PRODUCTS */}
         <div className="md:col-span-3">
-         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
             {paginatedRings.map((ring) => (
   <div
   key={ring._id}
@@ -410,7 +409,7 @@ const sortedRings = [...filteredRings].sort((a, b) => {
     <div className="overflow-hidden rounded-lg">
   <img
     src={ring.image.startsWith("http") ? ring.image : `${API_URL}${ring.image}`}
-    className="h-64 w-full object-cover group-hover:scale-105 transition-transform duration-500"
+    className="h-52 sm:h-64 w-full object-cover group-hover:scale-105 transition-transform duration-500"
     alt={ring.name}
   />
 </div>
@@ -446,7 +445,7 @@ const sortedRings = [...filteredRings].sort((a, b) => {
           </div>
           <button
   onClick={() => setCurrentPage((p) => p + 1)}
-  className="mt-10 mx-auto block px-6 py-2 bg-amber-500 text-black rounded"
+className="mt-10 mx-auto block w-full sm:w-auto px-6 py-3 bg-amber-500 text-black rounded"
 >
   Load More
 </button>
@@ -477,7 +476,7 @@ const sortedRings = [...filteredRings].sort((a, b) => {
 <div className="grid grid-cols-1 md:grid-cols-2">        
         
  {/* IMAGE SIDE */}
-<div className="relative bg-black h-full min-h-[480px] overflow-hidden">
+<div className="relative bg-black h-[300px] md:h-full md:min-h-[480px] overflow-hidden">
   <img
     src={
       selectedProduct.image.startsWith("http")
@@ -546,7 +545,7 @@ const sortedRings = [...filteredRings].sort((a, b) => {
             {/* GO TO CART */}
             <button
               onClick={() => (window.location.href = "/cart")}
-              className="w-full py-3.5rounded-2xl border border-amber-500/30 bg-white/5 backdrop-blur-md text-amber-300 uppercase tracking-[0.25em] text-sm hover:bg-amber-500 hover:text-black transition-all duration-500"
+              className="w-full py-3.5 rounded-2xl border border-amber-500/30 bg-white/5 backdrop-blur-md text-amber-300 uppercase tracking-[0.25em] text-sm hover:bg-amber-500 hover:text-black transition-all duration-500"
             >
               Go to Cart
             </button>
@@ -579,7 +578,7 @@ const sortedRings = [...filteredRings].sort((a, b) => {
             Similar Products
           </h3>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-5">
             {similarProducts.map((item) => (
               <div
                 key={item._id}
