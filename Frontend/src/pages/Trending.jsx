@@ -22,6 +22,7 @@ export default function Trending() {
   const [showModal, setShowModal] = useState(false);
   const [notification, setNotification] = useState(null);
   const [cart, setCart] = useState([]);
+  const [showFilters, setShowFilters] = useState(false);
 
   const isLoggedIn = !!localStorage.getItem("token");
 
@@ -206,10 +207,22 @@ export default function Trending() {
         <h1 className="text-4xl text-amber-400">Trending Now</h1>
       </div>
 
+      {/* MOBILE FILTER BUTTON */}
+<div className="md:hidden mb-6">
+  <button
+    onClick={() => setShowFilters(!showFilters)}
+    className="w-full py-3 border border-amber-500 text-amber-400 rounded-xl uppercase tracking-wider text-sm"
+  >
+    {showFilters ? "Close Filters" : "Filters"}
+  </button>
+</div>
+
+
+
       <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
 
         {/* SIDEBAR FILTER */}
-         <div className="space-y-8 sticky top-32 h-fit">
+         <div className="hidden md:block space-y-8 sticky top-32 h-fit">
 
           {/* CATEGORY */}
           <div>
@@ -269,6 +282,76 @@ export default function Trending() {
           )}
         </div>
 
+        {/* MOBILE FILTERS */}
+{showFilters && (
+  <div className="md:hidden mb-8 border border-white/10 rounded-xl p-5 bg-zinc-900/80">
+
+    {/* CATEGORY */}
+    <div className="mb-6">
+      <h3 className="text-sm uppercase mb-3 text-amber-500">
+        Category
+      </h3>
+
+      {[
+        "all",
+        "rings",
+        "earrings",
+        "necklaces",
+        "bracelets",
+        "kids",
+        "rentals",
+      ].map((item) => (
+        <button
+          key={item}
+          onClick={() => updateFilter("category", item)}
+          className={`block mb-2 text-sm ${
+            filters.category === item
+              ? "text-amber-400 font-bold"
+              : "text-gray-400"
+          }`}
+        >
+          {item}
+        </button>
+      ))}
+    </div>
+
+    {/* PRICE */}
+    <div className="mb-6">
+      <h3 className="text-sm uppercase mb-3 text-amber-500">
+        Price
+      </h3>
+
+      {[
+        { label: "All", value: "all" },
+        { label: "Below ₹500", value: "low" },
+        { label: "₹500 - ₹1000", value: "mid" },
+        { label: "Above ₹1000", value: "high" },
+      ].map((p) => (
+        <button
+          key={p.value}
+          onClick={() => updateFilter("price", p.value)}
+          className={`block mb-2 text-sm ${
+            filters.price === p.value
+              ? "text-amber-400 font-bold"
+              : "text-gray-400"
+          }`}
+        >
+          {p.label}
+        </button>
+      ))}
+    </div>
+
+    {isFiltered && (
+      <button
+        onClick={clearAllFilters}
+        className="text-red-400 text-xs uppercase"
+      >
+        Clear Filters
+      </button>
+    )}
+  </div>
+)}
+
         {/* PRODUCTS */}
         <div className="md:col-span-3">
 
@@ -307,19 +390,19 @@ export default function Trending() {
               <div
                 key={item._id}
                 onClick={() => openModal(item)}
-                className="border border-white/10 rounded-xl overflow-hidden cursor-pointer"
+                className="border border-white/10 rounded-xl overflow-hidden cursor-pointer bg-zinc-900/50 p-3"
               >
                 <img
                   src={getImage(item.image)}
-                  className="h-60 w-full object-cover"
+                  className="h-44 sm:h-48 w-full object-cover rounded-lg"
                 />
 
-                <div className="p-4">
+               <div className="pt-3">
                   <h3 className="text-white">{item.name}</h3>
                   <p className="text-amber-400">₹{item.price}</p>
                 </div>
                 {/* BUY NOW BUTTON */}
-    <div className="mt-4">
+    <div className="mt-3">
       <button
         onClick={(e) => {
           e.stopPropagation();
