@@ -362,7 +362,7 @@ const paginatedRings = sortedRings;
     {/* DRAWER */}
     <div className="
   fixed left-0 top-0
-  w-[85%] max-w-sm
+  w-[70%] max-w-[280px]
   h-screen
   bg-[#0b0b0b]
   border-r border-amber-500/20
