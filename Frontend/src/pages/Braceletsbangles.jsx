@@ -28,6 +28,7 @@ export default function BraceletsBangles() {
   const [showModal, setShowModal] = useState(false);
   const [notification, setNotification] = useState(null);
   const [cart, setCart] = useState([]);
+const [showFilters, setShowFilters] = useState(false);
 
   const isLoggedIn = !!localStorage.getItem("token");
 
@@ -245,7 +246,7 @@ const filteredItems = products.filter((item) => {
   </p>
 
   {/* SORTING (moved under header like Earrings page) */}
-  <div className="flex justify-end mt-2">
+  <div className="hidden md:flex justify-end mt-2">
     <div className="flex gap-3 text-xs uppercase">
       {[
         { label: "Latest", value: "latest" },
@@ -268,9 +269,28 @@ const filteredItems = products.filter((item) => {
   </div>
 </div>
 
-     <div className="md:grid md:grid-cols-4 gap-10 items-start">
+     <div className="mb-6 flex items-center justify-between md:hidden">
+  <button
+    onClick={() => setShowFilters(true)}
+    className="px-4 py-2 border border-amber-500 text-amber-400 rounded-lg text-sm"
+  >
+    Filters
+  </button>
+
+  <select
+    value={sort}
+    onChange={(e) => setSort(e.target.value)}
+    className="bg-black border border-white/20 rounded-lg px-3 py-2 text-sm"
+  >
+    <option value="latest">Latest</option>
+    <option value="priceLow">Low → High</option>
+    <option value="priceHigh">High → Low</option>
+  </select>
+</div>
+
+<div className="grid grid-cols-1 md:grid-cols-4 gap-10 items-start">
         {/* FILTERS */}
-        <div className="space-y-8 sticky top-24 self-start">
+       <div className="hidden md:block space-y-8 sticky top-24 self-start">
 
          <div>
   {["all", "bracelet", "bangle"].map((item) => (
@@ -370,13 +390,142 @@ const filteredItems = products.filter((item) => {
 
 </div>
 
+{showFilters && (
+  <>
+    <div
+      className="fixed inset-0 bg-black/70 z-40 md:hidden"
+      onClick={() => setShowFilters(false)}
+    />
+
+    <div className="fixed top-0 left-0 h-full w-[85%] max-w-sm bg-[#111] z-50 overflow-y-auto p-6 md:hidden">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl text-amber-400 font-semibold">
+          Filters
+        </h2>
+
+        <button
+          onClick={() => setShowFilters(false)}
+          className="text-white text-xl"
+        >
+          ✕
+        </button>
+      </div>
+
+      {/* TYPE */}
+      <div className="mb-6">
+        <h3 className="text-amber-500 text-sm uppercase mb-3">
+          Type
+        </h3>
+
+        {["all", "bracelet", "bangle"].map((item) => (
+          <button
+            key={item}
+            onClick={() => updateFilter("itemType", item)}
+            className={`block mb-2 ${
+              filters.itemType === item
+                ? "text-amber-400 font-bold"
+                : "text-gray-400"
+            }`}
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+
+      {/* MATERIAL */}
+      <div className="mb-6">
+        <h3 className="text-amber-500 text-sm uppercase mb-3">
+          Material
+        </h3>
+
+        {["all", "gold", "diamond", "gemstone"].map((item) => (
+          <button
+            key={item}
+            onClick={() => updateFilter("materialType", item)}
+            className={`block mb-2 ${
+              filters.materialType === item
+                ? "text-amber-400 font-bold"
+                : "text-gray-400"
+            }`}
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+
+      {/* STYLE */}
+      <div className="mb-6">
+        <h3 className="text-amber-500 text-sm uppercase mb-3">
+          Style
+        </h3>
+
+        {["all", "traditional", "modern", "casual"].map((item) => (
+          <button
+            key={item}
+            onClick={() => updateFilter("style", item)}
+            className={`block mb-2 ${
+              filters.style === item
+                ? "text-amber-400 font-bold"
+                : "text-gray-400"
+            }`}
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+
+      {/* PRICE */}
+      <div className="mb-6">
+        <h3 className="text-amber-500 text-sm uppercase mb-3">
+          Price
+        </h3>
+
+        {[
+          { label: "All", value: "all" },
+          { label: "Below ₹500", value: "below500" },
+          { label: "₹500 - ₹1000", value: "500to1000" },
+          { label: "Above ₹1000", value: "above1000" },
+        ].map((item) => (
+          <button
+            key={item.value}
+            onClick={() => updateFilter("price", item.value)}
+            className={`block mb-2 ${
+              filters.price === item.value
+                ? "text-amber-400 font-bold"
+                : "text-gray-400"
+            }`}
+          >
+            {item.label}
+          </button>
+        ))}
+      </div>
+
+      {isFiltered && (
+        <button
+          onClick={clearAllFilters}
+          className="w-full bg-red-500 text-white py-2 rounded-lg"
+        >
+          Clear Filters
+        </button>
+      )}
+
+      <button
+        onClick={() => setShowFilters(false)}
+        className="w-full mt-4 bg-amber-500 text-black py-2 rounded-lg font-semibold"
+      >
+        Apply Filters
+      </button>
+    </div>
+  </>
+)}
+
         {/* PRODUCTS */}
         <div className="md:col-span-3">
 
  
 
           {/* GRID */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
             {paginatedItems.map((item) => (
               <div
   key={item._id}
@@ -385,7 +534,7 @@ const filteredItems = products.filter((item) => {
 >
                 <img
   src={getImage(item.image)}
-  className="h-64 w-full object-cover rounded-lg"
+className="h-44 md:h-64 w-full object-cover rounded-lg"
 />
 
 <h3 className="text-white mt-4 font-medium">
@@ -506,7 +655,7 @@ const filteredItems = products.filter((item) => {
                        {/* GO TO CART */}
                        <button
                          onClick={() => (window.location.href = "/cart")}
-                         className="w-full py-3.5rounded-2xl border border-amber-500/30 bg-white/5 backdrop-blur-md text-amber-300 uppercase tracking-[0.25em] text-sm hover:bg-amber-500 hover:text-black transition-all duration-500"
+                         className="w-full py-3.5 rounded-2xl border border-amber-500/30 bg-white/5 backdrop-blur-md text-amber-300 uppercase tracking-[0.25em] text-sm hover:bg-amber-500 hover:text-black transition-all duration-500"
                        >
                          Go to Cart
                        </button>
