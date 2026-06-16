@@ -546,7 +546,8 @@ const buyNow = (item) => {
         <div className="md:col-span-3">
 
           {/* SORT TOP RIGHT */}
-          <div className="flex justify-end mb-6">
+          {/* SORT TOP RIGHT */}
+<div className="hidden md:flex justify-end mb-6">
             <div className="flex gap-3 text-xs uppercase">
               {[{ label: "Latest", value: "latest" }, { label: "Low → High", value: "priceLow" }, { label: "High → Low", value: "priceHigh" }].map((s) => (
                 <button
