@@ -29,11 +29,14 @@ const [loading, setLoading] = useState(false);
   }
 
   try {
-    await axios.post("/api/auth/register", {
-      name: form.name,
-      email: form.email,
-      password: form.password
-    });
+    console.log("API URL:", API);
+   const API = import.meta.env.VITE_API_URL;
+
+await axios.post(`${API}/api/auth/register`, {
+  name: form.name,
+  email: form.email,
+  password: form.password,
+});
 
     setMessageType("success");
     setMessage("Registration successful! Redirecting to login...");
