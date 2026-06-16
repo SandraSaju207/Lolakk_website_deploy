@@ -36,19 +36,23 @@ export default function Rental() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("/api/products");
-        const rentalData = response.data.filter(p => p.type === "rentals");
+        const response = axios.get(`${API}/api/products`);
+     const rentalData = response.data.filter(
+  p => (p.type || "").toLowerCase().trim().includes("rent")
+);
 
       const formattedData = rentalData.map((p) => ({
   id: p._id,
   name: p.name,
   rent: Number(p.price || 0),
 
-  category: (p.materialType || "unknown").toLowerCase(),
-  type: (p.style || "unknown").toLowerCase(),
+ category: (p.materialType || "").toLowerCase().trim(),
+type: (p.style || "").toLowerCase().trim(),
 
   duration: ["1", "3", "7", "15"],
-  image: `${API}${p.image}`,
+image: p.image?.startsWith("http")
+  ? p.image
+  : `${API}/${p.image}`,
   createdAt: p.createdAt,
 }));
         
@@ -87,15 +91,16 @@ export default function Rental() {
   return (
     // CATEGORY FILTER
     (filters.category === "all" ||
-      item.category === filters.category) &&
+     (item.category || "").toLowerCase() === filters.category) &&
 
     // TYPE FILTER
     (filters.type === "all" ||
-      item.type === filters.type) &&
+     (item.type || "").toLowerCase() === filters.type) &&
 
     // DURATION FILTER
     (filters.duration === "all" ||
-      item.duration.includes(filters.duration)) &&
+     (filters.duration === "all" ||
+ (Array.isArray(item.duration) && item.duration.includes(filters.duration)))) &&
 
     // PRICE FILTER
     (
