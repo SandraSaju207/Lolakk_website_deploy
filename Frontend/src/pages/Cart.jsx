@@ -27,7 +27,7 @@ export default function Cart() {
   useEffect(() => {
     const fetchAddresses = async () => {
       try {
-        const res = await fetch("${API}/api/user/me", {
+        const res = await fetch(`${API}/api/user/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -125,8 +125,8 @@ const deliveryCharge = 100;
 const orderTotal = productTotal + deliveryCharge;
 
       // CREATE RAZORPAY ORDER
-      const orderResponse = await fetch(
-        "${API}/api/payments/create-order",
+     const orderResponse = await fetch(
+  `${API}/api/payments/create-order`,
         {
           method: "POST",
           headers: {
@@ -142,7 +142,14 @@ const orderTotal = productTotal + deliveryCharge;
         }
       );
 
-      const orderData = await orderResponse.json();
+     const orderText = await orderResponse.text();
+
+console.log(
+  "CREATE ORDER RESPONSE:",
+  orderText
+);
+
+const orderData = JSON.parse(orderText);
 
       console.log("ORDER RESPONSE:", orderData);
 
@@ -161,7 +168,7 @@ const orderTotal = productTotal + deliveryCharge;
         handler: async function (response) {
           try {
             const verifyResponse = await fetch(
-              "${API}/api/payments/verify-payment",
+  `${API}/api/payments/verify-payment`,
               {
                 method: "POST",
                 headers: {
@@ -185,7 +192,16 @@ const orderTotal = productTotal + deliveryCharge;
               }
             );
 
-            const verifyData = await verifyResponse.json();
+            const verifyText =
+  await verifyResponse.text();
+
+console.log(
+  "VERIFY PAYMENT RESPONSE:",
+  verifyText
+);
+
+const verifyData =
+  JSON.parse(verifyText);
 
             if (verifyData.success) {
               alert("Payment Successful");
