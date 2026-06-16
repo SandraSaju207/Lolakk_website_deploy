@@ -479,13 +479,11 @@ setTimeout(() => {
 
 {/* MOBILE FILTER BUTTON */}
 <div className="md:hidden flex justify-between items-center mb-4">
-  <h2 className="text-amber-400 font-semibold">Filters</h2>
-
   <button
     onClick={() => setMobileFilterOpen(true)}
-    className="px-4 py-2 bg-amber-500 text-black text-sm rounded"
+    className="flex items-center gap-2 px-4 py-2 border border-amber-500/30 rounded-full text-amber-400 bg-zinc-900"
   >
-    Filter
+    ☰ Filters
   </button>
 </div>
 
@@ -545,6 +543,18 @@ setTimeout(() => {
         </div>
 
         <div className="md:col-span-3">
+          {/* SORT UI */}
+<div className="flex justify-end mb-4">
+  <select
+    value={sort}
+    onChange={(e) => setSort(e.target.value)}
+    className="bg-zinc-900 border border-white/10 text-white px-3 py-2 rounded"
+  >
+    <option value="latest">Latest</option>
+    <option value="priceLow">Price: Low to High</option>
+    <option value="priceHigh">Price: High to Low</option>
+  </select>
+</div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
             {sortedItems.map((item) => (
               <div key={item.id} className="border border-white/10 p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition-all group">
