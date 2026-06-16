@@ -514,14 +514,14 @@ const filteredItems = products.filter((item) => {
         ))}
       </div>
 
-      {isFiltered && (
-        <button
-          onClick={clearAllFilters}
-          className="w-full bg-red-500 text-white py-2 rounded-lg"
-        >
-          Clear Filters
-        </button>
-      )}
+       {isFiltered && (
+            <button
+              onClick={clearAllFilters}
+              className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-red-400/80 hover:text-red-400 border-b border-red-400/20 pb-1"
+            >
+              Clear Filters
+            </button>
+          )}
 
       {/* <button
         onClick={() => setShowFilters(false)}
