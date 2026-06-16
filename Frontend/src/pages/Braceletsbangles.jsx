@@ -221,6 +221,17 @@ const filteredItems = products.filter((item) => {
         </div>
         <style jsx>{`
           @keyframes softGlow { 0%, 100% { opacity: 0.5; transform: scale(0.75); } 50% { opacity: 1; transform: scale(1); } }
+          @keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.serif {
+  font-family: 'Playfair Display', serif;
+}
           @keyframes iconBreathe { 0%, 100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.03); opacity: 1; } }
           @keyframes progressBar { 0% { transform: translateX(-100%); } 100% { transform: translateX(0%); } }
           .serif { font-family: 'Playfair Display', serif; }
@@ -273,11 +284,11 @@ const filteredItems = products.filter((item) => {
 
   {/* FILTER BUTTON */}
   <button
-    onClick={() => setShowFilters(true)}
-    className="flex items-center gap-2 px-4 py-2 border border-amber-500/30 rounded-full text-amber-400 bg-zinc-900"
-  >
-    ☰ Filters
-  </button>
+  onClick={() => setShowFilters(true)}
+  className="flex items-center gap-2 px-4 py-2 border border-amber-500/30 rounded-full text-amber-400 bg-zinc-900"
+>
+  ☰ Filters
+</button>
 
   {/* SORT BUTTONS (same style as desktop) */}
   <div className="flex gap-2 text-[11px] uppercase">
@@ -393,16 +404,26 @@ const filteredItems = products.filter((item) => {
   <>
     {/* BACKDROP */}
     <div
-      className="fixed inset-0 bg-black/70 z-40 md:hidden"
+      className="fixed inset-0 bg-black/70 z-[998]"
       onClick={() => setShowFilters(false)}
     />
 
-    {/* DRAWER */}
-    <div className="fixed top-0 left-0 h-full w-[85%] max-w-sm bg-[#111] z-50 overflow-y-auto p-6 md:hidden">
+    {/* DRAWER (MATCH RINGS EXACTLY) */}
+    <div className="
+      fixed left-0 top-0
+      w-[60%] max-w-[240px]
+      h-screen
+      bg-[#0b0b0b]
+      border-r border-amber-500/20
+      z-[999]
+      overflow-y-auto
+      p-6
+      animate-[slideIn_.3s_ease]
+    ">
 
       {/* HEADER */}
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl text-amber-400 font-semibold">
+      <div className="flex justify-between items-center mb-8">
+        <h2 className="text-xl serif text-amber-400">
           Filters
         </h2>
 
@@ -415,7 +436,7 @@ const filteredItems = products.filter((item) => {
       </div>
 
       {/* TYPE */}
-      <div className="mb-6">
+      <div className="mb-8">
         <h3 className="text-amber-500 text-sm uppercase mb-3">
           Type
         </h3>
@@ -423,10 +444,13 @@ const filteredItems = products.filter((item) => {
         {["all", "bracelet", "bangle"].map((item) => (
           <button
             key={item}
-            onClick={() => updateFilter("itemType", item)}
-            className={`block mb-2 text-sm ${
+            onClick={() => {
+              updateFilter("itemType", item);
+              setShowFilters(false);
+            }}
+            className={`block text-sm mb-2 ${
               filters.itemType === item
-                ? "text-amber-400 font-semibold"
+                ? "text-amber-400 font-bold"
                 : "text-gray-400"
             }`}
           >
@@ -436,7 +460,7 @@ const filteredItems = products.filter((item) => {
       </div>
 
       {/* MATERIAL */}
-      <div className="mb-6">
+      <div className="mb-8">
         <h3 className="text-amber-500 text-sm uppercase mb-3">
           Material
         </h3>
@@ -445,9 +469,9 @@ const filteredItems = products.filter((item) => {
           <button
             key={item}
             onClick={() => updateFilter("materialType", item)}
-            className={`block mb-2 text-sm ${
+            className={`block text-sm mb-2 ${
               filters.materialType === item
-                ? "text-amber-400 font-semibold"
+                ? "text-amber-400 font-bold"
                 : "text-gray-400"
             }`}
           >
@@ -457,7 +481,7 @@ const filteredItems = products.filter((item) => {
       </div>
 
       {/* STYLE */}
-      <div className="mb-6">
+      <div className="mb-8">
         <h3 className="text-amber-500 text-sm uppercase mb-3">
           Style
         </h3>
@@ -466,9 +490,9 @@ const filteredItems = products.filter((item) => {
           <button
             key={item}
             onClick={() => updateFilter("style", item)}
-            className={`block mb-2 text-sm ${
+            className={`block text-sm mb-2 ${
               filters.style === item
-                ? "text-amber-400 font-semibold"
+                ? "text-amber-400 font-bold"
                 : "text-gray-400"
             }`}
           >
@@ -478,7 +502,7 @@ const filteredItems = products.filter((item) => {
       </div>
 
       {/* PRICE */}
-      <div className="mb-6">
+      <div className="mb-8">
         <h3 className="text-amber-500 text-sm uppercase mb-3">
           Price
         </h3>
@@ -492,9 +516,9 @@ const filteredItems = products.filter((item) => {
           <button
             key={item.value}
             onClick={() => updateFilter("price", item.value)}
-            className={`block mb-2 text-sm ${
+            className={`block text-sm mb-2 ${
               filters.price === item.value
-                ? "text-amber-400 font-semibold"
+                ? "text-amber-400 font-bold"
                 : "text-gray-400"
             }`}
           >
@@ -503,14 +527,19 @@ const filteredItems = products.filter((item) => {
         ))}
       </div>
 
-      {/* CLEAR FILTERS (MATCH RINGS UI — NOT RED) */}
+      {/* CLEAR BUTTON (RINGS STYLE) */}
       <button
         onClick={clearAllFilters}
-        className="w-full mt-4 py-2 rounded-lg border border-amber-500 text-amber-400 font-semibold"
+        className="
+          w-full py-3
+          bg-amber-500
+          text-black
+          font-semibold
+          rounded-xl
+        "
       >
         Clear Filters
       </button>
-
     </div>
   </>
 )}
