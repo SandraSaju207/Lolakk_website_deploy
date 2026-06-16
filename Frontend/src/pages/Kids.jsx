@@ -218,9 +218,9 @@ const similarProducts = selectedProduct
           </p>
         </div>
 
-    <div className="md:hidden flex flex-col gap-4 mb-6">
+  <div className="md:hidden flex flex-col gap-3 mb-6">
 
-  {/* FILTER BUTTON */}
+  {/* FILTER BUTTON ROW */}
   <div className="flex justify-between items-center">
     <button
       onClick={() => setShowFilters(true)}
@@ -230,12 +230,12 @@ const similarProducts = selectedProduct
     </button>
   </div>
 
-  {/* SORT LIKE RINGS UI */}
-  <div className="flex gap-2 text-[11px] overflow-x-auto no-scrollbar">
+  {/* SORT ROW (CLEAN - NO DUPLICATES) */}
+  <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
 
     <button
       onClick={() => setSort("latest")}
-      className={`px-3 py-1 rounded-full border whitespace-nowrap ${
+      className={`px-4 py-1 rounded-full border whitespace-nowrap text-xs ${
         sort === "latest"
           ? "bg-amber-500 text-black border-amber-500"
           : "border-white/10 text-gray-300"
@@ -246,7 +246,7 @@ const similarProducts = selectedProduct
 
     <button
       onClick={() => setSort("priceLow")}
-      className={`px-3 py-1 rounded-full border whitespace-nowrap ${
+      className={`px-4 py-1 rounded-full border whitespace-nowrap text-xs ${
         sort === "priceLow"
           ? "bg-amber-500 text-black border-amber-500"
           : "border-white/10 text-gray-300"
@@ -257,7 +257,7 @@ const similarProducts = selectedProduct
 
     <button
       onClick={() => setSort("priceHigh")}
-      className={`px-3 py-1 rounded-full border whitespace-nowrap ${
+      className={`px-4 py-1 rounded-full border whitespace-nowrap text-xs ${
         sort === "priceHigh"
           ? "bg-amber-500 text-black border-amber-500"
           : "border-white/10 text-gray-300"
@@ -289,7 +289,8 @@ const similarProducts = selectedProduct
         p-5
       "
     >
-      <div className="flex justify-between items-center mb-8">
+     <div className="flex justify-end items-center mb-8">
+  <div className="flex gap-2 text-xs">
         <h2 className="text-xl text-amber-400">
           Filters
         </h2>
@@ -300,6 +301,7 @@ const similarProducts = selectedProduct
         >
           ✕
         </button>
+        </div>
       </div>
 
       {/* TYPE */}
