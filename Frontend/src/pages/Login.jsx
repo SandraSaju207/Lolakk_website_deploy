@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 
+const API = import.meta.env.VITE_API_URL;
+
 export default function Login() {
   const [form, setForm] = useState({
     email: "",
@@ -20,7 +22,10 @@ const [loading, setLoading] = useState(false);
 
   try {
     
-    const res = await axios.post("/api/auth/login", form);
+   const res = await axios.post(
+  `${API}/api/auth/login`,
+  form
+);
    console.log(res.data);
     
 
