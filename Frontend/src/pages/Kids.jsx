@@ -155,6 +155,7 @@ const similarProducts = selectedProduct
       )
     : [];
 
+    console.log("🔥 KIDS PAGE NEW DEPLOY TEST");
 
   
 
@@ -211,7 +212,7 @@ const similarProducts = selectedProduct
         {/* HEADER */}
         <div className="text-center mb-16">
           <h1 className="text-4xl serif text-amber-400">
-            Kids Collectionss
+            Kids Collections
           </h1>
           <p className="text-gray-500 italic text-sm">
             Hair bows • Clips • Buns • Bangles • Necklace ✨
