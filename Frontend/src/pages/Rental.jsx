@@ -36,28 +36,41 @@ export default function Rental() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = axios.get(`${API}/api/products`);
-     const rentalData = response.data.filter(
+       const response = await axios.get(`${API}/api/products`);
+
+const data = response?.data;
+
+if (!Array.isArray(data)) {
+  console.error("API ERROR: Expected array but got:", data);
+  setItems([]);
+  setLoading(false);
+  return;
+}
+
+const rentalData = data.filter(
   p => (p.type || "").toLowerCase().trim().includes("rent")
 );
 
-      const formattedData = rentalData.map((p) => ({
+const formattedData = rentalData.map((p) => ({
   id: p._id,
   name: p.name,
   rent: Number(p.price || 0),
 
- category: (p.materialType || "").toLowerCase().trim(),
-type: (p.style || "").toLowerCase().trim(),
+  category: (p.materialType || "").toLowerCase().trim(),
+  type: (p.style || "").toLowerCase().trim(),
 
   duration: ["1", "3", "7", "15"],
-image: p.image?.startsWith("http")
-  ? p.image
-  : `${API}/${p.image}`,
+  image: p.image?.startsWith("http")
+    ? p.image
+    : `${API}/${p.image}`,
+
   createdAt: p.createdAt,
 }));
+
+setItems(formattedData);
+setTimeout(() => setLoading(false), 2500);
         
-        setItems(formattedData);
-        setTimeout(() => setLoading(false), 2500);
+        
       } catch (err) {
         console.error("Connection Error:", err);
         setLoading(false);
