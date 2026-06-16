@@ -455,11 +455,8 @@ const similarProducts = selectedProduct
 <div className="md:col-span-3">
 
   {/* SORT */}
-  <div className="flex justify-between items-center mb-8">
-
-    
-
-    <div className="flex gap-2 text-xs">
+  <div className="hidden md:flex justify-end items-center mb-8">
+  <div className="flex gap-2 text-xs">
       {[
         { label: "Latest", value: "latest" },
         { label: "Low", value: "priceLow" },
