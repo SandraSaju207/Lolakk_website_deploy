@@ -302,7 +302,7 @@ const paginatedRings = sortedRings;
   </p>
 
   {/* SORTING MOVED HERE */}
-  <div className="flex justify-end">
+  {/* <div className="flex justify-end">
     <div className="flex gap-3 text-xs uppercase">
       {[
         { label: "Latest", value: "latest" },
@@ -322,7 +322,7 @@ const paginatedRings = sortedRings;
         </button>
       ))}
     </div>
-  </div>
+  </div> */}
 </div>
 
  <div className="md:hidden flex justify-between items-center mb-6 gap-3">
@@ -336,7 +336,7 @@ const paginatedRings = sortedRings;
   </button>
 
   {/* SORT OPTIONS */}
-  <div className="flex gap-2 text-[11px]">
+  {/* <div className="flex gap-2 text-[11px]">
     
     <button
       onClick={() => setSort("latest")}
@@ -371,7 +371,7 @@ const paginatedRings = sortedRings;
       High
     </button>
 
-  </div>
+  </div> */}
 
 </div>
 
