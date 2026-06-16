@@ -1,6 +1,7 @@
 // pages/Register.jsx
 import { useState } from "react";
 import axios from "axios";
+const API = import.meta.env.VITE_API_URL;
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -29,14 +30,13 @@ const [loading, setLoading] = useState(false);
   }
 
   try {
-    console.log("API URL:", API);
-   const API = import.meta.env.VITE_API_URL;
+  console.log("API URL:", API);
 
-await axios.post(`${API}/api/auth/register`, {
-  name: form.name,
-  email: form.email,
-  password: form.password,
-});
+  await axios.post(`${API}/api/auth/register`, {
+    name: form.name,
+    email: form.email,
+    password: form.password,
+  });
 
     setMessageType("success");
     setMessage("Registration successful! Redirecting to login...");
