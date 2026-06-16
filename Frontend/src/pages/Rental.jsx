@@ -475,53 +475,25 @@ setTimeout(() => {
       </div>
 
 {/* MOBILE FILTER BUTTON */}
-<div className="md:hidden flex justify-between items-center mb-6 gap-3">
+<div className="md:hidden flex justify-between items-center mb-4">
 
-  {/* FILTER BUTTON */}
   <button
     onClick={() => setMobileFilterOpen(true)}
-    className="flex items-center gap-2 px-4 py-2 border border-amber-500/30 rounded-full text-amber-400 bg-zinc-900"
+    className="px-4 py-2 border border-amber-500/30 rounded-full text-amber-400 bg-zinc-900 text-sm"
   >
     ☰ Filters
   </button>
 
-  {/* SORT PILLS */}
-  <div className="flex gap-2 text-[11px]">
+  <select
+    value={sort}
+    onChange={(e) => setSort(e.target.value)}
+    className="bg-zinc-900 border border-white/10 text-sm text-gray-300 px-3 py-2 rounded-full"
+  >
+    <option value="latest">Latest</option>
+    <option value="priceLow">Low</option>
+    <option value="priceHigh">High</option>
+  </select>
 
-    <button
-      onClick={() => setSort("latest")}
-      className={`px-3 py-1 rounded-full border ${
-        sort === "latest"
-          ? "bg-amber-500 text-black border-amber-500"
-          : "border-white/10 text-gray-300"
-      }`}
-    >
-      Latest
-    </button>
-
-    <button
-      onClick={() => setSort("priceLow")}
-      className={`px-3 py-1 rounded-full border ${
-        sort === "priceLow"
-          ? "bg-amber-500 text-black border-amber-500"
-          : "border-white/10 text-gray-300"
-      }`}
-    >
-      Low
-    </button>
-
-    <button
-      onClick={() => setSort("priceHigh")}
-      className={`px-3 py-1 rounded-full border ${
-        sort === "priceHigh"
-          ? "bg-amber-500 text-black border-amber-500"
-          : "border-white/10 text-gray-300"
-      }`}
-    >
-      High
-    </button>
-
-  </div>
 </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
@@ -581,7 +553,7 @@ setTimeout(() => {
 
         <div className="md:col-span-3">
           {/* SORT UI */}
-<div className="hidden md:flex justify-end mb-6">
+{/* <div className="hidden md:flex justify-end mb-6">
 
   <button
     onClick={() => setSort("latest")}
@@ -616,8 +588,8 @@ setTimeout(() => {
     High
   </button>
 
-</div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 md:gap-10">
+</div> */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-10">
             {sortedItems.map((item) => (
               <div key={item.id} className="border border-white/10 p-3 md:p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition-all group">
                 <div className="overflow-hidden rounded-xl">
@@ -755,12 +727,12 @@ setTimeout(() => {
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-amber-400 font-bold">Filters</h2>
 
-        <button
-          onClick={() => setMobileFilterOpen(false)}
-          className="text-white text-lg"
-        >
-          ✕
-        </button>
+       <button
+  onClick={() => setMobileFilterOpen(false)}
+  className="text-gray-400 hover:text-white text-xl"
+>
+  ✕
+</button>
       </div>
 
       {/* FILTER CONTENT (COPY FROM YOUR SIDEBAR) */}
@@ -837,11 +809,17 @@ setTimeout(() => {
 
         {/* CLEAR */}
         <button
-          onClick={clearAllFilters}
-          className="text-red-400 text-sm mt-4"
-        >
-          Clear All Filters
-        </button>
+        onClick={clearAllFilters}
+        className="
+          w-full py-3
+          bg-amber-500
+          text-black
+          font-semibold
+          rounded-xl
+        "
+      >
+        Clear Filters
+      </button>
 
       </div>
     </div>
