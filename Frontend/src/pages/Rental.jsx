@@ -617,28 +617,28 @@ setTimeout(() => {
   </button>
 
 </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 md:gap-10">
             {sortedItems.map((item) => (
-              <div key={item.id} className="border border-white/10 p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition-all group">
-                <div className="overflow-hidden rounded-lg">
+              <div key={item.id} className="border border-white/10 p-3 md:p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition-all group">
+                <div className="overflow-hidden rounded-xl">
   <img
-    src={item.image}
-    className="h-64 w-full object-cover group-hover:scale-105 transition-transform duration-500"
-    alt={item.name}
-  />
+  src={item.image}
+  className="h-72 md:h-64 w-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-500"
+/>
 </div>
                
   
-<div className="mt-2 flex items-center gap-2">
-  <span className="text-2xl text-amber-400 font-light">
-    ₹{item.rent}
-  </span>
-  <span className="text-[11px] text-gray-500 uppercase">
-    Original Price
-  </span>
+<div className="mt-3 flex flex-col gap-2">
+  <div className="flex justify-between items-center">
+    <span className="text-2xl text-amber-400 font-light">
+      ₹{item.rent}
+    </span>
 
-
-</div>
+    <span className="text-[11px] text-gray-500 uppercase">
+      Rental Price
+    </span>
+  </div>
+  </div>
                 <button onClick={() => openModal(item)} className="mt-4 w-full bg-amber-500 text-black font-bold px-4 py-2 rounded hover:bg-amber-400 transition transform active:scale-95">
                   Book Now
                 </button>
