@@ -398,11 +398,11 @@ const filteredItems = products.filter((item) => {
     />
 
     {/* DRAWER */}
-    <div className="fixed top-0 left-0 h-full w-[80%] max-w-sm bg-[#0b0b0b] z-50 overflow-y-auto p-6 md:hidden">
+    <div className="fixed top-0 left-0 h-full w-[85%] max-w-sm bg-[#111] z-50 overflow-y-auto p-6 md:hidden">
 
       {/* HEADER */}
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-lg text-amber-400 font-semibold">
+        <h2 className="text-xl text-amber-400 font-semibold">
           Filters
         </h2>
 
@@ -416,7 +416,7 @@ const filteredItems = products.filter((item) => {
 
       {/* TYPE */}
       <div className="mb-6">
-        <h3 className="text-amber-500 text-xs uppercase mb-3">
+        <h3 className="text-amber-500 text-sm uppercase mb-3">
           Type
         </h3>
 
@@ -437,7 +437,7 @@ const filteredItems = products.filter((item) => {
 
       {/* MATERIAL */}
       <div className="mb-6">
-        <h3 className="text-amber-500 text-xs uppercase mb-3">
+        <h3 className="text-amber-500 text-sm uppercase mb-3">
           Material
         </h3>
 
@@ -458,7 +458,7 @@ const filteredItems = products.filter((item) => {
 
       {/* STYLE */}
       <div className="mb-6">
-        <h3 className="text-amber-500 text-xs uppercase mb-3">
+        <h3 className="text-amber-500 text-sm uppercase mb-3">
           Style
         </h3>
 
@@ -479,7 +479,7 @@ const filteredItems = products.filter((item) => {
 
       {/* PRICE */}
       <div className="mb-6">
-        <h3 className="text-amber-500 text-xs uppercase mb-3">
+        <h3 className="text-amber-500 text-sm uppercase mb-3">
           Price
         </h3>
 
@@ -503,10 +503,10 @@ const filteredItems = products.filter((item) => {
         ))}
       </div>
 
-      {/* CLEAR */}
+      {/* CLEAR FILTERS (MATCH RINGS UI — NOT RED) */}
       <button
         onClick={clearAllFilters}
-        className="w-full mt-4 py-2 rounded-lg bg-amber-500 text-black font-semibold"
+        className="w-full mt-4 py-2 rounded-lg border border-amber-500 text-amber-400 font-semibold"
       >
         Clear Filters
       </button>
@@ -514,7 +514,6 @@ const filteredItems = products.filter((item) => {
     </div>
   </>
 )}
-
         {/* PRODUCTS */}
         <div className="md:col-span-3">
 
