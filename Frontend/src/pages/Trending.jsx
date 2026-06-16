@@ -190,6 +190,17 @@ export default function Trending() {
         </div>
         <style jsx>{`
           @keyframes softGlow { 0%, 100% { opacity: 0.5; transform: scale(0.75); } 50% { opacity: 1; transform: scale(1); } }
+           @keyframes slideIn {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  .serif {
+    font-family: 'Playfair Display', serif;
+  }
           @keyframes iconBreathe { 0%, 100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.03); opacity: 1; } }
           @keyframes progressBar { 0% { transform: translateX(-100%); } 100% { transform: translateX(0%); } }
           .serif { font-family: 'Playfair Display', serif; }
@@ -208,83 +219,159 @@ export default function Trending() {
       </div>
 
       {/* MOBILE FILTER BUTTON */}
-<div className="md:hidden mb-6">
+<div className="md:hidden flex justify-between items-center mb-6 gap-3">
+
+  {/* FILTER BUTTON */}
   <button
-    onClick={() => setShowFilters(!showFilters)}
-    className="w-full py-3 border border-amber-500 text-amber-400 rounded-xl uppercase tracking-wider text-sm"
+    onClick={() => setShowFilters(true)}
+    className="flex items-center gap-2 px-4 py-2 border border-amber-500/30 rounded-full text-amber-400 bg-zinc-900"
   >
-    {showFilters ? "Close Filters" : "Filters"}
+    ☰ Filters
   </button>
+
+  {/* SORT OPTIONS */}
+  <div className="flex gap-2 text-[11px]">
+
+    <button
+      onClick={() => setSort("popular")}
+      className={`px-3 py-1 rounded-full border ${
+        sort === "popular"
+          ? "bg-amber-500 text-black border-amber-500"
+          : "border-white/10 text-gray-300"
+      }`}
+    >
+      Popular
+    </button>
+
+    <button
+      onClick={() => setSort("priceLow")}
+      className={`px-3 py-1 rounded-full border ${
+        sort === "priceLow"
+          ? "bg-amber-500 text-black border-amber-500"
+          : "border-white/10 text-gray-300"
+      }`}
+    >
+      Low
+    </button>
+
+    <button
+      onClick={() => setSort("priceHigh")}
+      className={`px-3 py-1 rounded-full border ${
+        sort === "priceHigh"
+          ? "bg-amber-500 text-black border-amber-500"
+          : "border-white/10 text-gray-300"
+      }`}
+    >
+      High
+    </button>
+
+  </div>
 </div>
 
      {/* MOBILE FILTERS */}
 {showFilters && (
-  <div className="md:hidden mb-8 border border-white/10 rounded-xl p-5 bg-zinc-900/80">
+  <>
+    {/* BACKDROP */}
+    <div
+      className="fixed inset-0 bg-black/70 z-[998]"
+      onClick={() => setShowFilters(false)}
+    />
 
-    {/* CATEGORY */}
-    <div className="mb-6">
-      <h3 className="text-sm uppercase mb-3 text-amber-500">
-        Category
-      </h3>
+    {/* DRAWER */}
+    <div className="
+      fixed left-0 top-0
+      w-[70%] max-w-[260px]
+      h-screen
+      bg-[#0b0b0b]
+      border-r border-amber-500/20
+      z-[999]
+      overflow-y-auto
+      p-6
+      animate-[slideIn_.3s_ease]
+    ">
 
-      {[
-        "all",
-        "rings",
-        "earrings",
-        "necklaces",
-        "bracelets",
-        "kids",
-        "rentals",
-      ].map((item) => (
+      {/* HEADER */}
+      <div className="flex justify-between items-center mb-8">
+        <h2 className="text-xl text-amber-400 serif">Filters</h2>
+
         <button
-          key={item}
-          onClick={() => updateFilter("category", item)}
-          className={`block mb-2 text-sm ${
-            filters.category === item
-              ? "text-amber-400 font-bold"
-              : "text-gray-400"
-          }`}
+          onClick={() => setShowFilters(false)}
+          className="text-white text-xl"
         >
-          {item}
+          ✕
         </button>
-      ))}
-    </div>
+      </div>
 
-    {/* PRICE */}
-    <div className="mb-6">
-      <h3 className="text-sm uppercase mb-3 text-amber-500">
-        Price
-      </h3>
+      {/* CATEGORY */}
+      <div className="mb-8">
+        <h3 className="text-amber-500 text-sm uppercase mb-3">
+          Category
+        </h3>
 
-      {[
-        { label: "All", value: "all" },
-        { label: "Below ₹500", value: "low" },
-        { label: "₹500 - ₹1000", value: "mid" },
-        { label: "Above ₹1000", value: "high" },
-      ].map((p) => (
+        {["all", "rings", "earrings", "necklaces", "bracelets", "kids", "rentals"].map((item) => (
+          <button
+            key={item}
+            onClick={() => {
+              updateFilter("category", item);
+              setShowFilters(false);
+            }}
+            className={`block text-sm mb-2 ${
+              filters.category === item
+                ? "text-amber-400 font-bold"
+                : "text-gray-400"
+            }`}
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+
+      {/* PRICE */}
+      <div className="mb-8">
+        <h3 className="text-amber-500 text-sm uppercase mb-3">
+          Price
+        </h3>
+
+        {[
+          { label: "All", value: "all" },
+          { label: "Below ₹500", value: "low" },
+          { label: "₹500 - ₹1000", value: "mid" },
+          { label: "Above ₹1000", value: "high" },
+        ].map((p) => (
+          <button
+            key={p.value}
+            onClick={() => {
+              updateFilter("price", p.value);
+              setShowFilters(false);
+            }}
+            className={`block text-sm mb-2 ${
+              filters.price === p.value
+                ? "text-amber-400 font-bold"
+                : "text-gray-400"
+            }`}
+          >
+            {p.label}
+          </button>
+        ))}
+      </div>
+
+      {/* CLEAR FILTERS (MATCH RINGS STYLE) */}
+      {isFiltered && (
         <button
-          key={p.value}
-          onClick={() => updateFilter("price", p.value)}
-          className={`block mb-2 text-sm ${
-            filters.price === p.value
-              ? "text-amber-400 font-bold"
-              : "text-gray-400"
-          }`}
+          onClick={clearAllFilters}
+          className="
+            w-full py-3
+            bg-amber-500
+            text-black
+            font-semibold
+            rounded-xl
+          "
         >
-          {p.label}
+          Clear Filters
         </button>
-      ))}
+      )}
     </div>
-
-    {isFiltered && (
-      <button
-        onClick={clearAllFilters}
-        className="text-red-400 text-xs uppercase"
-      >
-        Clear Filters
-      </button>
-    )}
-  </div>
+  </>
 )}
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
