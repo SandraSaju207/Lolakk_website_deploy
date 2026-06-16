@@ -36,8 +36,13 @@ const [showFailed, setShowFailed] = useState(false);
 useEffect(() => {
   const fetchAddresses = async () => {
     try {
-      const res = await axios.get(
-  "${API}/api/user/me",
+   if (!token) {
+  console.log("No token found");
+  return;
+}
+
+const res = await axios.get(
+  `${API}/api/user/me`,
   {
     headers: {
       Authorization: `Bearer ${token}`,
