@@ -472,10 +472,11 @@ setTimeout(() => {
     <section className="pt-32 pb-24 px-6 max-w-7xl mx-auto">
       <div className="text-center mb-16">
         <h1 className="text-4xl text-amber-400 serif tracking-widest">Jewellery Rentals</h1>
+         <p className="text-gray-500 text-sm italic mt-2">Luxury crafted for elegance</p>
       </div>
 
 {/* MOBILE FILTER BUTTON */}
-<div className="md:hidden flex justify-between items-center mb-4">
+ <div className="md:hidden flex justify-between items-center mb-6 gap-3">
 
   <button
     onClick={() => setMobileFilterOpen(true)}
@@ -484,15 +485,42 @@ setTimeout(() => {
     ☰ Filters
   </button>
 
-  <select
-    value={sort}
-    onChange={(e) => setSort(e.target.value)}
-    className="bg-zinc-900 border border-white/10 text-sm text-gray-300 px-3 py-2 rounded-full"
-  >
-    <option value="latest">Latest</option>
-    <option value="priceLow">Low</option>
-    <option value="priceHigh">High</option>
-  </select>
+  <div className="flex gap-2 text-[11px]">
+
+    <button
+      onClick={() => setSort("latest")}
+      className={`px-3 py-1 rounded-full border ${
+        sort === "latest"
+          ? "bg-amber-500 text-black border-amber-500"
+          : "border-white/10 text-gray-300"
+      }`}
+    >
+      Latest
+    </button>
+
+    <button
+      onClick={() => setSort("priceLow")}
+      className={`px-3 py-1 rounded-full border ${
+        sort === "priceLow"
+          ? "bg-amber-500 text-black border-amber-500"
+          : "border-white/10 text-gray-300"
+      }`}
+    >
+      Low
+    </button>
+
+    <button
+      onClick={() => setSort("priceHigh")}
+      className={`px-3 py-1 rounded-full border ${
+        sort === "priceHigh"
+          ? "bg-amber-500 text-black border-amber-500"
+          : "border-white/10 text-gray-300"
+      }`}
+    >
+      High
+    </button>
+
+  </div>
 
 </div>
 
@@ -595,7 +623,7 @@ setTimeout(() => {
                 <div className="overflow-hidden rounded-xl">
   <img
   src={item.image}
-  className="h-72 md:h-64 w-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-500"
+   className="h-48 md:h-64 w-full object-cover group-hover:scale-105 transition-transform duration-500"
 />
 </div>
                
