@@ -218,55 +218,30 @@ const similarProducts = selectedProduct
           </p>
         </div>
 
-  <div className="md:hidden flex flex-col gap-3 mb-6">
+        <div className="md:hidden flex justify-between items-center mb-6">
 
-  {/* FILTER BUTTON ROW */}
-  <div className="flex justify-between items-center">
-    <button
-      onClick={() => setShowFilters(true)}
-      className="flex items-center gap-2 px-4 py-2 border border-amber-500/30 rounded-full text-amber-400 bg-zinc-900"
-    >
-      ☰ Filters
-    </button>
-  </div>
+  <button
+    onClick={() => setShowFilters(true)}
+    className="flex items-center gap-2 px-4 py-2 border border-amber-500/30 rounded-full text-amber-400 bg-zinc-900"
+  >
+    ☰ Filters
+  </button>
 
-  {/* SORT ROW (CLEAN - NO DUPLICATES) */}
-  <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
-
-    <button
-      onClick={() => setSort("latest")}
-      className={`px-4 py-1 rounded-full border whitespace-nowrap text-xs ${
+  <button
+    onClick={() =>
+      setSort(
         sort === "latest"
-          ? "bg-amber-500 text-black border-amber-500"
-          : "border-white/10 text-gray-300"
-      }`}
-    >
-      Latest
-    </button>
+          ? "priceLow"
+          : sort === "priceLow"
+          ? "priceHigh"
+          : "latest"
+      )
+    }
+    className="px-4 py-2 border border-white/10 rounded-full text-gray-300 bg-zinc-900"
+  >
+    Sort
+  </button>
 
-    <button
-      onClick={() => setSort("priceLow")}
-      className={`px-4 py-1 rounded-full border whitespace-nowrap text-xs ${
-        sort === "priceLow"
-          ? "bg-amber-500 text-black border-amber-500"
-          : "border-white/10 text-gray-300"
-      }`}
-    >
-      Low
-    </button>
-
-    <button
-      onClick={() => setSort("priceHigh")}
-      className={`px-4 py-1 rounded-full border whitespace-nowrap text-xs ${
-        sort === "priceHigh"
-          ? "bg-amber-500 text-black border-amber-500"
-          : "border-white/10 text-gray-300"
-      }`}
-    >
-      High
-    </button>
-
-  </div>
 </div>
 
 {showFilters && (
@@ -278,7 +253,7 @@ const similarProducts = selectedProduct
 
     <div
       className="
-        fixed left-0 top-12
+        fixed left-0 top-0
         w-[70%]
         max-w-[250px]
         h-screen
@@ -289,8 +264,7 @@ const similarProducts = selectedProduct
         p-5
       "
     >
-     <div className="flex justify-end items-center mb-8">
-  <div className="flex gap-2 text-xs">
+      <div className="flex justify-between items-center mb-8">
         <h2 className="text-xl text-amber-400">
           Filters
         </h2>
@@ -301,7 +275,6 @@ const similarProducts = selectedProduct
         >
           ✕
         </button>
-        </div>
       </div>
 
       {/* TYPE */}
