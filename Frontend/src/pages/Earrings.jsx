@@ -269,7 +269,7 @@ const similarProducts = selectedProduct
   </p>
 
   {/* SORTING (moved under header like rings page) */}
-  <div className="flex justify-end mt-2">
+  {/* <div className="flex justify-end mt-2">
     <div className="flex gap-3 text-xs uppercase">
       {[
         { label: "Latest", value: "latest" },
@@ -289,7 +289,7 @@ const similarProducts = selectedProduct
         </button>
       ))}
     </div>
-  </div>
+  </div> */}
 </div>
 
 <div className="md:hidden flex justify-between items-center mb-6">
