@@ -581,7 +581,7 @@ setTimeout(() => {
 
         <div className="md:col-span-3">
           {/* SORT UI */}
-<div className="flex justify-end mb-6">
+<div className="hidden md:flex justify-end mb-6">
 
   <button
     onClick={() => setSort("latest")}
@@ -748,10 +748,8 @@ setTimeout(() => {
         </div>
       )}
       {mobileFilterOpen && (
-  <div className="fixed inset-0 z-[999] bg-black/70 flex justify-end">
-    
-    {/* PANEL */}
-    <div className="w-[85%] max-w-sm h-full bg-zinc-900 p-5 overflow-y-auto animate-slideIn">
+  <div className="fixed inset-0 z-[999] bg-black/70 flex">
+  <div className="w-[75%] max-w-xs h-full bg-zinc-900 p-5 overflow-y-auto animate-slideIn">
       
       {/* HEADER */}
       <div className="flex justify-between items-center mb-6">
