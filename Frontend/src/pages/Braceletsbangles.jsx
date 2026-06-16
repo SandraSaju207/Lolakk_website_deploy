@@ -74,12 +74,12 @@ const clearAllFilters = () => {
 };
 
 const filteredItems = products.filter((item) => {
-  const price = parseFloat(item.price) || 0;
+const price = Number(item.price) || 0;
 
   return (
     // TYPE
     (filters.itemType === "all" ||
-      item.itemType?.toLowerCase() === filters.itemType) &&
+      item.type?.toLowerCase() === filters.itemType) &&
 
     // MATERIAL
     (filters.materialType === "all" ||
@@ -106,18 +106,18 @@ const filteredItems = products.filter((item) => {
   );
 });
 
-  const sortedItems = [...filteredItems].sort((a, b) => {
-    if (sort === "priceLow") return a.price - b.price;
-    if (sort === "priceHigh") return b.price - a.price;
-    if (sort === "latest") return b._id > a._id ? 1 : -1;
-    return 0;
-  });
+ const sortedItems = [...filteredItems].sort((a, b) => {
+  if (sort === "priceLow") return Number(a.price) - Number(b.price);
+  if (sort === "priceHigh") return Number(b.price) - Number(a.price);
 
-  const paginatedItems = sortedItems.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  if (sort === "latest") {
+    return (b._id || "").localeCompare(a._id || "");
+  }
 
+  return 0;
+});
+
+  // const sortedItems = [...filteredItems].sort(...)
   // ---------------- MODAL ----------------
   const openModal = (item) => {
     setSelectedProduct(item);
@@ -184,7 +184,8 @@ const filteredItems = products.filter((item) => {
   const similarProducts = selectedProduct
     ? products.filter(
         (p) =>
-          p.category === selectedProduct.category &&
+          p.type === selectedProduct.type &&
+p._id !== selectedProduct._id &&
           p._id !== selectedProduct._id
       )
     : [];
@@ -213,7 +214,7 @@ const filteredItems = products.filter((item) => {
           </div>
           <div className="mt-6 relative z-10">
             <h2 className="text-3xl md:text-4xl serif gold-gradient tracking-[0.25em] mb-1">LOLAKK</h2>
-            <p className="text-gray-400 italic font-light text-sm tracking-wide">by Athira</p>
+            <p className="text-gray-400 italic font-light text-sm mb-2 tracking-wide">by Athira</p>
           </div>
         </div>
         <div className="mt-12 w-48 h-[1px] bg-white/5 rounded-full overflow-hidden relative">
@@ -236,48 +237,49 @@ const filteredItems = products.filter((item) => {
 
       {/* HEADER */}
      {/* HEADER */}
-<div className="text-center mb-6">
+<div className="text-center mb-3">
   <h1 className="text-4xl text-amber-400">
     Bracelets & Bangles
   </h1>
 
-  <p className="text-gray-500 text-sm italic mt-2">
+  <p className="text-gray-500 text-sm mb-2 italic mt-2">
     Elegant wrist collection
   </p>
 
   {/* SORTING (moved under header like Earrings page) */}
-  <div className="hidden md:flex justify-end mt-2">
-    <div className="flex gap-3 text-xs uppercase">
-      {[
-        { label: "Latest", value: "latest" },
-        { label: "Low → High", value: "priceLow" },
-        { label: "High → Low", value: "priceHigh" },
-      ].map((s) => (
-        <button
-          key={s.value}
-          onClick={() => setSort(s.value)}
-          className={`px-4 py-1 border rounded-full transition ${
-            sort === s.value
-              ? "bg-amber-500 text-black border-amber-500"
-              : "border-white/20 text-gray-400 hover:border-amber-500 hover:text-amber-400"
-          }`}
-        >
-          {s.label}
-        </button>
-      ))}
-    </div>
+  <div className="flex justify-end mt-2">
+  <div className="flex gap-2 text-[11px] uppercase">
+    {[
+      { label: "Latest", value: "latest" },
+      { label: "Low → High", value: "priceLow" },
+      { label: "High → Low", value: "priceHigh" },
+    ].map((s) => (
+      <button
+        key={s.value}
+        onClick={() => setSort(s.value)}
+        className={`px-3 py-1 rounded-full border transition ${
+          sort === s.value
+            ? "bg-amber-500 text-black border-amber-500"
+            : "border-white/20 text-gray-400"
+        }`}
+      >
+        {s.label}
+      </button>
+    ))}
   </div>
 </div>
+</div>
 
-     <div className="mb-6 flex items-center justify-between md:hidden">
+    <div className="md:hidden flex justify-between items-center mb-6">
   <button
     onClick={() => setShowFilters(true)}
-    className="px-4 py-2 border border-amber-500 text-amber-400 rounded-lg text-sm"
+    className="flex items-center gap-2 px-4 py-2 border border-amber-500/30 rounded-full text-amber-400 bg-zinc-900"
   >
-    Filters
+    ☰ Filters
   </button>
 
-  <select
+
+  {/* <select
     value={sort}
     onChange={(e) => setSort(e.target.value)}
     className="bg-black border border-white/20 rounded-lg px-3 py-2 text-sm"
@@ -285,7 +287,7 @@ const filteredItems = products.filter((item) => {
     <option value="latest">Latest</option>
     <option value="priceLow">Low → High</option>
     <option value="priceHigh">High → Low</option>
-  </select>
+  </select> */}
 </div>
 
 <div className="grid grid-cols-1 md:grid-cols-4 gap-10 items-start">
@@ -309,12 +311,12 @@ const filteredItems = products.filter((item) => {
 </div>
 
 <div>
-  <h3 className="text-amber-500 text-sm uppercase mb-3">Material</h3>
+  <h3 className="text-amber-500 text-sm mb-2 uppercase mb-3">Material</h3>
   {["all", "gold", "diamond", "gemstone"].map((item) => (
   <button
     key={item}
     onClick={() => updateFilter("materialType", item)}
-    className={`block text-sm mb-2 transition-all duration-200 ${
+    className={`block text-sm mb-2  transition-all duration-200 ${
       filters.materialType === item
         ? "text-amber-400 font-bold"
                     : "text-gray-400"
@@ -327,12 +329,12 @@ const filteredItems = products.filter((item) => {
 
 
          <div>
-  <h3 className="text-amber-500 text-sm uppercase mb-3">Style</h3>
+  <h3 className="text-amber-500 text-sm mb-2 uppercase mb-3">Style</h3>
   {["all", "traditional", "modern", "casual"].map((item) => (
   <button
     key={item}
     onClick={() => updateFilter("style", item)}
-    className={`block text-sm mb-2 transition-all duration-200 ${
+    className={`block text-sm mb-2  transition-all duration-200 ${
       filters.style === item
         ? "text-amber-400 font-bold"
                     : "text-gray-400"
@@ -344,7 +346,7 @@ const filteredItems = products.filter((item) => {
 </div>
 
 <div>
-  <h3 className="text-amber-500 text-sm uppercase mb-3">Price</h3>
+  <h3 className="text-amber-500 text-sm mb-2 uppercase mb-3">Price</h3>
 
   {[
   { label: "All", value: "all" },
@@ -397,7 +399,7 @@ const filteredItems = products.filter((item) => {
       onClick={() => setShowFilters(false)}
     />
 
-    <div className="fixed top-0 left-0 h-full w-[85%] max-w-sm bg-[#111] z-50 overflow-y-auto p-6 md:hidden">
+    <div className="fixed top-0 left-0 h-full w-[70%] max-w-[250px] bg-[#0b0b0b] border-r border-amber-500/20 z-50 overflow-y-auto p-6 md:hidden">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl text-amber-400 font-semibold">
           Filters
@@ -413,7 +415,7 @@ const filteredItems = products.filter((item) => {
 
       {/* TYPE */}
       <div className="mb-6">
-        <h3 className="text-amber-500 text-sm uppercase mb-3">
+        <h3 className="text-amber-500 text-sm mb-2 uppercase mb-3">
           Type
         </h3>
 
@@ -434,7 +436,7 @@ const filteredItems = products.filter((item) => {
 
       {/* MATERIAL */}
       <div className="mb-6">
-        <h3 className="text-amber-500 text-sm uppercase mb-3">
+        <h3 className="text-amber-500 text-sm mb-2 uppercase mb-3">
           Material
         </h3>
 
@@ -455,7 +457,7 @@ const filteredItems = products.filter((item) => {
 
       {/* STYLE */}
       <div className="mb-6">
-        <h3 className="text-amber-500 text-sm uppercase mb-3">
+        <h3 className="text-amber-500 text-sm mb-2 uppercase mb-3">
           Style
         </h3>
 
@@ -476,7 +478,7 @@ const filteredItems = products.filter((item) => {
 
       {/* PRICE */}
       <div className="mb-6">
-        <h3 className="text-amber-500 text-sm uppercase mb-3">
+        <h3 className="text-amber-500 text-sm mb-2  uppercase mb-3">
           Price
         </h3>
 
@@ -620,7 +622,7 @@ const filteredItems = products.filter((item) => {
                      </h2>
            
                      {/* DESCRIPTION */}
-                     <p className="text-gray-400 leading-relaxed mt-6 text-sm md:text-base">
+                     <p className="text-gray-400 leading-relaxed mt-6 text-sm mb-2  md:text-base">
                        {selectedProduct.description ||
                          "A timeless handcrafted luxury ring designed with elegance and sophistication for modern beauty."}
                      </p>
@@ -655,7 +657,7 @@ const filteredItems = products.filter((item) => {
                        {/* GO TO CART */}
                        <button
                          onClick={() => (window.location.href = "/cart")}
-                         className="w-full py-3.5 rounded-2xl border border-amber-500/30 bg-white/5 backdrop-blur-md text-amber-300 uppercase tracking-[0.25em] text-sm hover:bg-amber-500 hover:text-black transition-all duration-500"
+                         className="w-full py-3.5 rounded-2xl border border-amber-500/30 bg-white/5 backdrop-blur-md text-amber-300 uppercase tracking-[0.25em] text-sm mb-2 hover:bg-amber-500 hover:text-black transition-all duration-500"
                        >
                          Go to Cart
                        </button>
@@ -684,7 +686,7 @@ const filteredItems = products.filter((item) => {
                  {/* SIMILAR PRODUCTS */}
                  {similarProducts.length > 0 && (
                    <div className="border-t border-white/10 px-6 md:px-8 py-6 bg-white/[0.02]">
-                     <h3 className="text-sm uppercase tracking-[0.3em] text-amber-400 mb-6">
+                     <h3 className="text-sm mb-2 uppercase tracking-[0.3em] text-amber-400 mb-6">
                        Similar Products
                      </h3>
            
@@ -707,11 +709,11 @@ const filteredItems = products.filter((item) => {
                              />
                            </div>
            
-                           <p className="text-sm text-gray-300 mt-3 group-hover:text-amber-400 transition">
+                           <p className="text-sm mb-2 text-gray-300 mt-3 group-hover:text-amber-400 transition">
                              {item.name}
                            </p>
            
-                           <p className="text-amber-500 text-sm mt-1">
+                           <p className="text-amber-500 text-sm mb-2 mt-1">
                              ₹{item.price}
                            </p>
                          </div>
