@@ -248,9 +248,9 @@ const filteredItems = products.filter((item) => {
       {/* HEADER */}
      {/* HEADER */}
 <div className="text-center mb-6">
-  <h1 className="text-4xl text-amber-400">
-    Bracelets & Bangles
-  </h1>
+  <h1 className="text-2xl md:text-4xl text-amber-400">
+  Bracelets & Bangles
+</h1>
 
   <p className="text-gray-500 text-sm italic mt-2">
     Elegant wrist collection
