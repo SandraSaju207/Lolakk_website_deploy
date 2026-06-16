@@ -1,4 +1,4 @@
-import { useState, useEffect,useRef } from "react";
+import { useState, useEffect } from "react";
 import { ShoppingBag } from "lucide-react";
 import axios from "axios"; // Added for connection
 
@@ -26,10 +26,6 @@ export default function Rings() {
   const [notification, setNotification] = useState(null);
   const [cart, setCart] = useState([]);
   const [showFilters, setShowFilters] = useState(false);
-  const [showSort, setShowSort] = useState(false);
-  const [showPanel, setShowPanel] = useState(false);
-const [activePanel, setActivePanel] = useState("filter"); 
-const startY = useRef(0);
 
   // ✨ NEW: Dynamic Rings State
   const [rings, setRings] = useState([]);
@@ -282,22 +278,12 @@ const paginatedRings = sortedRings;
       transform: translateX(0);
     }
   }
-
-  @keyframes slideUp {
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
 `}</style>
       </div>
     );
   }
 
   return (
-
    <section className="pt-32 pb-24 px-6 max-w-7xl mx-auto min-h-screen">
 
       <style jsx>{`
@@ -341,23 +327,21 @@ const paginatedRings = sortedRings;
 
       <div className="md:hidden flex justify-between items-center mb-6">
 
-  <div className="md:hidden flex justify-between items-center mb-6">
-
   <button
-    onClick={() => {
-      setActivePanel("filter");
-      setShowPanel(true);
-    }}
-    className="px-4 py-2 border border-amber-500/30 rounded-full text-amber-400 bg-zinc-900"
+    onClick={() => setShowFilters(true)}
+    className="flex items-center gap-2 px-4 py-2 border border-amber-500/30 rounded-full text-amber-400 bg-zinc-900"
   >
-    ☰ Filter
+    ☰ Filters
   </button>
 
   <button
-    onClick={() => {
-      setActivePanel("sort");
-      setShowPanel(true);
-    }}
+    onClick={() => setSort(
+      sort === "latest"
+        ? "priceLow"
+        : sort === "priceLow"
+        ? "priceHigh"
+        : "latest"
+    )}
     className="px-4 py-2 border border-white/10 rounded-full text-gray-300 bg-zinc-900"
   >
     Sort
@@ -365,10 +349,154 @@ const paginatedRings = sortedRings;
 
 </div>
 
-</div>
-
      <div className="grid grid-cols-1 md:grid-cols-4 gap-10 items-start">
 
+      {showFilters && (
+  <>
+    {/* BACKDROP */}
+    <div
+      className="fixed inset-0 bg-black/70 z-[998]"
+      onClick={() => setShowFilters(false)}
+    />
+
+    {/* DRAWER */}
+    <div className="
+  fixed left-0 top-0
+ w-[60%] max-w-[240px]
+  h-screen
+  bg-[#0b0b0b]
+  border-r border-amber-500/20
+  z-[999]
+  overflow-y-auto
+  p-6
+  animate-[slideIn_.3s_ease]
+">
+      <div className="flex justify-between items-center mb-8">
+        <h2 className="text-xl serif text-amber-400">
+          Filters
+        </h2>
+
+        <button
+          onClick={() => setShowFilters(false)}
+          className="text-white text-xl"
+        >
+          ✕
+        </button>
+      </div>
+
+      {/* CATEGORY */}
+      <div className="mb-8">
+        <h3 className="text-amber-500 text-sm uppercase mb-3">
+          Category
+        </h3>
+
+        {["all", "gold", "diamond", "gemstone"].map((item) => (
+          <button
+            key={item}
+            onClick={() => {
+  updateFilter("category", item);
+  setShowFilters(false);
+}}
+            className={`block text-sm mb-2 ${
+              filters.category === item
+                ? "text-amber-400 font-bold"
+                : "text-gray-400"
+            }`}
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+
+      {/* TYPE */}
+      <div className="mb-8">
+        <h3 className="text-amber-500 text-sm uppercase mb-3">
+          Type
+        </h3>
+
+        {["all", "traditional", "modern", "casual"].map((item) => (
+          <button
+            key={item}
+            onClick={() => updateFilter("type", item)}
+            className={`block text-sm mb-2 ${
+              filters.type === item
+                ? "text-amber-400 font-bold"
+                : "text-gray-400"
+            }`}
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+
+      {/* SIZE */}
+      <div className="mb-8">
+        <h3 className="text-amber-500 text-sm uppercase mb-3">
+          Size
+        </h3>
+
+        <div className="flex flex-wrap gap-2">
+          {["all", 6, 7, 8, 9].map((item) => (
+            <button
+              key={item}
+              onClick={() =>
+                updateFilter("size", String(item))
+              }
+              className={`px-3 py-1 text-xs rounded-full border ${
+                String(filters.size) === String(item)
+                  ? "bg-amber-500 text-black border-amber-500"
+                  : "border-white/20 text-gray-400"
+              }`}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* PRICE */}
+      <div className="mb-8">
+        <h3 className="text-amber-500 text-sm uppercase mb-3">
+          Price
+        </h3>
+
+        {[
+          { label: "All", value: "all" },
+          { label: "Below ₹500", value: "low" },
+          { label: "₹500 - ₹1000", value: "mid" },
+          { label: "Above ₹1000", value: "high" },
+        ].map((p) => (
+          <button
+            key={p.value}
+            onClick={() =>
+              updateFilter("price", p.value)
+            }
+            className={`block text-sm mb-2 ${
+              filters.price === p.value
+                ? "text-amber-400 font-bold"
+                : "text-gray-400"
+            }`}
+          >
+            {p.label}
+          </button>
+        ))}
+      </div>
+
+      <button
+        onClick={clearAllFilters}
+        className="
+          w-full py-3
+          bg-amber-500
+          text-black
+          font-semibold
+          rounded-xl
+        "
+      >
+        Clear Filters
+      </button>
+    </div>
+  </>
+)}
 
         {/* SIDEBAR */}
       <div className="hidden md:block space-y-8 sticky top-32 h-fit">
@@ -671,123 +799,6 @@ const paginatedRings = sortedRings;
     </div>
   </div>
 )}
-
-{showPanel && (
-  <>
-    {/* BACKDROP */}
-    <div
-      className="fixed inset-0 bg-black/70 z-[998]"
-      onClick={() => setShowPanel(false)}
-    />
-
-    {/* BOTTOM SHEET */}
-    <div
-      className="
-        fixed bottom-0 left-0 right-0
-        h-[70vh]
-        bg-[#0b0b0b]
-        border-t border-amber-500/20
-        z-[999]
-        rounded-t-3xl
-        p-6
-        overflow-y-auto
-        animate-[slideUp_.35s_ease]
-      "
-      onTouchStart={(e) => (startY.current = e.touches[0].clientY)}
-      onTouchMove={(e) => {
-        const diff = e.touches[0].clientY - startY.current;
-        if (diff > 80) setShowPanel(false);
-      }}
-    >
-
-      {/* HEADER */}
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl serif text-amber-400">
-          {activePanel === "filter" ? "Filters" : "Sort By"}
-        </h2>
-
-        <button
-          onClick={() => setShowPanel(false)}
-          className="text-white text-xl"
-        >
-          ✕
-        </button>
-      </div>
-
-      {/* FILTER SECTION */}
-      {activePanel === "filter" && (
-        <div>
-          <h3 className="text-amber-500 text-sm uppercase mb-3">Category</h3>
-
-          {["all", "gold", "diamond", "gemstone"].map((item) => (
-            <button
-              key={item}
-              onClick={() => updateFilter("category", item)}
-              className={`block text-sm mb-2 ${
-                filters.category === item
-                  ? "text-amber-400 font-bold"
-                  : "text-gray-400"
-              }`}
-            >
-              {item}
-            </button>
-          ))}
-
-          <div className="mt-6">
-            <h3 className="text-amber-500 text-sm uppercase mb-3">Price</h3>
-
-            {[
-              { label: "All", value: "all" },
-              { label: "Below ₹500", value: "low" },
-              { label: "₹500 - ₹1000", value: "mid" },
-              { label: "Above ₹1000", value: "high" },
-            ].map((p) => (
-              <button
-                key={p.value}
-                onClick={() => updateFilter("price", p.value)}
-                className={`block text-sm mb-2 ${
-                  filters.price === p.value
-                    ? "text-amber-400 font-bold"
-                    : "text-gray-400"
-                }`}
-              >
-                {p.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* SORT SECTION */}
-      {activePanel === "sort" && (
-        <div>
-          {[
-            { label: "Latest", value: "latest" },
-            { label: "Low → High", value: "priceLow" },
-            { label: "High → Low", value: "priceHigh" },
-          ].map((s) => (
-            <button
-              key={s.value}
-              onClick={() => {
-                setSort(s.value);
-                setShowPanel(false);
-              }}
-              className={`block text-sm mb-3 ${
-                sort === s.value
-                  ? "text-amber-400 font-bold"
-                  : "text-gray-400"
-              }`}
-            >
-              {s.label}
-            </button>
-          ))}
-        </div>
-      )}
-
-    </div>
-  </>
-)}
-
 
       {/* NOTIFICATION */}
       {notification && (
