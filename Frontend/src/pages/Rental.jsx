@@ -57,8 +57,8 @@ const formattedData = rentalData.map((p) => ({
   name: p.name,
   rent: Number(p.price || 0),
 
-  category: (p.materialType || "").toLowerCase().trim(),
-  type: (p.style || "").toLowerCase().trim(),
+category: (p.materialType ?? "").toString().toLowerCase().trim(),
+type: (p.style ?? "").toString().toLowerCase().trim(),
 
   duration: ["1", "3", "7", "15"],
   image: p.image?.startsWith("http")
@@ -99,38 +99,28 @@ setTimeout(() => setLoading(false), 2500);
     //setCurrentPage(1);
   };
 
- const filteredItems = items.filter((item) => {
+const filteredItems = items.filter((item) => {
   const rent = Number(item.rent || 0);
 
-  return (
-    // CATEGORY FILTER
-    (filters.category === "all" ||
-     (item.category || "").toLowerCase() === filters.category) &&
+  const matchCategory =
+    filters.category === "all" ||
+    item.category?.toLowerCase() === filters.category.toLowerCase();
 
-    // TYPE FILTER
-    (filters.type === "all" ||
-     (item.type || "").toLowerCase() === filters.type) &&
+  const matchType =
+    filters.type === "all" ||
+    item.type?.toLowerCase() === filters.type.toLowerCase();
 
-    // DURATION FILTER
-    (filters.duration === "all" ||
-     (filters.duration === "all" ||
- (Array.isArray(item.duration) && item.duration.includes(filters.duration)))) &&
+  const matchDuration =
+    filters.duration === "all" ||
+    item.duration?.map(String).includes(String(filters.duration));
 
-    // PRICE FILTER
-    (
-      filters.price === "all" ||
+  const matchPrice =
+    filters.price === "all" ||
+    (filters.price === "low" && rent < 1500) ||
+    (filters.price === "mid" && rent >= 1500 && rent <= 2000) ||
+    (filters.price === "high" && rent > 2000);
 
-      (filters.price === "low" &&
-        rent < 1500) ||
-
-      (filters.price === "mid" &&
-        rent >= 1500 &&
-        rent <= 2000) ||
-
-      (filters.price === "high" &&
-        rent > 2000)
-    )
-  );
+  return matchCategory && matchType && matchDuration && matchPrice;
 });
 
   const sortedItems = [...filteredItems].sort((a, b) => {
@@ -463,6 +453,13 @@ setTimeout(() => {
   animation: slideIn 0.3s ease-out;
 }
           @keyframes iconBreathe { 0%, 100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.03); opacity: 1; } }
+          @keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
           @keyframes progressBar { 0% { transform: translateX(-100%); } 100% { transform: translateX(0%); } }
           .serif { font-family: 'Playfair Display', serif; }
           .gold-gradient { background: linear-gradient(to right, #fbbf24, #fef3c7, #b45309); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -478,19 +475,59 @@ setTimeout(() => {
       </div>
 
 {/* MOBILE FILTER BUTTON */}
-<div className="md:hidden flex justify-between items-center mb-4">
+<div className="md:hidden flex justify-between items-center mb-6 gap-3">
+
+  {/* FILTER BUTTON */}
   <button
     onClick={() => setMobileFilterOpen(true)}
     className="flex items-center gap-2 px-4 py-2 border border-amber-500/30 rounded-full text-amber-400 bg-zinc-900"
   >
     ☰ Filters
   </button>
+
+  {/* SORT PILLS */}
+  <div className="flex gap-2 text-[11px]">
+
+    <button
+      onClick={() => setSort("latest")}
+      className={`px-3 py-1 rounded-full border ${
+        sort === "latest"
+          ? "bg-amber-500 text-black border-amber-500"
+          : "border-white/10 text-gray-300"
+      }`}
+    >
+      Latest
+    </button>
+
+    <button
+      onClick={() => setSort("priceLow")}
+      className={`px-3 py-1 rounded-full border ${
+        sort === "priceLow"
+          ? "bg-amber-500 text-black border-amber-500"
+          : "border-white/10 text-gray-300"
+      }`}
+    >
+      Low
+    </button>
+
+    <button
+      onClick={() => setSort("priceHigh")}
+      className={`px-3 py-1 rounded-full border ${
+        sort === "priceHigh"
+          ? "bg-amber-500 text-black border-amber-500"
+          : "border-white/10 text-gray-300"
+      }`}
+    >
+      High
+    </button>
+
+  </div>
 </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
       <div className="hidden md:block space-y-8 sticky top-32 self-start">
          <div>
-  <h3 className="text-sm uppercase mb-3 text-amber-500 font-bold">
+  <h3 className="text-sm uppercase mb-3 text-amber-500 font-semibold tracking-wider">
     Category
   </h3>
 
@@ -510,7 +547,7 @@ setTimeout(() => {
 </div>
 
           <div>
-            <h3 className="text-sm uppercase mb-3 text-amber-500 font-bold">Product Type</h3>
+            <h3 className="text-sm uppercase mb-3 text-amber-500 font-semibold tracking-wider">Product Type</h3>
             {["all", "traditional", "modern", "casual"].map((item) => (
               <button key={item} onClick={() => updateFilter("type", item)} className={`block text-left text-sm mb-2 ${filters.type === item ? "text-amber-400 font-medium" : "text-gray-400 hover:text-amber-400"}`}>
                 {item}
@@ -519,7 +556,7 @@ setTimeout(() => {
           </div>
 
           <div>
-            <h3 className="text-sm uppercase mb-3 text-amber-500 font-bold">Price</h3>
+            <h3 className="text-sm uppercase mb-3 text-amber-500 font-semibold tracking-wider">Price</h3>
             {[
               { label: "All", value: "all" },
               { label: "Under ₹1500", value: "low" },
@@ -544,33 +581,62 @@ setTimeout(() => {
 
         <div className="md:col-span-3">
           {/* SORT UI */}
-<div className="flex justify-end mb-4">
-  <select
-    value={sort}
-    onChange={(e) => setSort(e.target.value)}
-    className="bg-zinc-900 border border-white/10 text-white px-3 py-2 rounded"
+<div className="flex justify-end mb-6">
+
+  <button
+    onClick={() => setSort("latest")}
+    className={`px-3 py-1 rounded-full border ${
+      sort === "latest"
+        ? "bg-amber-500 text-black"
+        : "border-white/10 text-gray-300"
+    }`}
   >
-    <option value="latest">Latest</option>
-    <option value="priceLow">Price: Low to High</option>
-    <option value="priceHigh">Price: High to Low</option>
-  </select>
+    Latest
+  </button>
+
+  <button
+    onClick={() => setSort("priceLow")}
+    className={`px-3 py-1 rounded-full border ${
+      sort === "priceLow"
+        ? "bg-amber-500 text-black"
+        : "border-white/10 text-gray-300"
+    }`}
+  >
+    Low
+  </button>
+
+  <button
+    onClick={() => setSort("priceHigh")}
+    className={`px-3 py-1 rounded-full border ${
+      sort === "priceHigh"
+        ? "bg-amber-500 text-black"
+        : "border-white/10 text-gray-300"
+    }`}
+  >
+    High
+  </button>
+
 </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
             {sortedItems.map((item) => (
               <div key={item.id} className="border border-white/10 p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition-all group">
                 <div className="overflow-hidden rounded-lg">
-                  <img src={item.image} className="h-64 w-full object-cover group-hover:scale-105 transition-transform duration-500" alt={item.name}/>
-                </div>
-                <h3 className="text-white mt-4 font-medium">{item.name}</h3>
-               <div className="mt-2 flex items-center gap-2">
+  <img
+    src={item.image}
+    className="h-64 w-full object-cover group-hover:scale-105 transition-transform duration-500"
+    alt={item.name}
+  />
+</div>
+               
   
-  <span className="text-2xl font-light text-amber-400 tracking-wide">
+<div className="mt-2 flex items-center gap-2">
+  <span className="text-2xl text-amber-400 font-light">
     ₹{item.rent}
   </span>
-
-  <span className="text-[11px] uppercase tracking-[0.2em] text-gray-500">
-   Orginal Price
+  <span className="text-[11px] text-gray-500 uppercase">
+    Original Price
   </span>
+
 
 </div>
                 <button onClick={() => openModal(item)} className="mt-4 w-full bg-amber-500 text-black font-bold px-4 py-2 rounded hover:bg-amber-400 transition transform active:scale-95">
@@ -670,7 +736,7 @@ setTimeout(() => {
               <button onClick={closeModal} className="text-gray-400 hover:text-white transition text-sm">Cancel</button>
               <button
                 onClick={handleConfirm}
-                disabled={!startDate || !duration || !customerName}
+              disabled={!startDate || !duration || !customerName || !selectedItem}
                 className={`px-6 py-2 rounded font-bold transition ${
                   !startDate || !duration || !customerName ? "bg-zinc-700 text-zinc-500 cursor-not-allowed" : "bg-amber-500 text-black hover:bg-amber-400 shadow-lg shadow-amber-500/20"
                 }`}
@@ -705,7 +771,7 @@ setTimeout(() => {
 
         {/* CATEGORY */}
         <div>
-          <h3 className="text-sm uppercase mb-3 text-amber-500 font-bold">
+          <h3 className="text-sm uppercase mb-3 text-amber-500 font-semibold tracking-wider">
             Category
           </h3>
 
@@ -726,7 +792,7 @@ setTimeout(() => {
 
         {/* TYPE */}
         <div>
-          <h3 className="text-sm uppercase mb-3 text-amber-500 font-bold">
+          <h3 className="text-sm uppercase mb-3 text-amber-500 font-semibold tracking-wider">
             Product Type
           </h3>
 
@@ -747,7 +813,7 @@ setTimeout(() => {
 
         {/* PRICE */}
         <div>
-          <h3 className="text-sm uppercase mb-3 text-amber-500 font-bold">
+          <h3 className="text-sm uppercase mb-3 text-amber-500 font-semibold tracking-wider">
             Price
           </h3>
 
