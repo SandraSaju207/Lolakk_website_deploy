@@ -302,7 +302,7 @@ const paginatedRings = sortedRings;
   </p>
 
   {/* SORTING MOVED HERE */}
-  {/* <div className="flex justify-end">
+  <div className="flex justify-end">
     <div className="flex gap-3 text-xs uppercase">
       {[
         { label: "Latest", value: "latest" },
@@ -322,12 +322,11 @@ const paginatedRings = sortedRings;
         </button>
       ))}
     </div>
-  </div> */}
+  </div>
 </div>
 
- <div className="md:hidden flex justify-between items-center mb-6 gap-3">
+      <div className="md:hidden flex justify-between items-center mb-6">
 
-  {/* FILTER BUTTON */}
   <button
     onClick={() => setShowFilters(true)}
     className="flex items-center gap-2 px-4 py-2 border border-amber-500/30 rounded-full text-amber-400 bg-zinc-900"
@@ -335,43 +334,18 @@ const paginatedRings = sortedRings;
     ☰ Filters
   </button>
 
-  {/* SORT OPTIONS */}
-  {/* <div className="flex gap-2 text-[11px]">
-    
-    <button
-      onClick={() => setSort("latest")}
-      className={`px-3 py-1 rounded-full border ${
-        sort === "latest"
-          ? "bg-amber-500 text-black border-amber-500"
-          : "border-white/10 text-gray-300"
-      }`}
-    >
-      Latest
-    </button>
-
-    <button
-      onClick={() => setSort("priceLow")}
-      className={`px-3 py-1 rounded-full border ${
-        sort === "priceLow"
-          ? "bg-amber-500 text-black border-amber-500"
-          : "border-white/10 text-gray-300"
-      }`}
-    >
-      Low
-    </button>
-
-    <button
-      onClick={() => setSort("priceHigh")}
-      className={`px-3 py-1 rounded-full border ${
-        sort === "priceHigh"
-          ? "bg-amber-500 text-black border-amber-500"
-          : "border-white/10 text-gray-300"
-      }`}
-    >
-      High
-    </button>
-
-  </div> */}
+  <button
+    onClick={() => setSort(
+      sort === "latest"
+        ? "priceLow"
+        : sort === "priceLow"
+        ? "priceHigh"
+        : "latest"
+    )}
+    className="px-4 py-2 border border-white/10 rounded-full text-gray-300 bg-zinc-900"
+  >
+    Sort
+  </button>
 
 </div>
 
