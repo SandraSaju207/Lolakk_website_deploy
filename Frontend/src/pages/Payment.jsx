@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+const API = import.meta.env.VITE_API_URL;
 import { useLocation } from "react-router-dom";
 import { CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -120,8 +121,7 @@ const defaultAddress =
 
       // CREATE ORDER
       const orderResponse = await fetch(
-        
-        "${API}/api/payments/create-order",
+  `${API}/api/payments/create-order`,
         {
           method: "POST",
           headers: {
@@ -184,7 +184,7 @@ const options = {
   customerEmail: user.email,
 });
     const verifyResponse = await fetch(
-      "${API}/api/payments/verify-payment",
+  `${API}/api/payments/verify-payment`,
       {
         method: "POST",
         headers: {
