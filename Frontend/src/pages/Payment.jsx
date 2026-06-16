@@ -151,7 +151,12 @@ customerPhone: phone.trim(),
         }
       );
 
-      const orderData = await orderResponse.json();
+    const orderText = await orderResponse.text();
+
+console.log("CREATE ORDER STATUS:", orderResponse.status);
+console.log("CREATE ORDER RESPONSE:", orderText);
+
+return;
 
       if (!orderResponse.ok) {
         throw new Error(
