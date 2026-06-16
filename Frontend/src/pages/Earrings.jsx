@@ -301,7 +301,7 @@ const similarProducts = selectedProduct
     ☰ Filters
   </button>
 
-  <button
+  {/* <button
     onClick={() =>
       setSort(
         sort === "latest"
@@ -314,7 +314,7 @@ const similarProducts = selectedProduct
     className="px-4 py-2 border border-white/10 rounded-full text-gray-300 bg-zinc-900"
   >
     Sort
-  </button>
+  </button> */}
 
 </div>
 
