@@ -269,23 +269,52 @@ const filteredItems = products.filter((item) => {
   </div>
 </div>
 
-     <div className="mb-6 flex items-center justify-between md:hidden">
+     <div className="md:hidden flex justify-between items-center mb-6">
+
   <button
     onClick={() => setShowFilters(true)}
-    className="px-4 py-2 border border-amber-500 text-amber-400 rounded-lg text-sm"
+    className="flex items-center gap-2 px-4 py-2 border border-amber-500/30 rounded-full text-amber-400 bg-zinc-900"
   >
-    Filters
+    ☰ Filters
   </button>
 
-  <select
-    value={sort}
-    onChange={(e) => setSort(e.target.value)}
-    className="bg-black border border-white/20 rounded-lg px-3 py-2 text-sm"
-  >
-    <option value="latest">Latest</option>
-    <option value="priceLow">Low → High</option>
-    <option value="priceHigh">High → Low</option>
-  </select>
+  {/* SORT OPTIONS (ONLY MOBILE HERE) */}
+  <div className="flex gap-2 text-[11px]">
+
+    <button
+      onClick={() => setSort("latest")}
+      className={`px-3 py-1 rounded-full border ${
+        sort === "latest"
+          ? "bg-amber-500 text-black border-amber-500"
+          : "border-white/10 text-gray-300"
+      }`}
+    >
+      Latest
+    </button>
+
+    <button
+      onClick={() => setSort("priceLow")}
+      className={`px-3 py-1 rounded-full border ${
+        sort === "priceLow"
+          ? "bg-amber-500 text-black border-amber-500"
+          : "border-white/10 text-gray-300"
+      }`}
+    >
+      Low
+    </button>
+
+    <button
+      onClick={() => setSort("priceHigh")}
+      className={`px-3 py-1 rounded-full border ${
+        sort === "priceHigh"
+          ? "bg-amber-500 text-black border-amber-500"
+          : "border-white/10 text-gray-300"
+      }`}
+    >
+      High
+    </button>
+
+  </div>
 </div>
 
 <div className="grid grid-cols-1 md:grid-cols-4 gap-10 items-start">
@@ -509,12 +538,12 @@ const filteredItems = products.filter((item) => {
         </button>
       )}
 
-      <button
+      {/* <button
         onClick={() => setShowFilters(false)}
         className="w-full mt-4 bg-amber-500 text-black py-2 rounded-lg font-semibold"
       >
         Apply Filters
-      </button>
+      </button> */}
     </div>
   </>
 )}
