@@ -269,8 +269,9 @@ const filteredItems = products.filter((item) => {
   </div>
 </div>
 
-     <div className="md:hidden flex justify-between items-center mb-6">
+    <div className="md:hidden flex items-center justify-between mb-6">
 
+  {/* FILTER BUTTON */}
   <button
     onClick={() => setShowFilters(true)}
     className="flex items-center gap-2 px-4 py-2 border border-amber-500/30 rounded-full text-amber-400 bg-zinc-900"
@@ -278,43 +279,27 @@ const filteredItems = products.filter((item) => {
     ☰ Filters
   </button>
 
-  {/* SORT OPTIONS (ONLY MOBILE HERE) */}
-  <div className="flex gap-2 text-[11px]">
-
-    <button
-      onClick={() => setSort("latest")}
-      className={`px-3 py-1 rounded-full border ${
-        sort === "latest"
-          ? "bg-amber-500 text-black border-amber-500"
-          : "border-white/10 text-gray-300"
-      }`}
-    >
-      Latest
-    </button>
-
-    <button
-      onClick={() => setSort("priceLow")}
-      className={`px-3 py-1 rounded-full border ${
-        sort === "priceLow"
-          ? "bg-amber-500 text-black border-amber-500"
-          : "border-white/10 text-gray-300"
-      }`}
-    >
-      Low
-    </button>
-
-    <button
-      onClick={() => setSort("priceHigh")}
-      className={`px-3 py-1 rounded-full border ${
-        sort === "priceHigh"
-          ? "bg-amber-500 text-black border-amber-500"
-          : "border-white/10 text-gray-300"
-      }`}
-    >
-      High
-    </button>
-
+  {/* SORT BUTTONS (same style as desktop) */}
+  <div className="flex gap-2 text-[11px] uppercase">
+    {[
+      { label: "Latest", value: "latest" },
+      { label: "Low", value: "priceLow" },
+      { label: "High", value: "priceHigh" },
+    ].map((s) => (
+      <button
+        key={s.value}
+        onClick={() => setSort(s.value)}
+        className={`px-3 py-1 rounded-full border transition ${
+          sort === s.value
+            ? "bg-amber-500 text-black border-amber-500"
+            : "border-white/20 text-gray-400"
+        }`}
+      >
+        {s.label}
+      </button>
+    ))}
   </div>
+
 </div>
 
 <div className="grid grid-cols-1 md:grid-cols-4 gap-10 items-start">
@@ -406,14 +391,18 @@ const filteredItems = products.filter((item) => {
 
 {showFilters && (
   <>
+    {/* BACKDROP */}
     <div
       className="fixed inset-0 bg-black/70 z-40 md:hidden"
       onClick={() => setShowFilters(false)}
     />
 
-    <div className="fixed top-0 left-0 h-full w-[85%] max-w-sm bg-[#111] z-50 overflow-y-auto p-6 md:hidden">
+    {/* DRAWER */}
+    <div className="fixed top-0 left-0 h-full w-[80%] max-w-sm bg-[#0b0b0b] z-50 overflow-y-auto p-6 md:hidden">
+
+      {/* HEADER */}
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl text-amber-400 font-semibold">
+        <h2 className="text-lg text-amber-400 font-semibold">
           Filters
         </h2>
 
@@ -427,7 +416,7 @@ const filteredItems = products.filter((item) => {
 
       {/* TYPE */}
       <div className="mb-6">
-        <h3 className="text-amber-500 text-sm uppercase mb-3">
+        <h3 className="text-amber-500 text-xs uppercase mb-3">
           Type
         </h3>
 
@@ -435,9 +424,9 @@ const filteredItems = products.filter((item) => {
           <button
             key={item}
             onClick={() => updateFilter("itemType", item)}
-            className={`block mb-2 ${
+            className={`block mb-2 text-sm ${
               filters.itemType === item
-                ? "text-amber-400 font-bold"
+                ? "text-amber-400 font-semibold"
                 : "text-gray-400"
             }`}
           >
@@ -448,7 +437,7 @@ const filteredItems = products.filter((item) => {
 
       {/* MATERIAL */}
       <div className="mb-6">
-        <h3 className="text-amber-500 text-sm uppercase mb-3">
+        <h3 className="text-amber-500 text-xs uppercase mb-3">
           Material
         </h3>
 
@@ -456,9 +445,9 @@ const filteredItems = products.filter((item) => {
           <button
             key={item}
             onClick={() => updateFilter("materialType", item)}
-            className={`block mb-2 ${
+            className={`block mb-2 text-sm ${
               filters.materialType === item
-                ? "text-amber-400 font-bold"
+                ? "text-amber-400 font-semibold"
                 : "text-gray-400"
             }`}
           >
@@ -469,7 +458,7 @@ const filteredItems = products.filter((item) => {
 
       {/* STYLE */}
       <div className="mb-6">
-        <h3 className="text-amber-500 text-sm uppercase mb-3">
+        <h3 className="text-amber-500 text-xs uppercase mb-3">
           Style
         </h3>
 
@@ -477,9 +466,9 @@ const filteredItems = products.filter((item) => {
           <button
             key={item}
             onClick={() => updateFilter("style", item)}
-            className={`block mb-2 ${
+            className={`block mb-2 text-sm ${
               filters.style === item
-                ? "text-amber-400 font-bold"
+                ? "text-amber-400 font-semibold"
                 : "text-gray-400"
             }`}
           >
@@ -490,7 +479,7 @@ const filteredItems = products.filter((item) => {
 
       {/* PRICE */}
       <div className="mb-6">
-        <h3 className="text-amber-500 text-sm uppercase mb-3">
+        <h3 className="text-amber-500 text-xs uppercase mb-3">
           Price
         </h3>
 
@@ -503,9 +492,9 @@ const filteredItems = products.filter((item) => {
           <button
             key={item.value}
             onClick={() => updateFilter("price", item.value)}
-            className={`block mb-2 ${
+            className={`block mb-2 text-sm ${
               filters.price === item.value
-                ? "text-amber-400 font-bold"
+                ? "text-amber-400 font-semibold"
                 : "text-gray-400"
             }`}
           >
@@ -514,21 +503,14 @@ const filteredItems = products.filter((item) => {
         ))}
       </div>
 
-       {isFiltered && (
-            <button
-              onClick={clearAllFilters}
-              className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-red-400/80 hover:text-red-400 border-b border-red-400/20 pb-1"
-            >
-              Clear Filters
-            </button>
-          )}
-
-      {/* <button
-        onClick={() => setShowFilters(false)}
-        className="w-full mt-4 bg-amber-500 text-black py-2 rounded-lg font-semibold"
+      {/* CLEAR */}
+      <button
+        onClick={clearAllFilters}
+        className="w-full mt-4 py-2 rounded-lg bg-amber-500 text-black font-semibold"
       >
-        Apply Filters
-      </button> */}
+        Clear Filters
+      </button>
+
     </div>
   </>
 )}
