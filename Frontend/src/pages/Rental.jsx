@@ -31,6 +31,7 @@ export default function Rental() {
   const [returnDate, setReturnDate] = useState("");
   const [customerName, setCustomerName] = useState(""); 
   const [successMessage, setSuccessMessage] = useState("");
+  const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
   // ✅ BACKEND DATA FETCHING
   useEffect(() => {
@@ -449,6 +450,18 @@ setTimeout(() => {
         </div>
         <style>{`
           @keyframes softGlow { 0%, 100% { opacity: 0.5; transform: scale(0.75); } 50% { opacity: 1; transform: scale(1); } }
+          @keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-slideIn {
+  animation: slideIn 0.3s ease-out;
+}
           @keyframes iconBreathe { 0%, 100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.03); opacity: 1; } }
           @keyframes progressBar { 0% { transform: translateX(-100%); } 100% { transform: translateX(0%); } }
           .serif { font-family: 'Playfair Display', serif; }
@@ -464,8 +477,20 @@ setTimeout(() => {
         <h1 className="text-4xl text-amber-400 serif tracking-widest">Jewellery Rentals</h1>
       </div>
 
+{/* MOBILE FILTER BUTTON */}
+<div className="md:hidden flex justify-between items-center mb-4">
+  <h2 className="text-amber-400 font-semibold">Filters</h2>
+
+  <button
+    onClick={() => setMobileFilterOpen(true)}
+    className="px-4 py-2 bg-amber-500 text-black text-sm rounded"
+  >
+    Filter
+  </button>
+</div>
+
       <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
-       <div className="space-y-8 sticky top-32 self-start">
+      <div className="hidden md:block space-y-8 sticky top-32 self-start">
          <div>
   <h3 className="text-sm uppercase mb-3 text-amber-500 font-bold">
     Category
@@ -646,6 +671,108 @@ setTimeout(() => {
           </div>
         </div>
       )}
+      {mobileFilterOpen && (
+  <div className="fixed inset-0 z-[999] bg-black/70 flex justify-end">
+    
+    {/* PANEL */}
+    <div className="w-[85%] max-w-sm h-full bg-zinc-900 p-5 overflow-y-auto animate-slideIn">
+      
+      {/* HEADER */}
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-amber-400 font-bold">Filters</h2>
+
+        <button
+          onClick={() => setMobileFilterOpen(false)}
+          className="text-white text-lg"
+        >
+          ✕
+        </button>
+      </div>
+
+      {/* FILTER CONTENT (COPY FROM YOUR SIDEBAR) */}
+      
+      <div className="space-y-8">
+
+        {/* CATEGORY */}
+        <div>
+          <h3 className="text-sm uppercase mb-3 text-amber-500 font-bold">
+            Category
+          </h3>
+
+          {["all", "gold", "diamond", "gemstone"].map((item) => (
+            <button
+              key={item}
+              onClick={() => updateFilter("category", item)}
+              className={`block text-left text-sm mb-2 ${
+                filters.category === item
+                  ? "text-amber-400 font-medium"
+                  : "text-gray-400"
+              }`}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+
+        {/* TYPE */}
+        <div>
+          <h3 className="text-sm uppercase mb-3 text-amber-500 font-bold">
+            Product Type
+          </h3>
+
+          {["all", "traditional", "modern", "casual"].map((item) => (
+            <button
+              key={item}
+              onClick={() => updateFilter("type", item)}
+              className={`block text-left text-sm mb-2 ${
+                filters.type === item
+                  ? "text-amber-400 font-medium"
+                  : "text-gray-400"
+              }`}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+
+        {/* PRICE */}
+        <div>
+          <h3 className="text-sm uppercase mb-3 text-amber-500 font-bold">
+            Price
+          </h3>
+
+          {[
+            { label: "All", value: "all" },
+            { label: "Under ₹1500", value: "low" },
+            { label: "₹1500 - ₹2000", value: "mid" },
+            { label: "Above ₹2000", value: "high" },
+          ].map((p) => (
+            <button
+              key={p.value}
+              onClick={() => updateFilter("price", p.value)}
+              className={`block text-left text-sm mb-2 ${
+                filters.price === p.value
+                  ? "text-amber-400 font-medium"
+                  : "text-gray-400"
+              }`}
+            >
+              {p.label}
+            </button>
+          ))}
+        </div>
+
+        {/* CLEAR */}
+        <button
+          onClick={clearAllFilters}
+          className="text-red-400 text-sm mt-4"
+        >
+          Clear All Filters
+        </button>
+
+      </div>
+    </div>
+  </div>
+)}
     </section>
   );
 }
