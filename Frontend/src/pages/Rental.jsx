@@ -475,7 +475,7 @@ setTimeout(() => {
       </div>
 
 {/* MOBILE FILTER BUTTON */}
- <div className="md:hidden flex justify-between items-center mb-6 gap-3">
+<div className="md:hidden flex justify-between items-center mb-4">
 
   <button
     onClick={() => setMobileFilterOpen(true)}
@@ -589,7 +589,7 @@ setTimeout(() => {
   </button>
 
 </div> */}
-           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 gap-8">
             {sortedItems.map((item) => (
               <div key={item.id} className="border border-white/10 p-3 md:p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition-all group">
                 <div className="overflow-hidden rounded-xl">
@@ -602,7 +602,7 @@ setTimeout(() => {
   
 <div className="mt-3 flex flex-col gap-2">
   <div className="flex justify-between items-center">
-    <span className="text-2xl font-light text-amber-400 tracking-wide">
+    <span className="text-2xl text-amber-400 font-light">
       ₹{item.rent}
     </span>
 
