@@ -37,13 +37,13 @@ router.post("/create-order", async (req, res) => {
 
     return res.status(200).json(order);
   } catch (error) {
-    console.log(error);
+  console.error("CREATE ORDER ERROR:", error);
 
-    return res.status(500).json({
-      success: false,
-      message: "Failed to create order",
-    });
-  }
+  return res.status(500).json({
+    success: false,
+    message: error.message,
+  });
+}
 });
 
 // VERIFY PAYMENT
