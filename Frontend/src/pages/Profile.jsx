@@ -95,7 +95,7 @@ useEffect(() => {
       const token = localStorage.getItem("token");
 
 const res = await axios.get(
-  "${API}/api/user/me",
+  `${API}/api/user/me`,
   {
     headers: {
       Authorization: `Bearer ${token}`,
