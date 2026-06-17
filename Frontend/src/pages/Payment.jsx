@@ -173,7 +173,7 @@ if (!window.Razorpay) {
 }
 
 const options = {
-  key: "rzp_test_SpVaA5eFB9yPzb",
+ key: import.meta.env.VITE_RAZORPAY_KEY_ID,
   amount: orderData.amount,
   currency: orderData.currency,
   name: "LOLAKK",
