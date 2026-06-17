@@ -153,11 +153,7 @@ const orderData = JSON.parse(orderText);
 
       console.log("ORDER RESPONSE:", orderData);
 
-      console.log("ENV OBJECT:", import.meta.env);
-console.log(
-  "RAZORPAY KEY:",
-  import.meta.env.VITE_RAZORPAY_KEY_ID
-);
+     
 
       if (!orderResponse.ok) {
         throw new Error(orderData.message || "Order failed");
@@ -226,10 +222,7 @@ const verifyData =
         },
       };
 
-      console.log(
-  "RAZORPAY KEY:",
-  import.meta.env.VITE_RAZORPAY_KEY_ID
-);
+
 
       const rzp = new window.Razorpay(options);
       rzp.open();
@@ -253,8 +246,8 @@ const grandTotal = cartTotal + deliveryCharge;
   if (!isInitialized) return null;
 
   return (
-   <section className="pt-28 md:pt-32 pb-24 px-4 md:px-6 max-w-7xl mx-auto text-white bg-black min-h-screen">
-      <div className="text-center mb-16">
+  <section className="pt-40 md:pt-32 pb-24 px-4 md:px-6 max-w-7xl mx-auto text-white bg-black min-h-screen">
+     <div className="text-center mb-10 md:mb-16">
        <h1 className="text-3xl md:text-4xl serif gold-gradient mb-3">
           Your Collection
         </h1>
@@ -281,16 +274,19 @@ const grandTotal = cartTotal + deliveryCharge;
             {cart.map((item) => (
               <div
                 key={item.id}
-                className="flex flex-col sm:flex-row gap-4 p-4 md:p-6 rounded-2xl glass border border-white/10"
+               className="flex flex-col sm:flex-row gap-6 p-5 md:p-6 rounded-3xl bg-zinc-900/80 border border-white/10 shadow-xl"
               >
                 <img
                   src={item.image}
                   alt={item.name}
-                 className="w-full sm:w-32 h-48 sm:h-32 object-cover rounded-xl"
+               className="w-full h-72 sm:w-32 sm:h-32 object-contain bg-zinc-900 rounded-2xl p-3"
                 />
+                <div className="sm:hidden border-b border-white/10"></div>
 
               <div className="flex-1 text-center sm:text-left">
-                  <h2 className="text-xl serif">{item.name}</h2>
+                 <h2 className="text-lg md:text-xl font-semibold text-white leading-snug">
+  {item.name}
+</h2>
 
                   <p className="text-amber-500 font-bold">
                     ₹{item.price}
@@ -299,7 +295,7 @@ const grandTotal = cartTotal + deliveryCharge;
                 <div className="flex items-center justify-center sm:justify-start gap-4 mt-4">
   <button
     onClick={() => updateQty(item.id, -1)}
-    className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center"
+   className="w-10 h-10 rounded-full bg-zinc-800 border border-white/10 flex items-center justify-center active:scale-95"
   >
     <Minus size={14} />
   </button>
@@ -310,7 +306,7 @@ const grandTotal = cartTotal + deliveryCharge;
 
   <button
     onClick={() => updateQty(item.id, 1)}
-    className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center"
+    className="w-10 h-10 rounded-full bg-zinc-800 border border-white/10 flex items-center justify-center active:scale-95"
   >
     <Plus size={14} />
   </button>
@@ -349,8 +345,10 @@ const grandTotal = cartTotal + deliveryCharge;
             ))}
           </div>
 
-         <div className="glass p-6 rounded-2xl h-fit lg:sticky lg:top-32">
-            <h2 className="text-xl mb-4">Order Summary</h2>
+       <div className="glass p-6 rounded-3xl h-fit lg:sticky lg:top-32 mb-28 md:mb-0 border border-amber-500/20">
+           <h2 className="text-xl font-bold mb-4 text-amber-400">
+  Order Summary
+</h2>
 
             <p>Items: {cart.length}</p>
            <p>Subtotal: ₹{cartTotal}</p>
@@ -390,15 +388,28 @@ const grandTotal = cartTotal + deliveryCharge;
 )}
 
             <button
-              disabled={loading || cart.length === 0}
-              onClick={() => proceedToPayment(cart, false)}
-              className="w-full mt-4 bg-amber-600 py-3 rounded-xl font-bold"
-            >
+  disabled={loading || cart.length === 0}
+  onClick={() => proceedToPayment(cart, false)}
+  className="hidden md:block w-full mt-4 bg-amber-600 py-3 rounded-xl font-bold"
+>
               {loading ? "Processing..." : "Pay All"}
             </button>
           </div>
         </div>
       )}
+
+      {cart.length > 0 && (
+  <div className="fixed bottom-0 left-0 right-0 md:hidden bg-black border-t border-white/10 p-4 z-50">
+    <button
+      disabled={loading || cart.length === 0}
+      onClick={() => proceedToPayment(cart, false)}
+      className="w-full bg-amber-500 text-black py-4 rounded-2xl font-bold shadow-lg"
+    >
+      {loading ? "Processing..." : `Pay ₹${grandTotal}`}
+    </button>
+  </div>
+)}
+
     </section>
   );
 }
