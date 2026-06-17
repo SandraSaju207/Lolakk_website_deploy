@@ -188,6 +188,11 @@ const options = {
       amount: totalAmount,
     });
 
+    console.log(
+  "RAZORPAY KEY:",
+  import.meta.env.VITE_RAZORPAY_KEY_ID
+);
+
     console.log("SENDING TO BACKEND:", {
   userId: user._id,
   customerName: user.name,

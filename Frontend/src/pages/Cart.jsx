@@ -220,6 +220,11 @@ const verifyData =
         },
       };
 
+      console.log(
+  "RAZORPAY KEY:",
+  import.meta.env.VITE_RAZORPAY_KEY_ID
+);
+
       const rzp = new window.Razorpay(options);
       rzp.open();
     } catch (error) {
