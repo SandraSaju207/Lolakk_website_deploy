@@ -246,7 +246,7 @@ const grandTotal = cartTotal + deliveryCharge;
   if (!isInitialized) return null;
 
   return (
- <section className="pt-44 md:pt-32 pb-24 px-4 md:px-6 max-w-7xl mx-auto text-white bg-black min-h-screen">
+ <section className="pt-36 md:pt-32 pb-24 px-4 md:px-6 max-w-7xl mx-auto text-white bg-black min-h-screen">
      <div className="text-center mb-10 md:mb-16">
        <h1 className="text-3xl md:text-4xl serif gold-gradient mb-3">
           Your Collection
@@ -273,49 +273,55 @@ const grandTotal = cartTotal + deliveryCharge;
           <div className="lg:col-span-2 space-y-4">
             {cart.map((item) => (
               <div
-                key={item.id}
-               className="flex flex-col sm:flex-row gap-6 p-5 md:p-6 rounded-3xl bg-gradient-to-b from-zinc-900 to-black border border-white/10 shadow-xl"
-              >
+  key={item.id}
+  className="flex gap-3 p-3 rounded-2xl bg-zinc-900 border border-white/10 shadow-lg"
+>
                 <img
-                  src={item.image}
-                  alt={item.name}
-              className="w-full h-80 sm:w-32 sm:h-32 object-contain bg-zinc-900 rounded-2xl p-4 border border-white/10"
-                />
-                <div className="sm:hidden border-b border-white/10"></div>
+  src={item.image}
+  alt={item.name}
+  className="w-28 h-28 md:w-32 md:h-32md:w-32 md:h-32 object-contain bg-zinc-900 rounded-xl p-2 border border-white/10 shrink-0"
+/>
+               
 
-            <div className="flex-1 text-center sm:text-left py-2">
-                <h2 className="text-xl font-bold text-white leading-snug">
+           <div className="flex-1 min-w-0">
+             <h2 className="text-sm md:text-xl font-semibold text-white line-clamp-2">
   {item.name}
 </h2>
 
-                  <p className="text-amber-400 font-bold text-xl mt-2">
+               <p className="text-amber-400 font-bold text-base mt-1">
                     ₹{item.price}
                   </p>
 
-                <div className="flex items-center justify-center sm:justify-start gap-5 mt-5">
+                <div className="flex items-center gap-2 mt-3">
 
   <button
     onClick={() => updateQty(item.id, -1)}
-    className="w-11 h-11 rounded-full bg-zinc-800 border border-white/10 flex items-center justify-center"
+    className="w-8 h-8 rounded-full bg-zinc-800 border border-white/10 flex items-center justify-center"
   >
-    <Minus size={18} />
+    <Minus size={14} />
   </button>
 
-  <span className="font-bold text-xl min-w-[30px] text-center">
-    {item.qty}
-  </span>
+  <span className="font-semibold text-base min-w-[24px] text-center">
+  {item.qty}
+</span>
 
   <button
     onClick={() => updateQty(item.id, 1)}
-    className="w-11 h-11 rounded-full bg-zinc-800 border border-white/10 flex items-center justify-center"
+    className="w-8 h-8 rounded-full bg-zinc-800 border border-white/10 flex items-center justify-center"
   >
-    <Plus size={18} />
+    <Plus size={14} />
   </button>
+
+  <button
+  onClick={() => removeItem(item.id)}
+  className="ml-2 text-red-400"
+>
+  <Trash2 size={16} />
+</button>
 
 </div>
                 </div>
-
-              <div className="text-center sm:text-right border-t border-white/10 pt-5">
+<div className="text-right ml-auto flex flex-col justify-between">
                   <p className="text-gray-400 text-sm">
   Product: ₹{item.price * item.qty}
 </p>
@@ -324,14 +330,14 @@ const grandTotal = cartTotal + deliveryCharge;
   Delivery: ₹100
 </p>
 
-<p className="text-amber-400 font-bold text-xl mt-2">
+<p className="text-amber-400 font-bold text-base mt-1">
   Total: ₹{item.price * item.qty + 100}
 </p>
 
                   <button
                     disabled={loading}
                     onClick={() => proceedToPayment([item], true)}
-                   className="mt-4 w-full sm:w-auto bg-amber-600 px-5 py-3 rounded-xl text-black font-bold"
+                  className="mt-2 px-4 py-2 bg-amber-500 text-black rounded-lg text-sm font-semibold"
                   >
                     {loading ? "Processing..." : "Checkout"}
                   </button>
@@ -340,7 +346,7 @@ const grandTotal = cartTotal + deliveryCharge;
             ))}
           </div>
 
-       <div className="glass p-6 rounded-3xl bg-zinc-900/60 backdrop-blur-md h-fit lg:sticky lg:top-32 mb-28 md:mb-0 border border-amber-500/20">
+       <div className="glass p-4 md:p-6 rounded-3xl bg-zinc-900/60 backdrop-blur-md h-fit lg:sticky lg:top-32 mb-28 md:mb-0 border border-amber-500/20">
            <h2 className="text-xl font-bold mb-4 text-amber-400">
   Order Summary
 </h2>
