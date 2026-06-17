@@ -251,9 +251,7 @@ const grandTotal = cartTotal + deliveryCharge;
        <h1 className="text-3xl md:text-4xl serif gold-gradient mb-3">
           Your Collection
         </h1>
-        <p className="text-gray-400 italic">
-          Review your selections for purchase or rental
-        </p>
+        
       </div>
 
       {cart.length === 0 ? (
