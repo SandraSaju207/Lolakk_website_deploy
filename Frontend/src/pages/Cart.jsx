@@ -96,7 +96,7 @@ export default function Cart() {
     try {
       setLoading(true);
 
-      const res = await fetch("${API}/api/user/me", {
+      const res = await fetch(`${API}/api/user/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
