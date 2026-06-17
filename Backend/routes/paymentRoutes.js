@@ -37,7 +37,7 @@ router.post("/create-order", async (req, res) => {
 
     return res.status(200).json(order);
   } catch (error) {
-  console.error("CREATE ORDER ERROR:", error);
+  console.error("CREATE ORDER  Route ERROR:", error);
 
   return res.status(500).json({
     success: false,
