@@ -205,7 +205,12 @@ export default function Navbar() {
         
        <button
   onClick={() => {
-    navigate("/#collection");
+   navigate("/");
+setTimeout(() => {
+  document.getElementById("collection")?.scrollIntoView({
+    behavior: "smooth",
+  });
+}, 300);
     setMobileMenuOpen(false);
   }}
 >
@@ -213,7 +218,12 @@ export default function Navbar() {
 </button>
        <button
   onClick={() => {
-    navigate("/#contact");
+   navigate("/");
+setTimeout(() => {
+  document.getElementById("contact")?.scrollIntoView({
+    behavior: "smooth",
+  });
+}, 300);
     setMobileMenuOpen(false);
   }}
 >
