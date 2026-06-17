@@ -189,33 +189,15 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* MOBILE MENU */}
-     {/* PREMIUM MOBILE MENU (BOTTOM SHEET STYLE) */}
-<div
-  className={`fixed inset-0 z-40 md:hidden transition-all duration-300 ${
-    mobileMenuOpen ? "visible opacity-100" : "invisible opacity-0"
-  }`}
->
-  {/* BACKDROP */}
-  <div
-    className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-    onClick={() => setMobileMenuOpen(false)}
-  />
+      {/* MOBILE ANCHORED MENU */}
+{mobileMenuOpen && (
+  <div className="md:hidden absolute top-[70px] left-4 z-50 w-64">
+    
+    {/* arrow */}
+    <div className="ml-3 w-3 h-3 bg-zinc-950 rotate-45 border-l border-t border-white/10"></div>
 
-  {/* SHEET */}
-  <div
-    className={`absolute bottom-0 left-0 w-full rounded-t-3xl bg-zinc-950/95 border-t border-white/10
-    transform transition-transform duration-300 ${
-      mobileMenuOpen ? "translate-y-0" : "translate-y-full"
-    }`}
-  >
-    {/* HANDLE */}
-    <div className="w-full flex justify-center pt-3 pb-1">
-      <div className="w-12 h-1.5 bg-white/20 rounded-full" />
-    </div>
-
-    {/* MENU ITEMS */}
-    <div className="px-6 pb-8 pt-4 space-y-3 text-white">
+    {/* menu box */}
+    <div className="bg-zinc-950/95 backdrop-blur-md border border-white/10 rounded-2xl shadow-xl overflow-hidden">
 
       <MobileItem
         icon="🏠"
@@ -235,7 +217,7 @@ export default function Navbar() {
             document.getElementById("collection")?.scrollIntoView({
               behavior: "smooth",
             });
-          }, 300);
+          }, 200);
           setMobileMenuOpen(false);
         }}
       />
@@ -249,7 +231,7 @@ export default function Navbar() {
             document.getElementById("contact")?.scrollIntoView({
               behavior: "smooth",
             });
-          }, 300);
+          }, 200);
           setMobileMenuOpen(false);
         }}
       />
@@ -264,7 +246,11 @@ export default function Navbar() {
       />
     </div>
   </div>
-</div>
+)}
+
+
+     {/* PREMIUM MOBILE MENU (BOTTOM SHEET STYLE) */}
+
 
       {/* CATEGORY NAV */}
       <div
