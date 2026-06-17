@@ -202,7 +202,7 @@ export default function Navbar() {
 >
   Home
 </button>
-        <a href="#jewelry" onClick={() => setMobileMenuOpen(false)}>Jewelry</a>
+        
        <button
   onClick={() => {
     navigate("/#collection");
