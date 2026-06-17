@@ -153,6 +153,12 @@ const orderData = JSON.parse(orderText);
 
       console.log("ORDER RESPONSE:", orderData);
 
+      console.log("ENV OBJECT:", import.meta.env);
+console.log(
+  "RAZORPAY KEY:",
+  import.meta.env.VITE_RAZORPAY_KEY_ID
+);
+
       if (!orderResponse.ok) {
         throw new Error(orderData.message || "Order failed");
       }
