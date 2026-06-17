@@ -159,7 +159,7 @@ const orderData = JSON.parse(orderText);
 
       // OPEN RAZORPAY
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        key: "rzp_test_SpVaA5eFB9yPzb",
         amount: orderData.amount,
         currency: orderData.currency,
         name: "LOLAKK",
