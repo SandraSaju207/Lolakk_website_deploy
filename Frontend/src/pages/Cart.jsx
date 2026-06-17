@@ -253,9 +253,9 @@ const grandTotal = cartTotal + deliveryCharge;
   if (!isInitialized) return null;
 
   return (
-    <section className="pt-32 pb-24 px-6 max-w-7xl mx-auto text-white bg-black min-h-screen">
+   <section className="pt-28 md:pt-32 pb-24 px-4 md:px-6 max-w-7xl mx-auto text-white bg-black min-h-screen">
       <div className="text-center mb-16">
-        <h1 className="text-4xl serif gold-gradient mb-3">
+       <h1 className="text-3xl md:text-4xl serif gold-gradient mb-3">
           Your Collection
         </h1>
         <p className="text-gray-400 italic">
@@ -281,42 +281,50 @@ const grandTotal = cartTotal + deliveryCharge;
             {cart.map((item) => (
               <div
                 key={item.id}
-                className="flex gap-6 p-6 rounded-2xl glass border border-white/10"
+                className="flex flex-col sm:flex-row gap-4 p-4 md:p-6 rounded-2xl glass border border-white/10"
               >
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="w-32 h-32 object-cover rounded-xl"
+                 className="w-full sm:w-32 h-48 sm:h-32 object-cover rounded-xl"
                 />
 
-                <div className="flex-1">
+              <div className="flex-1 text-center sm:text-left">
                   <h2 className="text-xl serif">{item.name}</h2>
 
                   <p className="text-amber-500 font-bold">
                     ₹{item.price}
                   </p>
 
-                  <div className="flex items-center gap-3 mt-3">
-                    <button onClick={() => updateQty(item.id, -1)}>
-                      <Minus size={14} />
-                    </button>
+                <div className="flex items-center justify-center sm:justify-start gap-4 mt-4">
+  <button
+    onClick={() => updateQty(item.id, -1)}
+    className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center"
+  >
+    <Minus size={14} />
+  </button>
 
-                    <span>{item.qty}</span>
+  <span className="font-semibold text-lg">
+    {item.qty}
+  </span>
 
-                    <button onClick={() => updateQty(item.id, 1)}>
-                      <Plus size={14} />
-                    </button>
+  <button
+    onClick={() => updateQty(item.id, 1)}
+    className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center"
+  >
+    <Plus size={14} />
+  </button>
 
-                    <button
-                      onClick={() => removeItem(item.id)}
-                      className="text-red-400 ml-3"
-                    >
-                      <Trash2 size={18} />
-                    </button>
-                  </div>
+  <button
+    onClick={() => removeItem(item.id)}
+    className="text-red-400 ml-2"
+  >
+    <Trash2 size={18} />
+  </button>
+</div>
                 </div>
 
-                <div className="text-right">
+               <div className="text-center sm:text-right border-t sm:border-0 border-white/10 pt-4 sm:pt-0">
                   <p className="text-gray-400 text-sm">
   Product: ₹{item.price * item.qty}
 </p>
@@ -332,7 +340,7 @@ const grandTotal = cartTotal + deliveryCharge;
                   <button
                     disabled={loading}
                     onClick={() => proceedToPayment([item], true)}
-                    className="mt-3 bg-amber-600 px-4 py-2 rounded-lg text-black font-bold"
+                   className="mt-4 w-full sm:w-auto bg-amber-600 px-5 py-3 rounded-xl text-black font-bold"
                   >
                     {loading ? "Processing..." : "Checkout"}
                   </button>
@@ -341,7 +349,7 @@ const grandTotal = cartTotal + deliveryCharge;
             ))}
           </div>
 
-          <div className="glass p-6 rounded-2xl h-fit">
+         <div className="glass p-6 rounded-2xl h-fit lg:sticky lg:top-32">
             <h2 className="text-xl mb-4">Order Summary</h2>
 
             <p>Items: {cart.length}</p>
