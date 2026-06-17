@@ -279,19 +279,19 @@ export default function Trending() {
 
     {/* DRAWER */}
     <div className="
-      fixed left-0 top-0
-      w-[70%] max-w-[260px]
-      h-screen
-      bg-[#0b0b0b]
-      border-r border-amber-500/20
-      z-[999]
-      overflow-y-auto
-      p-6
-      animate-[slideIn_.3s_ease]
-    ">
+  fixed left-0 top-0
+  w-[55%] max-w-[200px]
+  h-screen
+  bg-[#0b0b0b]
+  border-r border-amber-500/20
+  z-[999]
+  overflow-y-auto
+  p-4
+  animate-[slideIn_.3s_ease]
+">
 
       {/* HEADER */}
-      <div className="flex justify-between items-center mb-8">
+     <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl text-amber-400 serif">Filters</h2>
 
         <button
@@ -303,7 +303,7 @@ export default function Trending() {
       </div>
 
       {/* CATEGORY */}
-      <div className="mb-8">
+      <div className="mb-6">
         <h3 className="text-amber-500 text-sm uppercase mb-3">
           Category
         </h3>
@@ -327,7 +327,7 @@ export default function Trending() {
       </div>
 
       {/* PRICE */}
-      <div className="mb-8">
+      <div className="mb-6">
         <h3 className="text-amber-500 text-sm uppercase mb-3">
           Price
         </h3>
@@ -443,7 +443,7 @@ export default function Trending() {
         <div className="md:col-span-3">
 
           {/* SORT */}
-          <div className="flex flex-col sm:flex-row sm:justify-between gap-4 mb-8">
+          <div className="hidden md:flex justify-end gap-4 mb-8">
             {/* <p className="text-gray-500 text-sm">
               {sorted.length} products
             </p> */}
