@@ -190,57 +190,81 @@ export default function Navbar() {
       </nav>
 
       {/* MOBILE MENU */}
-      <div
-        className={`fixed top-[70px] left-0 w-full bg-black/95 transition-all duration-300 flex flex-col items-center space-y-6 py-10 md:hidden z-40
-        ${mobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"}`}
-      >
-        <button
-  onClick={() => {
-    navigate("/");
-    setMobileMenuOpen(false);
-  }}
+     {/* PREMIUM MOBILE MENU (BOTTOM SHEET STYLE) */}
+<div
+  className={`fixed inset-0 z-40 md:hidden transition-all duration-300 ${
+    mobileMenuOpen ? "visible opacity-100" : "invisible opacity-0"
+  }`}
 >
-  Home
-</button>
-        
-       <button
-  onClick={() => {
-   navigate("/");
-setTimeout(() => {
-  document.getElementById("collection")?.scrollIntoView({
-    behavior: "smooth",
-  });
-}, 300);
-    setMobileMenuOpen(false);
-  }}
->
-  Collection
-</button>
-       <button
-  onClick={() => {
-   navigate("/");
-setTimeout(() => {
-  document.getElementById("contact")?.scrollIntoView({
-    behavior: "smooth",
-  });
-}, 300);
-    setMobileMenuOpen(false);
-  }}
->
-  Visit Us
-</button>
+  {/* BACKDROP */}
+  <div
+    className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+    onClick={() => setMobileMenuOpen(false)}
+  />
 
-<button
-  onClick={() => {
-    navigate("/cart");
-    setMobileMenuOpen(false);
-  }}
->
-  Cart
-</button>
-       
-        
-      </div>
+  {/* SHEET */}
+  <div
+    className={`absolute bottom-0 left-0 w-full rounded-t-3xl bg-zinc-950/95 border-t border-white/10
+    transform transition-transform duration-300 ${
+      mobileMenuOpen ? "translate-y-0" : "translate-y-full"
+    }`}
+  >
+    {/* HANDLE */}
+    <div className="w-full flex justify-center pt-3 pb-1">
+      <div className="w-12 h-1.5 bg-white/20 rounded-full" />
+    </div>
+
+    {/* MENU ITEMS */}
+    <div className="px-6 pb-8 pt-4 space-y-3 text-white">
+
+      <MobileItem
+        icon="🏠"
+        label="Home"
+        onClick={() => {
+          navigate("/");
+          setMobileMenuOpen(false);
+        }}
+      />
+
+      <MobileItem
+        icon="🛍️"
+        label="Collection"
+        onClick={() => {
+          navigate("/");
+          setTimeout(() => {
+            document.getElementById("collection")?.scrollIntoView({
+              behavior: "smooth",
+            });
+          }, 300);
+          setMobileMenuOpen(false);
+        }}
+      />
+
+      <MobileItem
+        icon="📍"
+        label="Visit Us"
+        onClick={() => {
+          navigate("/");
+          setTimeout(() => {
+            document.getElementById("contact")?.scrollIntoView({
+              behavior: "smooth",
+            });
+          }, 300);
+          setMobileMenuOpen(false);
+        }}
+      />
+
+      <MobileItem
+        icon="🛒"
+        label="Cart"
+        onClick={() => {
+          navigate("/cart");
+          setMobileMenuOpen(false);
+        }}
+      />
+    </div>
+  </div>
+</div>
 
       {/* CATEGORY NAV */}
       <div
@@ -282,5 +306,20 @@ setTimeout(() => {
   </div>
 </div>
     </>
+    
+  );
+}
+
+function MobileItem({ icon, label, onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      className="w-full flex items-center gap-4 px-4 py-4 rounded-xl
+      bg-white/5 hover:bg-white/10 active:scale-[0.98]
+      transition text-left"
+    >
+      <span className="text-xl">{icon}</span>
+      <span className="text-sm tracking-wide">{label}</span>
+    </button>
   );
 }

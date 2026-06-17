@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@react-google-maps/api": "^2.20.8",
+    "lucide-react": "^1.20.0",
     "multer": "^2.1.1"
   }
 }
