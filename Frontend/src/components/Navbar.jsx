@@ -192,7 +192,7 @@ export default function Navbar() {
       {/* MOBILE ANCHORED MENU */}
 {/* LUXURY MOBILE MENU */}
 {mobileMenuOpen && (
-  <div className="md:hidden absolute top-[70px] left-3 z-50 w-[260px]">
+  <div className="md:hidden absolute top-[70px] left-2 z-50 w-[220px]">
 
     {/* soft glow background */}
     <div className="absolute -inset-2 bg-gradient-to-br from-amber-500/10 via-black/40 to-amber-500/5 blur-2xl rounded-3xl" />
@@ -201,19 +201,14 @@ export default function Navbar() {
     <div className="ml-4 w-3 h-3 bg-zinc-950 rotate-45 border-l border-t border-amber-500/20 shadow-lg" />
 
     {/* menu box */}
-    <div className="relative bg-black/80 backdrop-blur-xl border border-amber-500/10 rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] overflow-hidden">
+   <div className="relative bg-black/85 backdrop-blur-xl border border-amber-500/10 rounded-2xl shadow-[0_25px_70px_rgba(0,0,0,0.65)] overflow-hidden">
 
       {/* header */}
       <div className="px-4 pt-4 pb-2 border-b border-white/5">
-        <p className="text-[10px] tracking-[0.3em] text-amber-500/70 uppercase">
-          Lolakk Menu
-        </p>
-        <p className="text-white/70 text-xs mt-1">
-          Luxury Jewellery Experience
-        </p>
+        
       </div>
 
-      <div className="p-2 space-y-1">
+     <div className="p-1.5 space-y-0.5">
 
         <LuxuryItem
           icon="🏠"
@@ -320,13 +315,13 @@ function LuxuryItem({ icon, label, onClick }) {
   return (
     <button
       onClick={onClick}
-      className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl
+      className="w-full flex items-center gap-2 px-3 py-2 rounded-xl
       text-white/80 hover:text-white
       hover:bg-white/5 active:scale-[0.98]
       transition-all duration-200"
     >
       {/* icon */}
-      <span className="text-lg text-amber-400">{icon}</span>
+      <span className="text-base text-amber-400">{icon}</span>
 
       {/* label */}
       <span className="text-sm tracking-wide">{label}</span>
