@@ -190,60 +190,80 @@ export default function Navbar() {
       </nav>
 
       {/* MOBILE ANCHORED MENU */}
+{/* LUXURY MOBILE MENU */}
 {mobileMenuOpen && (
-  <div className="md:hidden absolute top-[70px] left-4 z-50 w-64">
-    
+  <div className="md:hidden absolute top-[70px] left-3 z-50 w-[260px]">
+
+    {/* soft glow background */}
+    <div className="absolute -inset-2 bg-gradient-to-br from-amber-500/10 via-black/40 to-amber-500/5 blur-2xl rounded-3xl" />
+
     {/* arrow */}
-    <div className="ml-3 w-3 h-3 bg-zinc-950 rotate-45 border-l border-t border-white/10"></div>
+    <div className="ml-4 w-3 h-3 bg-zinc-950 rotate-45 border-l border-t border-amber-500/20 shadow-lg" />
 
     {/* menu box */}
-    <div className="bg-zinc-950/95 backdrop-blur-md border border-white/10 rounded-2xl shadow-xl overflow-hidden">
+    <div className="relative bg-black/80 backdrop-blur-xl border border-amber-500/10 rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] overflow-hidden">
 
-      <MobileItem
-        icon="🏠"
-        label="Home"
-        onClick={() => {
-          navigate("/");
-          setMobileMenuOpen(false);
-        }}
-      />
+      {/* header */}
+      <div className="px-4 pt-4 pb-2 border-b border-white/5">
+        <p className="text-[10px] tracking-[0.3em] text-amber-500/70 uppercase">
+          Lolakk Menu
+        </p>
+        <p className="text-white/70 text-xs mt-1">
+          Luxury Jewellery Experience
+        </p>
+      </div>
 
-      <MobileItem
-        icon="🛍️"
-        label="Collection"
-        onClick={() => {
-          navigate("/");
-          setTimeout(() => {
-            document.getElementById("collection")?.scrollIntoView({
-              behavior: "smooth",
-            });
-          }, 200);
-          setMobileMenuOpen(false);
-        }}
-      />
+      <div className="p-2 space-y-1">
 
-      <MobileItem
-        icon="📍"
-        label="Visit Us"
-        onClick={() => {
-          navigate("/");
-          setTimeout(() => {
-            document.getElementById("contact")?.scrollIntoView({
-              behavior: "smooth",
-            });
-          }, 200);
-          setMobileMenuOpen(false);
-        }}
-      />
+        <LuxuryItem
+          icon="🏠"
+          label="Home"
+          onClick={() => {
+            navigate("/");
+            setMobileMenuOpen(false);
+          }}
+        />
 
-      <MobileItem
-        icon="🛒"
-        label="Cart"
-        onClick={() => {
-          navigate("/cart");
-          setMobileMenuOpen(false);
-        }}
-      />
+        <LuxuryItem
+          icon="💎"
+          label="Collection"
+          onClick={() => {
+            navigate("/");
+            setTimeout(() => {
+              document.getElementById("collection")?.scrollIntoView({
+                behavior: "smooth",
+              });
+            }, 200);
+            setMobileMenuOpen(false);
+          }}
+        />
+
+        <LuxuryItem
+          icon="📍"
+          label="Visit Us"
+          onClick={() => {
+            navigate("/");
+            setTimeout(() => {
+              document.getElementById("contact")?.scrollIntoView({
+                behavior: "smooth",
+              });
+            }, 200);
+            setMobileMenuOpen(false);
+          }}
+        />
+
+        <LuxuryItem
+          icon="🛒"
+          label="Cart"
+          onClick={() => {
+            navigate("/cart");
+            setMobileMenuOpen(false);
+          }}
+        />
+      </div>
+
+      {/* footer glow */}
+      <div className="h-8 bg-gradient-to-t from-amber-500/5 to-transparent" />
     </div>
   </div>
 )}
@@ -296,16 +316,23 @@ export default function Navbar() {
   );
 }
 
-function MobileItem({ icon, label, onClick }) {
+function LuxuryItem({ icon, label, onClick }) {
   return (
     <button
       onClick={onClick}
-      className="w-full flex items-center gap-4 px-4 py-4 rounded-xl
-      bg-white/5 hover:bg-white/10 active:scale-[0.98]
-      transition text-left"
+      className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl
+      text-white/80 hover:text-white
+      hover:bg-white/5 active:scale-[0.98]
+      transition-all duration-200"
     >
-      <span className="text-xl">{icon}</span>
+      {/* icon */}
+      <span className="text-lg text-amber-400">{icon}</span>
+
+      {/* label */}
       <span className="text-sm tracking-wide">{label}</span>
+
+      {/* subtle glow dot */}
+      <span className="ml-auto w-1.5 h-1.5 rounded-full bg-amber-500/40" />
     </button>
   );
 }
