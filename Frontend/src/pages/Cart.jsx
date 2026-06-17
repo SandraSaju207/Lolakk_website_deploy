@@ -312,13 +312,7 @@ const grandTotal = cartTotal + deliveryCharge;
     <Plus size={14} />
   </button>
 
-  <button
-  onClick={() => removeItem(item.id)}
-  className="ml-2 text-red-400"
->
-  <Trash2 size={16} />
-</button>
-
+  
 </div>
                 </div>
 <div className="text-right ml-auto flex flex-col justify-between">
