@@ -246,7 +246,7 @@ const grandTotal = cartTotal + deliveryCharge;
   if (!isInitialized) return null;
 
   return (
-  <section className="pt-40 md:pt-32 pb-24 px-4 md:px-6 max-w-7xl mx-auto text-white bg-black min-h-screen">
+ <section className="pt-44 md:pt-32 pb-24 px-4 md:px-6 max-w-7xl mx-auto text-white bg-black min-h-screen">
      <div className="text-center mb-10 md:mb-16">
        <h1 className="text-3xl md:text-4xl serif gold-gradient mb-3">
           Your Collection
@@ -274,53 +274,48 @@ const grandTotal = cartTotal + deliveryCharge;
             {cart.map((item) => (
               <div
                 key={item.id}
-               className="flex flex-col sm:flex-row gap-6 p-5 md:p-6 rounded-3xl bg-zinc-900/80 border border-white/10 shadow-xl"
+               className="flex flex-col sm:flex-row gap-6 p-5 md:p-6 rounded-3xl bg-gradient-to-b from-zinc-900 to-black border border-white/10 shadow-xl"
               >
                 <img
                   src={item.image}
                   alt={item.name}
-               className="w-full h-72 sm:w-32 sm:h-32 object-contain bg-zinc-900 rounded-2xl p-3"
+              className="w-full h-80 sm:w-32 sm:h-32 object-contain bg-zinc-900 rounded-2xl p-4 border border-white/10"
                 />
                 <div className="sm:hidden border-b border-white/10"></div>
 
-              <div className="flex-1 text-center sm:text-left">
-                 <h2 className="text-lg md:text-xl font-semibold text-white leading-snug">
+            <div className="flex-1 text-center sm:text-left py-2">
+                <h2 className="text-xl font-bold text-white leading-snug">
   {item.name}
 </h2>
 
-                  <p className="text-amber-500 font-bold">
+                  <p className="text-amber-400 font-bold text-xl mt-2">
                     ₹{item.price}
                   </p>
 
-                <div className="flex items-center justify-center sm:justify-start gap-4 mt-4">
+                <div className="flex items-center justify-center sm:justify-start gap-5 mt-5">
+
   <button
     onClick={() => updateQty(item.id, -1)}
-   className="w-10 h-10 rounded-full bg-zinc-800 border border-white/10 flex items-center justify-center active:scale-95"
+    className="w-11 h-11 rounded-full bg-zinc-800 border border-white/10 flex items-center justify-center"
   >
-    <Minus size={14} />
+    <Minus size={18} />
   </button>
 
-  <span className="font-semibold text-lg">
+  <span className="font-bold text-xl min-w-[30px] text-center">
     {item.qty}
   </span>
 
   <button
     onClick={() => updateQty(item.id, 1)}
-    className="w-10 h-10 rounded-full bg-zinc-800 border border-white/10 flex items-center justify-center active:scale-95"
+    className="w-11 h-11 rounded-full bg-zinc-800 border border-white/10 flex items-center justify-center"
   >
-    <Plus size={14} />
+    <Plus size={18} />
   </button>
 
-  <button
-    onClick={() => removeItem(item.id)}
-    className="text-red-400 ml-2"
-  >
-    <Trash2 size={18} />
-  </button>
 </div>
                 </div>
 
-               <div className="text-center sm:text-right border-t sm:border-0 border-white/10 pt-4 sm:pt-0">
+              <div className="text-center sm:text-right border-t border-white/10 pt-5">
                   <p className="text-gray-400 text-sm">
   Product: ₹{item.price * item.qty}
 </p>
@@ -329,7 +324,7 @@ const grandTotal = cartTotal + deliveryCharge;
   Delivery: ₹100
 </p>
 
-<p className="text-amber-400 font-bold">
+<p className="text-amber-400 font-bold text-xl mt-2">
   Total: ₹{item.price * item.qty + 100}
 </p>
 
@@ -345,7 +340,7 @@ const grandTotal = cartTotal + deliveryCharge;
             ))}
           </div>
 
-       <div className="glass p-6 rounded-3xl h-fit lg:sticky lg:top-32 mb-28 md:mb-0 border border-amber-500/20">
+       <div className="glass p-6 rounded-3xl bg-zinc-900/60 backdrop-blur-md h-fit lg:sticky lg:top-32 mb-28 md:mb-0 border border-amber-500/20">
            <h2 className="text-xl font-bold mb-4 text-amber-400">
   Order Summary
 </h2>
@@ -399,11 +394,11 @@ const grandTotal = cartTotal + deliveryCharge;
       )}
 
       {cart.length > 0 && (
-  <div className="fixed bottom-0 left-0 right-0 md:hidden bg-black border-t border-white/10 p-4 z-50">
+ <div className="fixed bottom-0 left-0 right-0 md:hidden bg-zinc-950/95 backdrop-blur-xl border-t border-amber-500/20 p-4 z-50">
     <button
       disabled={loading || cart.length === 0}
       onClick={() => proceedToPayment(cart, false)}
-      className="w-full bg-amber-500 text-black py-4 rounded-2xl font-bold shadow-lg"
+     className="w-full bg-amber-500 text-black py-4 rounded-2xl font-bold text-lg shadow-lg"
     >
       {loading ? "Processing..." : `Pay ₹${grandTotal}`}
     </button>
