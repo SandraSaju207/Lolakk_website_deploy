@@ -194,10 +194,40 @@ export default function Navbar() {
         className={`fixed top-[70px] left-0 w-full bg-black/95 transition-all duration-300 flex flex-col items-center space-y-6 py-10 md:hidden z-40
         ${mobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"}`}
       >
-        <a href="#home" onClick={() => setMobileMenuOpen(false)}>Home</a>
+        <button
+  onClick={() => {
+    navigate("/");
+    setMobileMenuOpen(false);
+  }}
+>
+  Home
+</button>
         <a href="#jewelry" onClick={() => setMobileMenuOpen(false)}>Jewelry</a>
-        <a href="#collection" onClick={() => setMobileMenuOpen(false)}>Collection</a>
-        <a href="#contact" onClick={() => setMobileMenuOpen(false)}>Visit Us</a>
+       <button
+  onClick={() => {
+    navigate("/#collection");
+    setMobileMenuOpen(false);
+  }}
+>
+  Collection
+</button>
+       <button
+  onClick={() => {
+    navigate("/#contact");
+    setMobileMenuOpen(false);
+  }}
+>
+  Visit Us
+</button>
+
+<button
+  onClick={() => {
+    navigate("/cart");
+    setMobileMenuOpen(false);
+  }}
+>
+  Cart
+</button>
        
         
       </div>
