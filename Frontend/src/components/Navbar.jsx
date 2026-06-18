@@ -115,70 +115,60 @@ export default function Navbar() {
         <div className="flex items-center gap-2 md:gap-4">
 
           {/* ✅ UPDATED PROFILE BUTTON */}
-          <div ref={dropdownRef} className="relative">
-            <button
-              onClick={() => {
-                if (!token) {
-                  navigate("/login");
-                } else {
-                  setDropdownOpen(!dropdownOpen);
-                }
-              }}
-              className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/10 border border-white/20 flex items-center justify-center hover:bg-amber-500 hover:text-black transition"
-            >
-              👤
-            </button>
+          {/* PROFILE BUTTON */}
+<div ref={dropdownRef} className="relative">
 
-            {/* ✅ DROPDOWN MENU */}
-{token && dropdownOpen && (
-  <div className="absolute right-0 mt-2 w-40 bg-black border border-white/10 rounded-lg shadow-lg overflow-hidden z-50">
-    
-    <button
-      onClick={() => {
-        navigate("/profile");
-        setDropdownOpen(false);
-      }}
-      className="w-full text-left px-4 py-2 hover:bg-white/10"
-    >
-      Profile
-    </button>
-
-    <button
-      onClick={() => {
-        navigate("/cart");
-        setDropdownOpen(false);
-      }}
-      className="w-full text-left px-4 py-2 hover:bg-white/10"
-    >
-      Cart
-    </button>
-
-    {/* ✅ ADDED ORDERS OPTION */}
-    <button
-      onClick={() => {
-        navigate("/orders");
-        setDropdownOpen(false);
-      }}
-      className="w-full text-left px-4 py-2 hover:bg-white/10"
-    >
-      Orders
-    </button>
-
-    <button
-      onClick={() => {
-        localStorage.removeItem("token");
+  <button
+    onClick={() => {
+      if (!token) {
         navigate("/login");
-        // Good practice to also close the dropdown on logout
-        setDropdownOpen(false); 
-      }}
-      className="w-full text-left px-4 py-2 text-red-400 hover:bg-white/10"
-    >
-      Logout
-    </button>
+      } else {
+        setDropdownOpen(!dropdownOpen);
+      }
+    }}
+    className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/10 border border-white/20 flex items-center justify-center hover:bg-amber-500 hover:text-black transition"
+  >
+    👤
+  </button>
 
-  </div>
-)}
-          </div>
+  {/* DESKTOP + MOBILE SAME DROPDOWN */}
+  {token && dropdownOpen && (
+    <div className="absolute right-0 mt-2 w-40 bg-black border border-white/10 rounded-lg shadow-lg overflow-hidden z-50">
+
+      <button
+        onClick={() => {
+          navigate("/profile");
+          setDropdownOpen(false);
+        }}
+        className="w-full text-left px-4 py-2 hover:bg-white/10"
+      >
+        Profile
+      </button>
+
+      <button
+        onClick={() => {
+          navigate("/orders");
+          setDropdownOpen(false);
+        }}
+        className="w-full text-left px-4 py-2 hover:bg-white/10"
+      >
+        Orders
+      </button>
+
+      <button
+        onClick={() => {
+          localStorage.removeItem("token");
+          navigate("/login");
+          setDropdownOpen(false);
+        }}
+        className="w-full text-left px-4 py-2 text-red-400 hover:bg-white/10"
+      >
+        Logout
+      </button>
+
+    </div>
+  )}
+</div>
 
           <a
             href="https://wa.me/91XXXXXXXXXX"
@@ -191,18 +181,10 @@ export default function Navbar() {
 
       {/* MOBILE ANCHORED MENU */}
 {/* SIMPLE MOBILE LINKS (NO BOX) */}
-{/* UNIFIED MOBILE LINKS (INCLUDING PROFILE ACTIONS) */}
 {mobileMenuOpen && (
-  <div className="md:hidden absolute top-[88px] left-4 z-50 flex flex-col gap-4 pt-4">
+ <div className="md:hidden absolute top-[88px] left-4 z-50 flex flex-col gap-4 pt-4">
 
-    {/* MAIN LINKS */}
-    <MobileLink
-      label="Home"
-      onClick={() => {
-        navigate("/");
-        setMobileMenuOpen(false);
-      }}
-    />
+    <MobileLink label="Home" to="/" onClick={() => setMobileMenuOpen(false)} />
 
     <MobileLink
       label="Collection"
@@ -232,43 +214,9 @@ export default function Navbar() {
 
     <MobileLink
       label="Cart"
-      onClick={() => {
-        navigate("/cart");
-        setMobileMenuOpen(false);
-      }}
+      to="/cart"
+      onClick={() => setMobileMenuOpen(false)}
     />
-
-    {/* PROFILE SECTION (ONLY SHOW IF LOGGED IN) */}
-    {token && (
-      <>
-        <div className="h-px w-24 bg-white/10 my-1" />
-
-        <MobileLink
-          label="Profile"
-          onClick={() => {
-            navigate("/profile");
-            setMobileMenuOpen(false);
-          }}
-        />
-
-        <MobileLink
-          label="Orders"
-          onClick={() => {
-            navigate("/orders");
-            setMobileMenuOpen(false);
-          }}
-        />
-
-        <MobileLink
-          label="Logout"
-          onClick={() => {
-            localStorage.removeItem("token");
-            navigate("/login");
-            setMobileMenuOpen(false);
-          }}
-        />
-      </>
-    )}
   </div>
 )}
 
@@ -345,9 +293,10 @@ function MobileLink({ label, onClick }) {
   return (
     <button
       onClick={onClick}
-      className="text-sm text-white/70 hover:text-white transition text-left tracking-wide"
+     className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition"
     >
-      {label}
+      
+      <span className="tracking-wide">{label}</span>
     </button>
   );
 }
