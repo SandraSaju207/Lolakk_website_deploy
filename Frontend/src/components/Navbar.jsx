@@ -111,6 +111,13 @@ export default function Navbar() {
 
 </div>
 
+<a
+            href="https://wa.me/91XXXXXXXXXX"
+            className="bg-amber-600 text-black px-3 py-2 md:px-5 md:py-2 text-[10px] md:text-xs font-bold whitespace-nowrap"
+          >
+            Book Appointment
+          </a>
+
         {/* ACTIONS */}
         <div className="flex items-center gap-2 md:gap-4">
 
@@ -180,12 +187,7 @@ export default function Navbar() {
 )}
           </div>
 
-          <a
-            href="https://wa.me/91XXXXXXXXXX"
-            className="bg-amber-600 text-black px-3 py-2 md:px-5 md:py-2 text-[10px] md:text-xs font-bold whitespace-nowrap"
-          >
-            Book Appointment
-          </a>
+          
         </div>
       </nav>
 
