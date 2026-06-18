@@ -85,7 +85,11 @@ export default function Navbar() {
         </button>
 
         {/* LOGO */}
-        <img src="/hero.png" className="h-12 md:h-18 w-auto" alt="logo" />
+       <img
+  src="/hero.png"
+  className="h-12 md:h-18 w-auto md:mx-0 ml-1 md:ml-0"
+  alt="logo"
+/>
 
         {/* DESKTOP MENU */}
       <div className="hidden md:flex items-center space-x-10 text-xs uppercase tracking-widest font-semibold text-white">
