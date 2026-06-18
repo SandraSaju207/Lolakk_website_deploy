@@ -192,7 +192,7 @@ export default function Navbar() {
       {/* MOBILE ANCHORED MENU */}
 {/* SIMPLE MOBILE LINKS (NO BOX) */}
 {mobileMenuOpen && (
-  <div className="md:hidden absolute top-[70px] left-4 z-50 flex flex-col gap-3 pt-2">
+ <div className="md:hidden absolute top-[85px] left-4 z-50 flex flex-col gap-4 pt-4">
 
     <MobileLink label="Home" to="/" onClick={() => setMobileMenuOpen(false)} />
 
@@ -305,7 +305,7 @@ function MobileLink({ label, onClick }) {
       onClick={onClick}
      className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition"
     >
-      <span className="w-1.5 h-1.5 rounded-full bg-amber-400/60" />
+      
       <span className="tracking-wide">{label}</span>
     </button>
   );
