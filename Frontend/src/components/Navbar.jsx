@@ -72,7 +72,7 @@ export default function Navbar() {
     <>
       {/* MAIN NAV */}
       <nav
-        className={`fixed top-0 w-full h-[70px] md:h-[80px] z-50 px-4 md:px-6 flex justify-between items-center transition-all duration-300
+        className={`fixed top-0 w-full h-[70px] md:h-[80px] z-50 px-4 md:px-6 flex items-center justify-between md:justify-between transition-all duration-300
         ${scrolled ? "bg-black/90 backdrop-blur-md" : "bg-black/40 backdrop-blur-sm"}
         ${hideNav ? "-translate-y-full" : "translate-y-0"}`}
       >
@@ -85,11 +85,7 @@ export default function Navbar() {
         </button>
 
         {/* LOGO */}
-       <img
-  src="/hero.png"
-  className="h-12 md:h-18 w-auto md:mx-0 ml-1 md:ml-0"
-  alt="logo"
-/>
+        <img src="/hero.png" className="h-12 md:h-18 w-auto" alt="logo" />
 
         {/* DESKTOP MENU */}
       <div className="hidden md:flex items-center space-x-10 text-xs uppercase tracking-widest font-semibold text-white">
