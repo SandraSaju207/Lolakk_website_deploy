@@ -190,76 +190,43 @@ export default function Navbar() {
       </nav>
 
       {/* MOBILE ANCHORED MENU */}
-{/* LUXURY MOBILE MENU */}
+{/* SIMPLE MOBILE LINKS (NO BOX) */}
 {mobileMenuOpen && (
-  <div className="md:hidden absolute top-[70px] left-2 z-50 w-[220px]">
+  <div className="md:hidden absolute top-[70px] left-4 z-50 flex flex-col gap-3 pt-2">
 
-    {/* soft glow background */}
-    <div className="absolute -inset-2 bg-gradient-to-br from-amber-500/10 via-black/40 to-amber-500/5 blur-2xl rounded-3xl" />
+    <MobileLink label="Home" to="/" onClick={() => setMobileMenuOpen(false)} />
 
-    {/* arrow */}
-    <div className="ml-4 w-3 h-3 bg-zinc-950 rotate-45 border-l border-t border-amber-500/20 shadow-lg" />
+    <MobileLink
+      label="Collection"
+      onClick={() => {
+        navigate("/");
+        setTimeout(() => {
+          document.getElementById("collection")?.scrollIntoView({
+            behavior: "smooth",
+          });
+        }, 200);
+        setMobileMenuOpen(false);
+      }}
+    />
 
-    {/* menu box */}
-   <div className="relative bg-black/85 backdrop-blur-xl border border-amber-500/10 rounded-2xl shadow-[0_25px_70px_rgba(0,0,0,0.65)] overflow-hidden">
+    <MobileLink
+      label="Visit Us"
+      onClick={() => {
+        navigate("/");
+        setTimeout(() => {
+          document.getElementById("contact")?.scrollIntoView({
+            behavior: "smooth",
+          });
+        }, 200);
+        setMobileMenuOpen(false);
+      }}
+    />
 
-      {/* header */}
-      <div className="px-4 pt-4 pb-2 border-b border-white/5">
-        
-      </div>
-
-     <div className="p-1.5 space-y-0.5">
-
-        <LuxuryItem
-          icon="🏠"
-          label="Home"
-          onClick={() => {
-            navigate("/");
-            setMobileMenuOpen(false);
-          }}
-        />
-
-        <LuxuryItem
-          icon="💎"
-          label="Collection"
-          onClick={() => {
-            navigate("/");
-            setTimeout(() => {
-              document.getElementById("collection")?.scrollIntoView({
-                behavior: "smooth",
-              });
-            }, 200);
-            setMobileMenuOpen(false);
-          }}
-        />
-
-        <LuxuryItem
-          icon="📍"
-          label="Visit Us"
-          onClick={() => {
-            navigate("/");
-            setTimeout(() => {
-              document.getElementById("contact")?.scrollIntoView({
-                behavior: "smooth",
-              });
-            }, 200);
-            setMobileMenuOpen(false);
-          }}
-        />
-
-        <LuxuryItem
-          icon="🛒"
-          label="Cart"
-          onClick={() => {
-            navigate("/cart");
-            setMobileMenuOpen(false);
-          }}
-        />
-      </div>
-
-      {/* footer glow */}
-      <div className="h-8 bg-gradient-to-t from-amber-500/5 to-transparent" />
-    </div>
+    <MobileLink
+      label="Cart"
+      to="/cart"
+      onClick={() => setMobileMenuOpen(false)}
+    />
   </div>
 )}
 
@@ -328,6 +295,18 @@ function LuxuryItem({ icon, label, onClick }) {
 
       {/* subtle glow dot */}
       <span className="ml-auto w-1.5 h-1.5 rounded-full bg-amber-500/40" />
+    </button>
+  );
+}
+
+function MobileLink({ label, onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      className="flex items-center gap-2 text-sm text-amber-400/80 hover:text-amber-300 transition"
+    >
+      <span className="w-1.5 h-1.5 rounded-full bg-amber-400/60" />
+      <span className="tracking-wide">{label}</span>
     </button>
   );
 }
