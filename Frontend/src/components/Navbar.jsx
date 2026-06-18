@@ -191,10 +191,18 @@ export default function Navbar() {
 
       {/* MOBILE ANCHORED MENU */}
 {/* SIMPLE MOBILE LINKS (NO BOX) */}
+{/* UNIFIED MOBILE LINKS (INCLUDING PROFILE ACTIONS) */}
 {mobileMenuOpen && (
- <div className="md:hidden absolute top-[85px] left-4 z-50 flex flex-col gap-4 pt-4">
+  <div className="md:hidden absolute top-[88px] left-4 z-50 flex flex-col gap-4 pt-4">
 
-    <MobileLink label="Home" to="/" onClick={() => setMobileMenuOpen(false)} />
+    {/* MAIN LINKS */}
+    <MobileLink
+      label="Home"
+      onClick={() => {
+        navigate("/");
+        setMobileMenuOpen(false);
+      }}
+    />
 
     <MobileLink
       label="Collection"
@@ -224,9 +232,43 @@ export default function Navbar() {
 
     <MobileLink
       label="Cart"
-      to="/cart"
-      onClick={() => setMobileMenuOpen(false)}
+      onClick={() => {
+        navigate("/cart");
+        setMobileMenuOpen(false);
+      }}
     />
+
+    {/* PROFILE SECTION (ONLY SHOW IF LOGGED IN) */}
+    {token && (
+      <>
+        <div className="h-px w-24 bg-white/10 my-1" />
+
+        <MobileLink
+          label="Profile"
+          onClick={() => {
+            navigate("/profile");
+            setMobileMenuOpen(false);
+          }}
+        />
+
+        <MobileLink
+          label="Orders"
+          onClick={() => {
+            navigate("/orders");
+            setMobileMenuOpen(false);
+          }}
+        />
+
+        <MobileLink
+          label="Logout"
+          onClick={() => {
+            localStorage.removeItem("token");
+            navigate("/login");
+            setMobileMenuOpen(false);
+          }}
+        />
+      </>
+    )}
   </div>
 )}
 
@@ -303,10 +345,9 @@ function MobileLink({ label, onClick }) {
   return (
     <button
       onClick={onClick}
-     className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition"
+      className="text-sm text-white/70 hover:text-white transition text-left tracking-wide"
     >
-      
-      <span className="tracking-wide">{label}</span>
+      {label}
     </button>
   );
 }
