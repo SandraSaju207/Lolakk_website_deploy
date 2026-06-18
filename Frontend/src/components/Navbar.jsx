@@ -303,7 +303,7 @@ function MobileLink({ label, onClick }) {
   return (
     <button
       onClick={onClick}
-      className="flex items-center gap-2 text-sm text-amber-400/80 hover:text-amber-300 transition"
+     className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition"
     >
       <span className="w-1.5 h-1.5 rounded-full bg-amber-400/60" />
       <span className="tracking-wide">{label}</span>
