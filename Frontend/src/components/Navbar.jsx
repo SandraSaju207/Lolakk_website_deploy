@@ -60,7 +60,11 @@ export default function Navbar() {
       <nav className="fixed top-0 w-full h-[70px] md:h-[80px] z-50 px-4 md:px-6 flex justify-between items-center bg-black/80 backdrop-blur">
         
         <div className="flex items-center gap-2">
-          <img src="/hero.png" className="h-12 md:h-18 w-auto" alt="logo" />
+        <img
+  src="/hero.png"
+  className="h-12 md:h-18 w-auto mr-auto ml-1 md:ml-0"
+  alt="logo"
+/>
         </div>
 
         <div className="w-10"></div>
@@ -118,7 +122,7 @@ export default function Navbar() {
 
           <a
             href="https://wa.me/91XXXXXXXXXX"
-            className="bg-amber-600 text-black px-3 py-2 md:px-5 md:py-2 text-[10px] md:text-xs font-bold whitespace-nowrap"
+           className="bg-amber-600 text-black px-2 py-1.5 md:px-5 md:py-2 text-[9px] md:text-xs font-bold whitespace-nowrap rounded"
           >
             Book Appointment
           </a>
@@ -196,41 +200,47 @@ export default function Navbar() {
       {/* MOBILE ANCHORED MENU */}
 {/* SIMPLE MOBILE LINKS (NO BOX) */}
 {mobileMenuOpen && (
- <div className="md:hidden absolute top-[88px] left-4 z-50 flex flex-col gap-4 pt-4">
+  <div className="md:hidden absolute left-2 top-[78px] w-40 bg-black border border-white/10 rounded-lg shadow-lg overflow-hidden z-50">
+<button
+  onClick={() => {
+    navigate("/");
+    setMobileMenuOpen(false);
+  }}
+  className="w-full text-left px-4 py-2 hover:bg-white/10"
+>
+  Home
+</button>
 
-    <MobileLink label="Home" to="/" onClick={() => setMobileMenuOpen(false)} />
+<button
+  onClick={() => {
+    navigate("/");
+    setTimeout(() => {
+      document.getElementById("collection")?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }, 200);
+    setMobileMenuOpen(false);
+  }}
+  className="w-full text-left px-4 py-2 hover:bg-white/10"
+>
+  Collection
+</button>
 
-    <MobileLink
-      label="Collection"
-      onClick={() => {
-        navigate("/");
-        setTimeout(() => {
-          document.getElementById("collection")?.scrollIntoView({
-            behavior: "smooth",
-          });
-        }, 200);
-        setMobileMenuOpen(false);
-      }}
-    />
+<button
+  onClick={() => {
+    navigate("/");
+    setTimeout(() => {
+      document.getElementById("contact")?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }, 200);
+    setMobileMenuOpen(false);
+  }}
+  className="w-full text-left px-4 py-2 hover:bg-white/10"
+>
+  Visit Us
+</button>
 
-    <MobileLink
-      label="Visit Us"
-      onClick={() => {
-        navigate("/");
-        setTimeout(() => {
-          document.getElementById("contact")?.scrollIntoView({
-            behavior: "smooth",
-          });
-        }, 200);
-        setMobileMenuOpen(false);
-      }}
-    />
-
-    <MobileLink
-      label="Cart"
-      to="/cart"
-      onClick={() => setMobileMenuOpen(false)}
-    />
   </div>
 )}
 
