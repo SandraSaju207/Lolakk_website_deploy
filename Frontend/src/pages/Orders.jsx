@@ -79,7 +79,7 @@ useEffect(() => {
   };
 
   return (
-    <section className="pt-32 pb-24 px-6 max-w-5xl mx-auto text-white bg-black min-h-screen">
+   <section className="pt-24 md:pt-32 pb-20 md:pb-24 px-4 md:px-6 max-w-5xl mx-auto text-white bg-black min-h-screen">
       <style>{`
         .serif { font-family: 'Playfair Display', serif; }
         .gold-gradient { background: linear-gradient(to right, #fbbf24, #fef3c7, #b45309); -webkit-background-clip: text; color: transparent; }
@@ -91,8 +91,8 @@ useEffect(() => {
         .pulse-gold { animation: pulse-gold 2s infinite; }
       `}</style>
 
-      <div className="text-center mb-16">
-        <h1 className="text-4xl serif gold-gradient mb-3">Order History</h1>
+      <div className="text-center mb-8 md:mb-16">
+       <h1 className="text-3xl md:text-4xl serif gold-gradient mb-2">Order History</h1>
         <p className="text-gray-400 italic">Tracking your curated selections</p>
       </div>
 
@@ -117,7 +117,7 @@ useEffect(() => {
             return (
               <div key={orderId} className="glass border border-white/10 rounded-2xl overflow-hidden transition-all duration-500">
                 {/* Header */}
-                <div className="p-6 border-b border-white/5 flex flex-wrap justify-between items-center gap-4 bg-white/5">
+                <div className="p-4 md:p-6 border-b border-white/5 flex flex-col md:flex-row justify-between gap-3 bg-white/5">
                   <div>
                     <p className="text-xs text-gray-500 uppercase tracking-widest">Order ID</p>
                     <p className="font-mono text-sm text-amber-200">#LOK-{String(orderId).slice(-8)}</p>
@@ -131,7 +131,7 @@ useEffect(() => {
     ).toLocaleDateString("en-IN")}
   </p>
 )}
-                  <div className="flex items-center gap-3">
+                <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-3">
                     <div className="text-right mr-4">
                       <p className="text-xs text-gray-500 uppercase tracking-widest">Status</p>
                       <div className="flex items-center gap-2 text-green-400 text-sm font-bold">
@@ -151,9 +151,9 @@ useEffect(() => {
 
                 {/* Track Section */}
 {isExpanded && (
-  <div className="p-8 bg-black/40 border-b border-white/5">
+ <div className="p-4 md:p-8 bg-black/40 border-b border-white/5">
     <div className="max-w-2xl mx-auto">
-      <div className="relative space-y-8 ml-4">
+     <div className="relative space-y-6 md:space-y-8 ml-2 md:ml-4">
 
         <div className="absolute left-3 top-2 bottom-2 w-[1px] bg-amber-500/20" />
 
@@ -240,7 +240,7 @@ useEffect(() => {
 
   return (
     <div key={idx} className="flex items-center gap-4">
-      <div className="w-16 h-16 rounded-lg border border-white/10 overflow-hidden bg-zinc-900 shadow-xl">
+      <div className="w-14 h-14 md:w-16 md:h-16 rounded-lg border border-white/10 overflow-hidden bg-zinc-900 shadow-xl">
         <img
           src={getImageUrl(
             item.image || item.img || item.productImage
@@ -255,7 +255,7 @@ useEffect(() => {
       </div>
 
       <div className="flex-1">
-        <h3 className="text-sm font-medium">
+       <h3 className="text-xs md:text-sm font-medium">
           {item.name}
         </h3>
 
@@ -269,11 +269,11 @@ useEffect(() => {
                 </div>
 
                 {/* Footer */}
-                <div className="p-4 bg-white/5 flex justify-between items-center px-6 border-t border-white/5">
+               <div className="p-4 bg-white/5 flex flex-col md:flex-row gap-2 md:gap-0 justify-between items-start md:items-center px-4 md:px-6 border-t border-white/5">
                    <span className="text-gray-400 text-xs flex items-center gap-2">
                      <Clock size={14}/> {new Date(order.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
                    </span>
-                   <div className="text-lg font-bold serif">
+                 <div className="text-base md:text-lg font-bold serif">
                      Total Paid: <span className="text-amber-500">₹{order.total}</span>
                    </div>
                 </div>
