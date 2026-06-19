@@ -38,12 +38,12 @@ export default function AdminLayout({ children, setActiveTab, activeTab }) {
   LOLAKK
 </h1>
 
-<button
+{/* <button
   onClick={() => navigate("/")}
   className="w-full mb-4 px-4 py-3 rounded-xl bg-[#d4af37] text-black font-semibold hover:scale-[1.02] transition"
 >
   🏠 Back to Website
-</button>
+</button> */}
 
 <div className="space-y-3 relative z-10">
           {menu.map((item) => (
