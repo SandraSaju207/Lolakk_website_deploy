@@ -266,14 +266,14 @@ const buyNow = (item) => {
       `}</style>
 
       {/* HEADER */}
-      <div className="text-center mb-16">
+         <div className="text-center mb-6">
         <h1 className="text-4xl serif text-amber-400">Necklaces</h1>
         <p className="text-gray-500 text-sm italic">
           Luxury sculpted for every neckline
         </p>
       </div>
 
-   <div className="md:hidden flex justify-between items-center mb-6 gap-3">
+   <div className="md:hidden flex justify-between items-center mb-6">
 
   {/* FILTER BUTTON */}
   <button
