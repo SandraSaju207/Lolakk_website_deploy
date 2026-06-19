@@ -106,7 +106,7 @@ export default function AdminLayout({ children, setActiveTab, activeTab }) {
   </h2>
 </div>
 
-          <div className="flex items-center gap-2 md:gap-6">
+          <div className="flex items-center gap-2 flex-shrink-0">
 
             <button
   onClick={() => navigate("/")}
