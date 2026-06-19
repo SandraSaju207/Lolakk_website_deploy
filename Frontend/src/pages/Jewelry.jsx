@@ -5,16 +5,19 @@ const slides = [
     image: "necklace1.jpeg",
     product: "model3.jpeg",
     title: "Royal Elegance",
+     description: "Crafted to celebrate timeless beauty and sophistication.",
   },
   {
     image: "/bg2.jpeg",
     product: "/modernGrace.png",
     title: "Modern Grace",
+     description: "Contemporary designs inspired by elegance and grace.",
   },
   {
     image: "necklace3.jpeg",
     product: "model4.jpeg",
     title: "Timeless Tradition",
+      description: "A tribute to heritage craftsmanship and luxury.",
   },
 ];
 
@@ -54,27 +57,29 @@ export default function JewelryExperience() {
         {slides.map((slide, i) => (
 <div
   key={i}
-  className="w-full flex-shrink-0 flex flex-col lg:flex-row"
->       
-<p className="text-[#d4af37] text-xs tracking-[0.4em] uppercase mb-2">
-  Signature Collection
-</p>
+  className="w-full flex-shrink-0 grid grid-cols-1 lg:grid-cols-2"
+>      
+
 
             {/* LEFT IMAGE */}
-<div className="relative w-full lg:w-1/2 h-[250px] sm:h-[450px] lg:h-[650px] overflow-hidden">
+<div className="relative w-full lg:w-1/2 h-[220px] sm:h-[400px] lg:h-[650px] overflow-hidden">
   <img
     src={slide.image}
-   className="w-full h-full object-cover"
+    className="w-full h-full object-cover"
     alt={slide.title}
   />
+
+  <div className="absolute inset-0 bg-gradient-to-r from-black/10 via-transparent to-black/40"></div>
+
+  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
 </div>
 
             {/* RIGHT CONTENT */}
 <div className="
 w-full
 lg:w-1/2
-h-[250px]
-sm:h-[450px]
+h-[220px]
+sm:h-[400px]
 lg:h-[650px]
 bg-gradient-to-b
 from-[#111]
@@ -87,6 +92,10 @@ px-4
 sm:px-6
 text-center
 ">
+  <p className="text-[#d4af37] text-[10px] sm:text-xs tracking-[0.4em] uppercase mb-3">
+  Signature Collection
+</p>
+
   <h2 className="
 font-royal
 text-2xl
@@ -106,20 +115,29 @@ text-transparent
     {slide.title}
   </h2>
 
+  <p className="max-w-md text-gray-400 text-sm sm:text-base mb-6 leading-relaxed">
+  {slide.description}
+</p>
+
+<div className="relative">
+  <div className="absolute inset-0 bg-[#d4af37]/10 blur-3xl rounded-full"></div>
+
   <img
     src={slide.product}
     alt={slide.title}
-   className="
-w-[170px]
-sm:w-[250px]
-lg:w-[380px]
-object-contain
-transition
-duration-700
-hover:scale-105
-drop-shadow-[0_0_20px_rgba(212,175,55,0.25)]
-"
+    className="
+      relative
+      z-10
+      w-[170px]
+      sm:w-[250px]
+      lg:w-[380px]
+      object-contain
+      transition-all
+      duration-700
+      hover:scale-105
+    "
   />
+</div>
 </div>
 
           </div>
@@ -192,6 +210,10 @@ transition
       }`}
     />
   ))}
+</div>
+
+<div className="absolute bottom-0 left-0 w-full h-[1px] overflow-hidden">
+  <div className="h-full w-40 bg-gradient-to-r from-transparent via-[#d4af37] to-transparent animate-pulse"></div>
 </div>
 
     </section>
