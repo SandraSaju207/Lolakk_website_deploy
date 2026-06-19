@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 export default function AdminLayout({ children, setActiveTab, activeTab }) {
   const menu = ["dashboard", "orders", "rentals", "stock"];
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   const navigate = useNavigate();
@@ -29,10 +30,32 @@ export default function AdminLayout({ children, setActiveTab, activeTab }) {
 };
 
   return (
-    <div className="flex min-h-screen bg-[#0b0b0c] text-[#eaeaea] font-sans">
+    <div className="flex min-h-screen bg-[#0b0b0c] text-[#eaeaea] font-sans relative">
+
+      {sidebarOpen && (
+  <div
+    className="fixed inset-0 bg-black/60 z-40 md:hidden"
+    onClick={() => setSidebarOpen(false)}
+  />
+)}
       
       {/* SIDEBAR (Unchanged) */}
-      <div className="w-64 p-6 relative border-r border-white/10 bg-gradient-to-b from-[#111111] via-[#0d0d0d] to-[#090909] backdrop-blur-xl">
+     <div
+  className={`
+    fixed md:static
+    top-0 left-0
+    h-full md:h-auto
+    w-64
+    p-6
+    z-50
+    border-r border-white/10
+    bg-gradient-to-b from-[#111111] via-[#0d0d0d] to-[#090909]
+    backdrop-blur-xl
+    transform transition-transform duration-300
+    ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+    md:translate-x-0
+  `}
+>
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-[#d4af37]/20 to-transparent blur-2xl opacity-30"></div>
         <h1 className="text-2xl font-serif mb-6 tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] via-[#f5e6b3] to-[#d4af37]">
   LOLAKK
@@ -49,7 +72,10 @@ export default function AdminLayout({ children, setActiveTab, activeTab }) {
           {menu.map((item) => (
             <button
               key={item}
-              onClick={() => setActiveTab(item)}
+             onClick={() => {
+  setActiveTab(item);
+  setSidebarOpen(false);
+}}
               className={`group w-full text-left px-4 py-3 rounded-xl transition-all duration-300 ${
                 activeTab === item
                   ? "bg-gradient-to-r from-[#d4af37] to-[#b8962e] text-black shadow-lg shadow-[#d4af37]/20"
@@ -66,16 +92,25 @@ export default function AdminLayout({ children, setActiveTab, activeTab }) {
       <div className="flex-1 flex flex-col">
 
         {/* NAVBAR */}
-        <div className="h-16 px-6 flex items-center justify-between border-b border-white/10 bg-white/5 backdrop-blur-xl relative z-50">
-          <h2 className="text-lg tracking-wide capitalize text-gray-200">
-            {activeTab}
-          </h2>
+        <div className="h-16 px-3 md:px-6 flex items-center justify-between border-b border-white/10 bg-white/5 backdrop-blur-xl relative z-50">
+          <div className="flex items-center gap-3">
+  <button
+    onClick={() => setSidebarOpen(true)}
+    className="md:hidden text-[#d4af37]"
+  >
+    ☰
+  </button>
 
-          <div className="flex items-center gap-6">
+  <h2 className="text-base md:text-lg tracking-wide capitalize text-gray-200">
+    {activeTab}
+  </h2>
+</div>
+
+          <div className="flex items-center gap-2 md:gap-6">
 
             <button
   onClick={() => navigate("/")}
-  className="px-4 py-2 rounded-lg bg-[#d4af37] text-black font-medium hover:scale-105 transition"
+ className="hidden sm:block px-4 py-2 rounded-lg bg-[#d4af37] text-black font-medium hover:scale-105 transition"
 >
   🏠 Home
 </button>
@@ -98,7 +133,7 @@ export default function AdminLayout({ children, setActiveTab, activeTab }) {
                 className="flex items-center gap-3 cursor-pointer group"
               >
                 <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#d4af37] via-[#f5e6b3] to-[#b8962e] shadow-lg group-hover:scale-105 transition border border-white/10"></div>
-                <div className="hidden md:block text-left">
+               <div className="hidden lg:block text-left">
                   <p className="text-xs text-gray-400 leading-none mb-1">Welcome,</p>
                   <p className="text-sm text-gray-200 font-medium leading-none">Admin ✨</p>
                 </div>
@@ -136,8 +171,8 @@ export default function AdminLayout({ children, setActiveTab, activeTab }) {
         </div>
 
         {/* CONTENT */}
-        <div className="flex-1 p-6 overflow-y-auto relative">
-          <div className="absolute top-10 right-10 w-72 h-72 bg-[#d4af37]/10 blur-[120px] rounded-full"></div>
+       <div className="flex-1 p-3 md:p-6 overflow-y-auto relative">
+        <div className="hidden md:block absolute top-10 right-10 w-72 h-72 bg-[#d4af37]/10 blur-[120px] rounded-full"></div>
           <div className="relative z-10">
             {children}
           </div>
