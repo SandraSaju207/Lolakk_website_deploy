@@ -85,14 +85,14 @@ export default function Navbar() {
         </button>
 
         {/* LOGO */}
-    <img
+       <img
   src="/hero.png"
-  className="h-12 md:h-18 w-auto md:static ml-1 md:ml-0"
+  className="h-12 md:h-18 w-auto mr-auto ml-1 md:ml-0"
   alt="logo"
 />
 
         {/* DESKTOP MENU */}
-      <div className="hidden md:flex items-center space-x-10 text-xs uppercase tracking-widest font-semibold text-white">
+      <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center space-x-10 text-xs uppercase tracking-widest font-semibold text-white">
   
   <a href="/" className="hover:text-amber-500 transition">
     Home
