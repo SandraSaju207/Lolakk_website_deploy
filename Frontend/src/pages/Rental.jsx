@@ -470,17 +470,17 @@ setTimeout(() => {
 
   return (
     <section className="pt-32 pb-24 px-6 max-w-7xl mx-auto">
-      <div className="text-center mb-2 md:mb-6">
+      <div className="text-center mb-6">
         <h1 className="text-2xl md:text-4xl text-amber-400">Jewellery Rentals</h1>
          <p className="text-gray-500 text-sm italic mt-2">Luxury crafted for elegance</p>
       </div>
 
 {/* MOBILE FILTER BUTTON */}
- <div className="md:hidden flex justify-between items-center -mt-2 mb-4">
+ <div className="md:hidden flex justify-between items-center mb-6">
 
   <button
     onClick={() => setMobileFilterOpen(true)}
-    className="px-4 py-2 border border-amber-500/30 rounded-full text-amber-400 bg-zinc-900 text-sm"
+   className="flex items-center gap-2 px-4 py-2 border border-amber-500/30 rounded-full text-amber-400 bg-zinc-900"
   >
     ☰ Filters
   </button>
