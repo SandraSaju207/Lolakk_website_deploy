@@ -1,11 +1,13 @@
 import express from "express";
 import Rental from "../models/Rental.js";
+import { protect } from "../middleware/authMiddleware.js";
+import { adminOnly } from "../middleware/adminMiddleware.js";
 
 const router = express.Router();
 
 // @desc    Get all rentals
 // @route   GET /api/rentals
-router.get("/", async (req, res) => {
+router.get("/", protect, adminOnly, async (req, res) => {
   try {
     const rentals = await Rental.find().sort({ createdAt: -1 });
     res.status(200).json(rentals);
@@ -72,7 +74,7 @@ router.post("/", async (req, res) => {
 
 // @desc    Update rental status
 // @route   PATCH /api/rentals/:id
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", protect, adminOnly, async (req, res) => {
   try {
     const updatedRental = await Rental.findByIdAndUpdate(
       req.params.id,

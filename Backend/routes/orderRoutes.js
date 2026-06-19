@@ -1,16 +1,21 @@
 import express from "express";
 import { createOrder } from "../controllers/orderController.js";
 import { protect } from "../middleware/authMiddleware.js";
+import { adminOnly } from "../middleware/adminMiddleware.js";
 import Order from "../models/Order.js";
 import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/", protect, async (req, res) => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
 
     let query = {};
+
+if (req.user.role !== "admin") {
+  query.userId = req.user.id;
+}
 
     if (token) {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -29,11 +34,11 @@ router.get("/", async (req, res) => {
 
 router.post("/", protect, createOrder);
 
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", protect, adminOnly, async (req, res) => {
   /* your patch code */
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", protect, adminOnly, async (req, res) => {
   try {
     const order = await Order.findByIdAndUpdate(
       req.params.id,

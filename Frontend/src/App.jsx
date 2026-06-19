@@ -18,6 +18,7 @@ import NecklacesPendants from "./pages/Necklacespendants.jsx";
 import Gifting from "./pages/Gifting.jsx";
 import Trending from "./pages/Trending.jsx";
 import Rental from "./pages/Rental.jsx";
+ import AdminRoute from "./components/AdminRoute";
 
 // ✅ ADD THIS LINE
 import AdminDashboard from "./pages/AdminDashboard.jsx";
@@ -64,7 +65,16 @@ const hideNavbar =
         <Route path="/necklaces-pendants" element={<NecklacesPendants />} />
         <Route path="/gifting" element={<Gifting />} />
         <Route path="/trending" element={<Trending />} />
-        <Route path="/admin" element={<AdminDashboard />} />
+      
+
+<Route
+  path="/admin"
+  element={
+    <AdminRoute>
+      <AdminDashboard />
+    </AdminRoute>
+  }
+/>
         <Route path="/cart" element={<Cart />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/orders" element={<Orders />} />

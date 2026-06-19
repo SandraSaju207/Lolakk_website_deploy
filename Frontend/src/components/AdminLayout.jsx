@@ -16,11 +16,12 @@ export default function AdminLayout({ children, setActiveTab, activeTab }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleLogout = () => {
-    // Add your logout logic here (e.g., clearing tokens)
-    console.log("Logged out");
-    window.location.href = "/login"; 
-  };
+ const handleLogout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+
+  window.location.href = "/login";
+};
 
   return (
     <div className="flex min-h-screen bg-[#0b0b0c] text-[#eaeaea] font-sans">

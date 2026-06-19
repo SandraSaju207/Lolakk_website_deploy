@@ -7,15 +7,36 @@ import {
 } from "../controllers/productController.js";
 
 import upload from "../middleware/upload.js";
+import { protect } from "../middleware/authMiddleware.js";
+import { adminOnly } from "../middleware/adminMiddleware.js";
 
 const router = express.Router();
 
+// Public
 router.get("/", getProducts);
 
-router.post("/", upload.single("image"), addProduct);
+// Admin only
+router.post(
+  "/",
+  protect,
+  adminOnly,
+  upload.single("image"),
+  addProduct
+);
 
-router.patch("/:id", upload.single("image"), updateProduct);
+router.patch(
+  "/:id",
+  protect,
+  adminOnly,
+  upload.single("image"),
+  updateProduct
+);
 
-router.delete("/:id", deleteProduct);
+router.delete(
+  "/:id",
+  protect,
+  adminOnly,
+  deleteProduct
+);
 
 export default router;
