@@ -294,13 +294,13 @@ const trendingProducts = Array.isArray(products)
       {activeTab === "dashboard" && (
         <div className="space-y-8">
           <div>
-            <h1 className="text-3xl font-serif tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] to-[#f5e6b3]">
+            <h1 className="text-2xl md:text-3xl font-serif tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] to-[#f5e6b3]">
               Dashboard Overview
             </h1>
-            <p className="text-gray-400 mt-1">Monitor your business performance in real time</p>
+            <p className="text-gray-400 mt-1 text-sm md:text-base">Monitor your business performance in real time</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             <div className="p-6 rounded-xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg hover:scale-[1.02] transition">
               <p className="text-gray-400 text-sm">Total Revenue</p>
               <h2 className="text-2xl mt-2 text-[#d4af37] font-semibold">₹{revenue}</h2>
@@ -323,13 +323,13 @@ const trendingProducts = Array.isArray(products)
           <div className="absolute -top-10 right-10 w-72 h-72 bg-[#d4af37]/10 blur-[120px] rounded-full"></div>
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-serif tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] via-[#f5e6b3] to-[#d4af37]">
+              <h1 className="text-2xl md:text-3xl font-serif tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] via-[#f5e6b3] to-[#d4af37]">
                 Orders
               </h1>
               <p className="text-gray-400 text-sm mt-1">Manage and track all customer purchases</p>
             </div>
           </div>
-          <div className="relative p-5 rounded-2xl bg-white/5 backdrop-blur-2xl border border-white/10">
+          <div className="relative p-3 md:p-5 rounded-2xl bg-white/5 backdrop-blur-2xl border border-white/10 overflow-x-auto">
             <Table
               data={orders}
               type="order"
@@ -349,13 +349,13 @@ const trendingProducts = Array.isArray(products)
           <div className="absolute -top-10 left-10 w-72 h-72 bg-[#d4af37]/10 blur-[120px] rounded-full"></div>
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-serif tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] via-[#f5e6b3] to-[#d4af37]">
+              <h1 className="text-2xl md:text-3xl font-serif tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] via-[#f5e6b3] to-[#d4af37]">
                 Rental Orders
               </h1>
               <p className="text-gray-400 text-sm mt-1">Track ongoing and returned rentals</p>
             </div>
           </div>
-          <div className="relative p-5 rounded-2xl bg-white/5 backdrop-blur-2xl border border-white/10">
+         <div className="relative p-3 md:p-5 rounded-2xl bg-white/5 backdrop-blur-2xl border border-white/10 overflow-x-auto">
             <Table
               data={rentals}
               type="rental"
@@ -374,9 +374,9 @@ const trendingProducts = Array.isArray(products)
         <div className="relative space-y-10">
           <div className="absolute top-0 right-1/3 w-72 h-72 bg-[#d4af37]/10 blur-[120px] rounded-full"></div>
 
-          <div className="flex items-center justify-between relative z-10">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between relative z-10">
             <div>
-              <h1 className="text-3xl font-serif tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] via-[#f5e6b3] to-[#d4af37]">
+              <h1 className="text-2xl md:text-3xl font-serif tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] via-[#f5e6b3] to-[#d4af37]">
                 Stock Management
               </h1>
               <p className="text-gray-400 text-sm mt-1">Manage inventory & add new products</p>
@@ -389,7 +389,7 @@ const trendingProducts = Array.isArray(products)
                 setProductStyle("traditional");
                 setShowModal(true);
               }}
-              className="px-6 py-2 rounded-lg bg-gradient-to-r from-[#d4af37] to-[#b8962e] text-black font-semibold hover:scale-105 transition"
+              className="w-full md:w-auto px-6 py-3 md:py-2 rounded-lg bg-gradient-to-r from-[#d4af37] to-[#b8962e] text-black font-semibold hover:scale-105 transition"
             >
               + Add Product
             </button>
@@ -397,9 +397,9 @@ const trendingProducts = Array.isArray(products)
 
           <div className="p-6 rounded-2xl bg-white/5 backdrop-blur-2xl border border-white/10 relative z-10">
             <h2 className="text-lg text-[#d4af37] font-semibold mb-6">Current Inventory</h2>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
               {products.map((p) => (
-                <div key={p._id} className="p-4 rounded-xl bg-black/40 border border-white/10 group relative overflow-hidden transition-all duration-300 hover:border-[#d4af37]/30">
+                <div key={p._id} className="p-3 md:p-4 rounded-xl bg-black/40 border border-white/10 group relative overflow-hidden transition-all duration-300 hover:border-[#d4af37]/30">
                   
                   {/* TRENDING BADGE */}
                   {p.trending && (
@@ -423,7 +423,7 @@ const trendingProducts = Array.isArray(products)
                     </button>
                   </div>
 
-                  <div className="h-40 w-full mb-3 rounded-lg overflow-hidden bg-black/60 border border-white/5 relative">
+                  <div className="h-28 sm:h-32 md:h-40 w-full mb-3 rounded-lg overflow-hidden bg-black/60 border border-white/5 relative">
                     {p.image ? (
                       <img
   src={getImage(p.image)}
@@ -436,7 +436,7 @@ const trendingProducts = Array.isArray(products)
                   </div>
 
                   <div className="space-y-1">
-                    <h3 className="text-white font-medium truncate">{p.name}</h3>
+                   <h3 className="text-sm md:text-base text-white font-medium truncate">{p.name}</h3>
                     <div className="flex justify-between items-end">
                       <div>
                         <p className="text-gray-400 text-xs uppercase tracking-wider">{p.type}</p>
@@ -457,12 +457,12 @@ const trendingProducts = Array.isArray(products)
         <div className="relative space-y-8">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#d4af37]/5 blur-[150px] rounded-full"></div>
           <div>
-            <h1 className="text-3xl font-serif tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] to-[#f5e6b3]">
+            <h1 className="text-2xl md:text-3xl font-serif tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] to-[#f5e6b3]">
               Trending Collection
             </h1>
-            <p className="text-gray-400 mt-1">Products currently featured on the trending storefront</p>
+          <p className="text-gray-400 mt-1 text-sm md:text-base">Products currently featured on the trending storefront</p>
           </div>
-          <div className="grid md:grid-cols-4 gap-6">
+         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
             {trendingProducts.map((p) => (
               <div key={p._id} className="p-5 rounded-2xl bg-white/5 border border-[#d4af37]/30 backdrop-blur-md">
                  <div className="w-full h-32 bg-white/10 rounded-lg mb-4 overflow-hidden">
@@ -480,12 +480,12 @@ const trendingProducts = Array.isArray(products)
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setShowModal(false)} />
-          <div className="relative w-full max-w-2xl p-8 rounded-3xl bg-[#111] border border-white/10 shadow-2xl overflow-y-auto max-h-[90vh]">
+          <div className="relative w-full max-w-2xl p-4 md:p-8 rounded-3xl bg-[#111] border border-white/10 shadow-2xl overflow-y-auto max-h-[90vh]">
             <h2 className="text-2xl font-serif text-[#d4af37] mb-6">
                {editingProduct ? "Edit Luxury Item" : "Add New Luxury Item"}
             </h2>
 
-            <div className="grid md:grid-cols-2 gap-5">
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
               <div className="space-y-1">
                 <label className="text-xs text-gray-500 ml-1">Product Name</label>
                 <input value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} placeholder="Ex: Regal Gold Bangle" className="w-full p-3 rounded-xl bg-black/40 border border-white/10 text-white focus:border-[#d4af37] outline-none transition" />
@@ -630,7 +630,7 @@ const trendingProducts = Array.isArray(products)
               <label htmlFor="trending" className="text-gray-300 cursor-pointer select-none">Mark as Trending Item</label>
             </div>
 
-            <div className="mt-8 flex space-x-4">
+           <div className="mt-8 flex flex-col md:flex-row gap-3 md:space-x-4">
               <button onClick={() => setShowModal(false)} className="flex-1 px-6 py-3 rounded-xl bg-white/5 text-white hover:bg-white/10 transition">Cancel</button>
               <button onClick={handleSaveProduct} className="flex-1 px-6 py-3 rounded-xl bg-gradient-to-r from-[#d4af37] to-[#b8962e] text-black font-bold transition">
                 {editingProduct ? "Update Product" : "Save Product"}
