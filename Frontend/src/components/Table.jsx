@@ -67,18 +67,18 @@ await fetch(`${API}/api/orders/${id}`, {
 
   return (
     <div>
-      <div className="flex gap-4 mb-4">
+     <div className="flex flex-col sm:flex-row gap-3 mb-4">
         <input
           placeholder="Search customer..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="p-2 bg-black border"
+        className="w-full sm:w-auto p-3 bg-black border border-zinc-700 rounded-lg"
         />
 
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="p-2 bg-black border"
+         className="w-full sm:w-auto p-3 bg-black border border-zinc-700 rounded-lg"
         >
           <option value="all">All</option>
 
@@ -105,11 +105,11 @@ await fetch(`${API}/api/orders/${id}`, {
     return (
       <div
         key={item._id}
-        className="border border-zinc-700 rounded-xl p-5 bg-zinc-900"
+    className="border border-zinc-700 rounded-xl p-3 md:p-5 bg-zinc-900"
       >
-        <div className="flex justify-between items-start mb-4">
+       <div className="flex flex-col md:flex-row justify-between items-start gap-3 mb-4">
          <div>
-  <h3 className="text-lg font-semibold text-white">
+ <h3 className="text-base md:text-lg font-semibold text-white break-words">
     {item.userId?.name || item.customerName || "Guest User"}
   </h3>
 
@@ -117,9 +117,9 @@ await fetch(`${API}/api/orders/${id}`, {
   {item.customerEmail || item.userId?.email || "No email"}
 </p>
 
-  <p className="text-sm text-gray-400">
-    Order ID: {item._id}
-  </p>
+<p className="text-xs md:text-sm text-gray-400 break-all">
+  Order ID: {item._id}
+</p>
 
   <p className="text-sm text-gray-400">
     Date: {new Date(item.createdAt).toLocaleString()}
@@ -128,7 +128,7 @@ await fetch(`${API}/api/orders/${id}`, {
 
   {/* ADDRESS */}
   {item.shippingAddress?.fullAddress ? (
-    <div className="mt-3 bg-zinc-800 p-3 rounded-lg">
+  <div className="mt-3 bg-zinc-800 p-3 rounded-lg text-sm md:text-base">
       <p className="text-amber-400 font-medium">
         Delivery Address
       </p>
@@ -179,9 +179,9 @@ await fetch(`${API}/api/orders/${id}`, {
           {item.items?.map((product, index) => (
             <div
               key={index}
-              className="flex items-center justify-between border-b border-zinc-800 py-3 gap-3"
+             className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-zinc-800 py-3 gap-2"
             >
-              <div className="flex items-center gap-3">
+             <div className="flex items-center gap-3 w-full">
                 <img
   src={product.image}
   alt={product.name}
@@ -189,10 +189,10 @@ await fetch(`${API}/api/orders/${id}`, {
   console.log("CLICKED IMAGE VALUE:", product.image);
   setPreviewImage(product.image);
 }}
-  className="w-12 h-12 rounded-md object-cover border border-zinc-700 cursor-pointer hover:scale-110 hover:shadow-lg transition duration-200"
+  className="w-14 h-14 md:w-12 md:h-12 rounded-md object-cover border border-zinc-700 cursor-pointer hover:scale-110 hover:shadow-lg transition duration-200"
 />
 
-                <span className="text-gray-300">
+                <span className="text-gray-300 text-sm md:text-base break-words">
                   {product.name}
                 </span>
               </div>
@@ -208,7 +208,7 @@ await fetch(`${API}/api/orders/${id}`, {
           ))}
         </div>
 
-        <div className="mt-4 border-t border-zinc-700 pt-3">
+       <div className="mt-4 border-t border-zinc-700 pt-3 text-sm md:text-base">
   <div className="flex justify-between text-gray-400">
     <span>Product Total</span>
     <span>₹{item.total - 100}</span>
@@ -224,19 +224,18 @@ await fetch(`${API}/api/orders/${id}`, {
     <span>₹{item.total}</span>
   </div>
 </div>
-
-        <div className="flex items-center justify-between">
+<div className="flex flex-col md:flex-row gap-4 md:gap-0 md:items-center md:justify-between">
           <span className="text-white">
             Status: {item.status}
           </span>
 
-         <div className="flex gap-3 items-center">
+       <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
   <select
     value={item.status}
     onChange={(e) =>
       updateStatus(item._id, e.target.value)
     }
-    className="p-2 bg-black border border-zinc-700 rounded"
+    className="w-full sm:w-auto p-3 bg-black border border-zinc-700 rounded"
   >
     <option>Order Confirmed</option>
     <option>Processing</option>
@@ -260,7 +259,7 @@ await fetch(`${API}/api/orders/${id}`, {
         e.target.value
       )
     }
-    className="bg-black border border-zinc-700 p-2 rounded"
+   className="w-full sm:w-auto bg-black border border-zinc-700 p-3 rounded"
   />
 </div>
         </div>
@@ -293,7 +292,7 @@ await fetch(`${API}/api/orders/${id}`, {
         padding: "12px",
         borderRadius: "12px",
         boxShadow: "0 10px 30px rgba(0,0,0,0.6)",
-        maxWidth: "420px",
+        maxWidth: "600px",
         width: "90%",
       }}
     >
@@ -318,7 +317,7 @@ await fetch(`${API}/api/orders/${id}`, {
         src={previewImage}
         style={{
           width: "100%",
-          maxHeight: "350px",
+          maxHeight: "80px",
           objectFit: "contain",
           borderRadius: "8px",
         }}
