@@ -17,15 +17,19 @@ export function Table({ data, type, refresh }) {
 }, [previewImage]);
 
   const updateStatus = async (id, status) => {
-    await fetch(
-  `${API}/api/${
-    type === "order" ? "orders" : "rentals"
-  }/${id}`,
+   const token = localStorage.getItem("token");
+
+await fetch(
+  `${API}/api/${type === "order" ? "orders" : "rentals"}/${id}`,
   {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status }),
-    });
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ status }),
+  }
+);
     refresh();
   };
 
@@ -33,18 +37,18 @@ export function Table({ data, type, refresh }) {
   id,
   expectedDeliveryDate
 ) => {
-  await fetch(
-    `${API}/api/orders/${id}`,
-    {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        expectedDeliveryDate,
-      }),
-    }
-  );
+  const token = localStorage.getItem("token");
+
+await fetch(`${API}/api/orders/${id}`, {
+  method: "PUT",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  },
+  body: JSON.stringify({
+    expectedDeliveryDate,
+  }),
+});
 
   refresh();
 };
