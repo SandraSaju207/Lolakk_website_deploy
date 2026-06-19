@@ -131,7 +131,7 @@ useEffect(() => {
     ).toLocaleDateString("en-IN")}
   </p>
 )}
-                <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-3">
+               <div className="flex flex-row items-center gap-2">
                     <div className="text-right mr-4">
                       <p className="text-xs text-gray-500 uppercase tracking-widest">Status</p>
                       <div className="flex items-center gap-2 text-green-400 text-sm font-bold">
