@@ -292,7 +292,7 @@ const paginatedRings = sortedRings;
       `}</style>
 
       {/* HEADER */}
-      <div className="text-center mb-10">
+        <div className="text-center mb-6">
   <h1 className="text-4xl serif text-amber-400 tracking-widest">
     Ring Collection
   </h1>
@@ -325,7 +325,7 @@ const paginatedRings = sortedRings;
   </div> */}
 </div>
 
- <div className="md:hidden flex justify-between items-center mb-6 gap-3">
+ <div className="md:hidden flex justify-between items-center mb-6">
 
   {/* FILTER BUTTON */}
   <button
