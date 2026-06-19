@@ -105,8 +105,9 @@ await fetch(`${API}/api/orders/${id}`, {
     return (
       <div
         key={item._id}
-    className="border border-zinc-700 rounded-xl p-3 md:p-5 bg-zinc-900"
+    className="relative rounded-xl p-[1px] bg-gradient-to-r from-[#d4af37] via-[#f5e6b3] to-[#d4af37] animate-pulse"
       >
+        <div className="bg-zinc-900 rounded-xl p-3 md:p-5">
        <div className="flex flex-col md:flex-row justify-between items-start gap-3 mb-4">
          <div>
  <h3 className="text-base md:text-lg font-semibold text-white break-words">
@@ -269,6 +270,7 @@ await fetch(`${API}/api/orders/${id}`, {
 </div>
 </div>
         </div>
+      </div>
       </div>
     );
   })}
