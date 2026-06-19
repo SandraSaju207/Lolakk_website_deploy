@@ -476,7 +476,7 @@ setTimeout(() => {
       </div>
 
 {/* MOBILE FILTER BUTTON */}
- <div className="md:hidden flex justify-between items-center mb-6 gap-3">
+ <div className="md:hidden flex justify-between items-center mb-6">
 
   <button
     onClick={() => setMobileFilterOpen(true)}
