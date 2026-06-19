@@ -214,12 +214,13 @@ export default function Trending() {
     <section className="pt-32 pb-24 px-6 max-w-7xl mx-auto">
 
       {/* TITLE */}
-      <div className="text-center mb-16">
+     <div className="text-center mb-6">
         <h1 className="text-4xl text-amber-400">Trending Now</h1>
+        <p className="text-gray-500 text-sm italic mt-2">Luxury crafted for elegance</p>
       </div>
 
       {/* MOBILE FILTER BUTTON */}
-<div className="md:hidden flex justify-between items-center mb-6 gap-3">
+<div className="md:hidden flex justify-between items-center mb-6">
 
   {/* FILTER BUTTON */}
   <button
