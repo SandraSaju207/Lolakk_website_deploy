@@ -79,7 +79,7 @@ useEffect(() => {
   };
 
   return (
-   <section className="pt-28 md:pt-32 pb-20 md:pb-24 px-4 md:px-6 max-w-5xl mx-auto text-white bg-black min-h-screen">
+   <section className="pt-30 md:pt-32 pb-20 md:pb-24 px-4 md:px-6 max-w-5xl mx-auto text-white bg-black min-h-screen">
       <style>{`
         .serif { font-family: 'Playfair Display', serif; }
         .gold-gradient { background: linear-gradient(to right, #fbbf24, #fef3c7, #b45309); -webkit-background-clip: text; color: transparent; }
