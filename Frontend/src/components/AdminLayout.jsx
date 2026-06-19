@@ -73,12 +73,7 @@ export default function AdminLayout({ children, setActiveTab, activeTab }) {
 
           <div className="flex items-center gap-6">
 
-            <button
-  onClick={() => navigate("/")}
-  className="px-4 py-2 rounded-lg bg-[#d4af37] text-black font-medium hover:scale-105 transition"
->
-  🏠 Home
-</button>
+  
             {/* Notification (Unchanged) */}
             <div className="relative cursor-pointer group">
               <div className="p-2 rounded-full bg-white/5 backdrop-blur-md group-hover:scale-110 transition">
