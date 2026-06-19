@@ -32,6 +32,15 @@ export default function AdminDashboard() {
 
   // BASE URL
   axios.defaults.baseURL = API;
+  axios.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
+});
 
   // Form States for Modal
   const [formData, setFormData] = useState({
@@ -130,6 +139,15 @@ console.log("Products Response:", productRes.data);
     }
   };
 
+  const token = localStorage.getItem("token");
+
+const authConfig = {
+  headers: {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "multipart/form-data",
+  },
+};
+
   // ===================== SAVE/UPDATE LOGIC =====================
   const handleSaveProduct = async () => {
     try {
@@ -162,13 +180,17 @@ if (productType === "bracelets") {
       }
 
       if (editingProduct && editingProduct._id) {
-        await axios.patch(`/api/products/${editingProduct._id}`, formDataToSend, {
-            headers: { "Content-Type": "multipart/form-data" }
-        });
+       await axios.patch(
+  `/api/products/${editingProduct._id}`,
+  formDataToSend,
+  authConfig
+);
       } else {
-        await axios.post("/api/products", formDataToSend, {
-            headers: { "Content-Type": "multipart/form-data" }
-        });
+       await axios.post(
+  "/api/products",
+  formDataToSend,
+  authConfig
+);
       }
 
       setShowModal(false);
