@@ -210,7 +210,7 @@ const similarProducts = selectedProduct
       <div className="pt-32 pb-24 px-6 max-w-7xl mx-auto">
 
         {/* HEADER */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-6">
           <h1 className="text-4xl serif text-amber-400">
             Kids Collections
           </h1>
@@ -219,7 +219,7 @@ const similarProducts = selectedProduct
           </p>
         </div>
 
-        <div className="md:hidden flex justify-between items-center mb-6">
+       <div className="md:hidden flex justify-between items-center mb-6">
 
   <button
     onClick={() => setShowFilters(true)}
