@@ -85,9 +85,9 @@ export default function Navbar() {
         </button>
 
         {/* LOGO */}
-       <img
+    <img
   src="/hero.png"
-  className="h-12 md:h-18 w-auto mr-auto ml-1 md:ml-0"
+  className="h-12 md:h-18 w-auto md:static ml-1 md:ml-0"
   alt="logo"
 />
 
