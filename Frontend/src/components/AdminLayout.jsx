@@ -110,7 +110,7 @@ export default function AdminLayout({ children, setActiveTab, activeTab }) {
 
             <button
   onClick={() => navigate("/")}
- className="hidden sm:block px-4 py-2 rounded-lg bg-[#d4af37] text-black font-medium hover:scale-105 transition"
+ className=" px-4 py-2 rounded-lg bg-[#d4af37] text-black font-medium hover:scale-105 transition"
 >
   🏠 Home
 </button>
