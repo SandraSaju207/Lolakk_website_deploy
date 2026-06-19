@@ -246,6 +246,11 @@ await fetch(`${API}/api/orders/${id}`, {
     <option>Cancelled</option>
   </select>
 
+  <div className="flex flex-col">
+  <label className="text-xs text-gray-400 mb-1">
+    Expected Delivery Date
+  </label>
+
   <input
     type="date"
     value={
@@ -259,8 +264,9 @@ await fetch(`${API}/api/orders/${id}`, {
         e.target.value
       )
     }
-   className="w-full sm:w-auto bg-black border border-zinc-700 p-3 rounded"
+    className="w-full sm:w-auto bg-black border border-zinc-700 p-3 rounded"
   />
+</div>
 </div>
         </div>
       </div>
