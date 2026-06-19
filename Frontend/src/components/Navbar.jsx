@@ -60,11 +60,7 @@ export default function Navbar() {
       <nav className="fixed top-0 w-full h-[70px] md:h-[80px] z-50 px-4 md:px-6 flex justify-between items-center bg-black/80 backdrop-blur">
         
         <div className="flex items-center gap-2">
-        <img
-  src="/hero.png"
-  className="h-12 md:h-18 w-auto mr-auto ml-1 md:ml-0"
-  alt="logo"
-/>
+     <img src="/hero.png" className="h-12 md:h-18 w-auto" alt="logo" />
         </div>
 
         <div className="w-10"></div>
@@ -89,7 +85,11 @@ export default function Navbar() {
         </button>
 
         {/* LOGO */}
-        <img src="/hero.png" className="h-12 md:h-18 w-auto" alt="logo" />
+       <img
+  src="/hero.png"
+  className="h-12 md:h-18 w-auto mr-auto ml-1 md:ml-0"
+  alt="logo"
+/>
 
         {/* DESKTOP MENU */}
       <div className="hidden md:flex items-center space-x-10 text-xs uppercase tracking-widest font-semibold text-white">
