@@ -1,9 +1,14 @@
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+
 
 export default function AdminLayout({ children, setActiveTab, activeTab }) {
   const menu = ["dashboard", "orders", "rentals", "stock"];
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+  const navigate = useNavigate();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -29,10 +34,18 @@ export default function AdminLayout({ children, setActiveTab, activeTab }) {
       {/* SIDEBAR (Unchanged) */}
       <div className="w-64 p-6 relative border-r border-white/10 bg-gradient-to-b from-[#111111] via-[#0d0d0d] to-[#090909] backdrop-blur-xl">
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-[#d4af37]/20 to-transparent blur-2xl opacity-30"></div>
-        <h1 className="text-2xl font-serif mb-12 tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] via-[#f5e6b3] to-[#d4af37]">
-          LOLAKK
-        </h1>
-        <div className="space-y-3 relative z-10">
+        <h1 className="text-2xl font-serif mb-6 tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] via-[#f5e6b3] to-[#d4af37]">
+  LOLAKK
+</h1>
+
+<button
+  onClick={() => navigate("/")}
+  className="w-full mb-4 px-4 py-3 rounded-xl bg-[#d4af37] text-black font-semibold hover:scale-[1.02] transition"
+>
+  🏠 Back to Website
+</button>
+
+<div className="space-y-3 relative z-10">
           {menu.map((item) => (
             <button
               key={item}
@@ -59,6 +72,13 @@ export default function AdminLayout({ children, setActiveTab, activeTab }) {
           </h2>
 
           <div className="flex items-center gap-6">
+
+            <button
+  onClick={() => navigate("/")}
+  className="px-4 py-2 rounded-lg bg-[#d4af37] text-black font-medium hover:scale-105 transition"
+>
+  🏠 Home
+</button>
             {/* Notification (Unchanged) */}
             <div className="relative cursor-pointer group">
               <div className="p-2 rounded-full bg-white/5 backdrop-blur-md group-hover:scale-110 transition">
