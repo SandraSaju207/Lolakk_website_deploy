@@ -69,10 +69,18 @@ export default function AdminDashboard() {
   // ===================== BACKEND SYNC =====================
   const fetchAll = async () => {
     try {
-     const [orderRes, rentalRes, productRes] = await Promise.all([
-  axios.get("/api/orders"),
-  axios.get("/api/rentals"),
-  axios.get("/api/products")
+    const token = localStorage.getItem("token");
+
+const config = {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+};
+
+const [orderRes, rentalRes, productRes] = await Promise.all([
+  axios.get("/api/orders", config),
+  axios.get("/api/rentals", config),
+  axios.get("/api/products", config),
 ]);
 
 console.log("Orders Response:", orderRes.data);
