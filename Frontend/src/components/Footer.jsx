@@ -31,7 +31,7 @@ export default function Footer() {
         </a>
 
         <a
-          href="https://wa.me/919999999999"
+          href="https://wa.me/917994405335"
           target="_blank"
           rel="noopener noreferrer"
           className="text-xs uppercase hover:text-amber-400 transition"
