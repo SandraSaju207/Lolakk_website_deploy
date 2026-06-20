@@ -1,15 +1,18 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { Notifications } from "../components/Notifications";
+import useNotifications from "../hooks/useNotifications";
 
 
 export default function AdminLayout({ children, setActiveTab, activeTab }) {
+  const notifications = useNotifications();
   const menu = ["dashboard", "orders", "rentals", "stock"];
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   const navigate = useNavigate();
+
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -30,6 +33,9 @@ export default function AdminLayout({ children, setActiveTab, activeTab }) {
 };
 
   return (
+    <>
+    <Notifications notifications={notifications} />
+    
     <div className="flex min-h-screen bg-[#0b0b0c] text-[#eaeaea] font-sans relative">
 
       {sidebarOpen && (
@@ -121,9 +127,11 @@ export default function AdminLayout({ children, setActiveTab, activeTab }) {
               <div className="p-2 rounded-full bg-white/5 backdrop-blur-md group-hover:scale-110 transition">
                 <span className="text-[#d4af37] text-lg">🔔</span>
               </div>
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#d4af37] text-black text-[10px] flex items-center justify-center rounded-full shadow">
-                1
-              </span>
+             {notifications.length > 0 && (
+  <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[10px] flex items-center justify-center rounded-full shadow">
+    {notifications.length}
+  </span>
+)}
             </div>
 
             {/* UPDATED: Profile Dropdown */}
@@ -180,5 +188,6 @@ export default function AdminLayout({ children, setActiveTab, activeTab }) {
 
       </div>
     </div>
+    </>
   );
 }

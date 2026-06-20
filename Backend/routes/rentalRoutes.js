@@ -51,6 +51,19 @@ router.post("/", async (req, res) => {
     const savedRental =
       await newRental.save();
 
+      const io = req.app.get("socketio");
+
+if (io) {
+  io.emit("newRental", {
+    customer: savedRental.customerName,
+    item: savedRental.itemName,
+    total: savedRental.total,
+  });
+
+  console.log("✅ New Rental Notification Sent");
+}
+
+
     // ✅ Socket.io notification
     const io = req.app.get("socketio");
 

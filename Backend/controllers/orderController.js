@@ -130,6 +130,19 @@ if (!user) {
       paymentStatus: "Paid",
     });
 
+    const io = req.app.get("socketio");
+
+if (io) {
+  io.emit("newOrder", {
+    customer: newOrder.customerName,
+    total: newOrder.total,
+    orderId: newOrder._id,
+  });
+
+  console.log("✅ New Order Notification Sent");
+}
+
+
     return res.json({
       success: true,
       message: "Payment verified & order created",
