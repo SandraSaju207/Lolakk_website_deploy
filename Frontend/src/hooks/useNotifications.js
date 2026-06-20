@@ -16,14 +16,8 @@ const socket = io(API, {
       console.log("Connected to Notification Server");
     });
 
-    socket.on("newOrder", (data) => {
-      setNotifications((prev) => [
-        { id: Date.now(), type: "order", ...data, message: "New Order Received!" },
-        ...prev,
-      ]);
-    });
-
-    socket.on("newOrder", (data) => {
+   
+socket.on("newOrder", (data) => {
   console.log("🔥 FRONTEND RECEIVED ORDER:", data);
 
   setNotifications((prev) => [
@@ -31,11 +25,12 @@ const socket = io(API, {
       id: Date.now(),
       type: "order",
       ...data,
-      message: "New Order Received!"
+      message: "New Order Received!",
     },
     ...prev,
   ]);
 });
+   
 
 
     socket.on("newRental", (data) => {
