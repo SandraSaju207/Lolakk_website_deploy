@@ -266,29 +266,30 @@ await fetch(`${API}/api/orders/${id}`, {
               key={index}
              className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-zinc-800 py-3 gap-2"
             >
-             <div className="flex items-center gap-3 w-full">
-                <img
-  src={product.image}
-  alt={product.name}
-  onClick={() => {
-  console.log("CLICKED IMAGE VALUE:", product.image);
-  setPreviewImage(product.image);
-}}
-  className="w-14 h-14 md:w-12 md:h-12 rounded-md object-cover border border-zinc-700 cursor-pointer hover:scale-110 hover:shadow-lg transition duration-200"
-/>
+             <div className="flex items-center gap-4 w-full">
+  <img
+    src={product.image}
+    alt={product.name}
+    onClick={() => setPreviewImage(product.image)}
+    className="w-24 h-24 rounded-xl object-cover border border-amber-500/20 cursor-pointer hover:scale-105 transition"
+  />
 
-                <span className="text-gray-300 text-sm md:text-base break-words">
-                  {product.name}
-                </span>
-              </div>
+  <div>
+    <h4 className="text-white font-medium text-base">
+      {product.name}
+    </h4>
 
-              <span className="text-gray-400">
-                Qty: {product.quantity}
-              </span>
+    <p className="text-gray-400">
+      Qty: {product.quantity}
+    </p>
 
-              <span className="text-amber-400">
-                ₹{product.price}
-              </span>
+    <p className="text-amber-400 font-semibold">
+      ₹{product.price}
+    </p>
+  </div>
+</div>
+
+              
             </div>
           ))}
         </div>
