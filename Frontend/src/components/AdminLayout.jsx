@@ -148,12 +148,12 @@ export default function AdminLayout({ children, setActiveTab, activeTab }) {
               {/* DROPDOWN MENU */}
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-3 w-48 rounded-2xl bg-[#111] border border-white/10 shadow-2xl overflow-hidden py-2 backdrop-blur-2xl animate-in fade-in zoom-in duration-200">
-                  <button 
+                  {/* <button 
                     onClick={() => { setActiveTab('profile'); setIsDropdownOpen(false); }}
                     className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:bg-white/5 hover:text-[#d4af37] transition"
                   >
                     <span>👤</span> Visit Profile
-                  </button>
+                  </button> */}
                   
                   <div className="h-[1px] bg-white/5 mx-2"></div>
                   
