@@ -128,6 +128,7 @@ const newOrder = await Order.create({
   status: "Order Confirmed",
   paymentStatus: "Paid",
 });
+console.log("✅ ORDER CREATED:", newOrder._id);
 
 const io = req.app.get("socketio");
 
