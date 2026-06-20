@@ -4,8 +4,11 @@ import { protect } from "../middleware/authMiddleware.js";
 import { adminOnly } from "../middleware/adminMiddleware.js";
 import Order from "../models/Order.js";
 import jwt from "jsonwebtoken";
+import { cancelOrder } from "../controllers/orderController.js";
 
 const router = express.Router();
+
+router.put("/:id/cancel", protect, cancelOrder);
 
 router.get("/", protect, async (req, res) => {
   try {

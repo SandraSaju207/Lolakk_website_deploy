@@ -310,12 +310,17 @@ await fetch(`${API}/api/orders/${id}`, {
 
        <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
   <select
-    value={item.status}
-    onChange={(e) =>
-      updateStatus(item._id, e.target.value)
-    }
-    className="w-full sm:w-auto p-3 bg-black border border-zinc-700 rounded"
-  >
+  value={item.status}
+  disabled={item.status === "Cancelled"}
+  onChange={(e) =>
+    updateStatus(item._id, e.target.value)
+  }
+  className={`w-full sm:w-auto p-3 border rounded ${
+    item.status === "Cancelled"
+      ? "bg-zinc-800 text-gray-500 cursor-not-allowed"
+      : "bg-black border-zinc-700"
+  }`}
+>
     <option>Order Confirmed</option>
     <option>Processing</option>
     <option>Ready to be Shipped</option>

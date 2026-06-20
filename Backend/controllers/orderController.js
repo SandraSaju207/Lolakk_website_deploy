@@ -52,6 +52,41 @@ customerPhone: decoded.phone,
 };
 
 
+export const cancelOrder = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+      return res.status(404).json({
+        message: "Order not found",
+      });
+    }
+
+    if (
+      !["Order Confirmed", "Processing"].includes(
+        order.status
+      )
+    ) {
+      return res.status(400).json({
+        message:
+          "Order can no longer be cancelled",
+      });
+    }
+
+    order.status = "Cancelled";
+
+    await order.save();
+
+    res.json({
+      success: true,
+      message: "Order cancelled",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
 
 
 export const verifyPayment = async (req, res) => {

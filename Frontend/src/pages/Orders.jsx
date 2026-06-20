@@ -67,10 +67,44 @@ useEffect(() => {
   };
 
   const handleCancelOrder = async (id) => {
-    if (window.confirm("Are you sure you want to cancel this order?")) {
-      alert(`Order cancellation request sent for ${id}`);
+  if (!window.confirm("Are you sure you want to cancel this order?")) {
+    return;
+  }
+
+  try {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(
+      `${BASE_URL}/api/orders/${id}/cancel`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message || "Cancellation failed");
+      return;
     }
-  };
+
+    alert("Order cancelled successfully");
+
+    setOrders((prev) =>
+      prev.map((order) =>
+        (order._id || order.id) === id
+          ? { ...order, status: "Cancelled" }
+          : order
+      )
+    );
+  } catch (err) {
+    console.error(err);
+    alert("Something went wrong");
+  }
+};
 
   const handleReturnOrder = async (id) => {
     if (window.confirm("Do you wish to initiate a return?")) {
@@ -113,6 +147,7 @@ useEffect(() => {
             const isExpanded = expandedOrderId === orderId;
             const status = order.status || "Order Confirmed";
             const isDelivered = status === "Delivered";
+            const isCancelled = status === "Cancelled";
             
             return (
               <div key={orderId} className="glass border border-white/10 rounded-2xl overflow-hidden transition-all duration-500">
@@ -134,15 +169,26 @@ useEffect(() => {
                <div className="flex flex-row items-center gap-2">
                     <div className="text-right mr-4">
                       <p className="text-xs text-gray-500 uppercase tracking-widest">Status</p>
-                      <div className="flex items-center gap-2 text-green-400 text-sm font-bold">
-                        <CheckCircle size={14} /> {order.status || "Confirmed"}
-                      </div>
+                      <div
+  className={`flex items-center gap-2 text-sm font-bold ${
+    isCancelled
+      ? "text-red-400"
+      : "text-green-400"
+  }`}
+>
+  <CheckCircle size={14} />
+  {order.status || "Confirmed"}
+</div>
                     </div>
-                    {!isDelivered && (
-                      <button onClick={() => handleCancelOrder(orderId)} className="flex items-center gap-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 px-4 py-2 rounded-xl text-xs font-bold uppercase transition border border-red-500/20">
-                        <XCircle size={14} /> Cancel
-                      </button>
-                    )}
+                    {["Order Confirmed", "Processing"].includes(status) && (
+  <button
+    onClick={() => handleCancelOrder(orderId)}
+    className="flex items-center gap-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 px-4 py-2 rounded-xl text-xs font-bold uppercase transition border border-red-500/20"
+  >
+    <XCircle size={14} />
+    Cancel
+  </button>
+)}
                     <button onClick={() => toggleTrack(orderId)} className="flex items-center gap-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-500 px-4 py-2 rounded-xl text-xs font-bold uppercase transition border border-amber-500/20">
                       {isExpanded ? <><ChevronUp size={14} /> Close</> : <><ChevronDown size={14} /> Track</>}
                     </button>
