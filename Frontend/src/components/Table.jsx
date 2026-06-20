@@ -99,6 +99,83 @@ await fetch(`${API}/api/orders/${id}`, {
       </div>
 <div className="space-y-4">
   {filtered.map((item) => {
+    if (type === "rental") {
+  return (
+    <div
+      key={item._id}
+      className="rounded-xl border border-amber-500/20 bg-zinc-900 p-5"
+    >
+      <div className="flex flex-col md:flex-row md:justify-between gap-4">
+        <div>
+          <h3 className="text-xl font-semibold text-amber-400">
+            {item.itemName}
+          </h3>
+
+          <p className="text-gray-300 mt-2">
+            Customer: {item.customerName}
+          </p>
+
+          <p className="text-gray-400">
+            Rental ID: {item.rentalId}
+          </p>
+
+          <p className="text-gray-400">
+            Booked On:{" "}
+            {new Date(item.createdAt).toLocaleDateString()}
+          </p>
+
+          <p className="text-gray-400">
+            Start Date:{" "}
+            {new Date(
+              item.rentalPeriod?.start
+            ).toLocaleDateString()}
+          </p>
+
+          <p className="text-gray-400">
+            Return Date:{" "}
+            {new Date(
+              item.rentalPeriod?.end
+            ).toLocaleDateString()}
+          </p>
+
+          <p className="text-gray-400">
+            Duration:{" "}
+            {Math.ceil(
+              (new Date(item.rentalPeriod?.end) -
+                new Date(item.rentalPeriod?.start)) /
+                (1000 * 60 * 60 * 24)
+            )}{" "}
+            Days
+          </p>
+
+          <p className="text-amber-400 font-semibold mt-2">
+            ₹{item.total}
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-3">
+          <span className="text-white">
+            Status: {item.status}
+          </span>
+
+          <select
+            value={item.status}
+            onChange={(e) =>
+              updateStatus(item._id, e.target.value)
+            }
+            className="bg-black border border-zinc-700 p-3 rounded"
+          >
+            <option>Rental Order Accepted</option>
+            <option>Booked</option>
+            <option>Ongoing</option>
+            <option>Returned</option>
+            <option>Cancelled</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  );
+}
     console.log("ORDER ITEMS:", item.items);
     console.log("ORDER ADDRESS:", item.shippingAddress);
 
