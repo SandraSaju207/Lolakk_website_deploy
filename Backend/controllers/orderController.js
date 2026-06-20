@@ -132,6 +132,8 @@ if (!user) {
 
     const io = req.app.get("socketio");
 
+    console.log("🔥 About to emit newOrder");
+
 if (io) {
   io.emit("newOrder", {
     customer: newOrder.customerName,
