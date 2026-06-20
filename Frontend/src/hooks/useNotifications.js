@@ -23,6 +23,21 @@ const socket = io(API, {
       ]);
     });
 
+    socket.on("newOrder", (data) => {
+  console.log("🔥 FRONTEND RECEIVED ORDER:", data);
+
+  setNotifications((prev) => [
+    {
+      id: Date.now(),
+      type: "order",
+      ...data,
+      message: "New Order Received!"
+    },
+    ...prev,
+  ]);
+});
+
+
     socket.on("newRental", (data) => {
       setNotifications((prev) => [
         { id: Date.now(), type: "rental", ...data, message: "New Rental Booked!" },
