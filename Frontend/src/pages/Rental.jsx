@@ -326,7 +326,7 @@ const handleConfirm = async () => {
 
   try {
     // ✅ Save booking in database
-    const response = await axios.post("/api/rentals", {
+   const response = await axios.post(`${API}/api/rentals`, {
       customerName,
       itemName: selectedItem.name,
       rentalPeriod: {
