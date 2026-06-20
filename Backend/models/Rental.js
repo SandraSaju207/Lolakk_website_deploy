@@ -24,6 +24,10 @@ const rentalSchema = new mongoose.Schema(
       ref: "Product",
     },
 
+    productImage: {
+  type: String,
+},
+
     rentalPeriod: {
       start: {
         type: Date,

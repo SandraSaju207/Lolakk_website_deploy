@@ -2,6 +2,7 @@ import express from "express";
 import Rental from "../models/Rental.js";
 import { protect } from "../middleware/authMiddleware.js";
 import { adminOnly } from "../middleware/adminMiddleware.js";
+import Product from "../models/Product.js";
 
 const router = express.Router();
 
@@ -32,6 +33,8 @@ router.post("/", async (req, res) => {
       rentalId,
       customerName: req.body.customerName,
       itemName: req.body.itemName,
+          productId: product?._id,
+       productImage: product?.image,
 
       rentalPeriod: {
         start: req.body.rentalPeriod.start,
