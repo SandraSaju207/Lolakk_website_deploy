@@ -113,7 +113,7 @@ console.log("FINAL ORDER:", {
 });
 
 // 🔥 CREATE ORDER (THIS WAS MISSING)
-await Order.create({
+const newOrder = await Order.create({
   userId: req.body.userId || null,
 
   customerName: req.body.customerName || "Guest User",
@@ -128,6 +128,20 @@ await Order.create({
   status: "Order Confirmed",
   paymentStatus: "Paid",
 });
+
+const io = req.app.get("socketio");
+
+console.log("SOCKET:", !!io);
+
+if (io) {
+  io.emit("newOrder", {
+    customer: newOrder.customerName,
+    total: newOrder.total,
+    orderId: newOrder._id,
+  });
+
+  console.log("✅ NEW ORDER EVENT EMITTED");
+}
 //     await Order.create({
 //   customerName,
 //   total: amount,
