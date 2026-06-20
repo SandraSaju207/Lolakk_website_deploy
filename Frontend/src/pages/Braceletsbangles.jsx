@@ -570,6 +570,10 @@ const filteredItems = products.filter((item) => {
   {item.name}
 </h3>
 
+<p className="text-gray-400 text-sm mt-1 line-clamp-2 min-h-[40px]">
+  {item.description || "Premium luxury earring collection"}
+</p>
+
 <p className="text-2xl text-amber-400 mt-2">
   ₹{item.price}
 </p>

@@ -615,7 +615,7 @@ const paginatedRings = sortedRings;
             {paginatedRings.map((ring) => (
   <div
   key={ring._id}
-  className="border border-white/10 p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition-all group cursor-pointer relative overflow-hidden"
+ className="border border-white/10 p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition-all group cursor-pointer relative overflow-hidden flex flex-col"
   onClick={() => openModal(ring)}
 >
     <div className="overflow-hidden rounded-lg">
@@ -627,6 +627,9 @@ const paginatedRings = sortedRings;
 </div>
 
     <h3 className="text-white mt-4 font-medium">{ring.name}</h3>
+    <p className="text-gray-400 text-sm mt-1 line-clamp-2 min-h-[40px]">
+  {ring.description || "Premium luxury ring collection"}
+</p>
 
 <div className="mt-2 flex items-center gap-2">
   <span className="text-2xl font-light text-amber-400 tracking-wide">
@@ -756,11 +759,11 @@ const paginatedRings = sortedRings;
 
             {/* GO TO CART */}
             <button
-              onClick={() => (window.location.href = "/cart")}
-              className="w-full py-3.5rounded-2xl border border-amber-500/30 bg-white/5 backdrop-blur-md text-amber-300 uppercase tracking-[0.25em] text-sm hover:bg-amber-500 hover:text-black transition-all duration-500"
-            >
-              Go to Cart
-            </button>
+                    onClick={() => (window.location.href = "/cart")}
+                    className="w-full py-3.5 rounded-2xl border border-amber-500/30 bg-white/5 backdrop-blur-md text-amber-300 uppercase tracking-[0.25em] text-sm hover:bg-amber-500 hover:text-black transition-all duration-500"
+                  >
+                    Go to Cart
+                  </button>
           </div>
 
           {/* EXTRA DETAILS */}
@@ -812,6 +815,7 @@ const paginatedRings = sortedRings;
                 <p className="text-sm text-gray-300 mt-3 group-hover:text-amber-400 transition">
                   {item.name}
                 </p>
+
 
                 <p className="text-amber-500 text-sm mt-1">
                   ₹{item.price}

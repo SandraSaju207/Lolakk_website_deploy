@@ -84,8 +84,10 @@ export default function Cart() {
   };
 
   const removeItem = (id) => {
+  if (window.confirm("Remove this item from cart?")) {
     setCart((prev) => prev.filter((item) => item.id !== id));
-  };
+  }
+};
 
   // =========================
   // PAYMENT FIXED
@@ -314,6 +316,13 @@ const grandTotal = cartTotal + deliveryCharge;
 </div>
                 </div>
 <div className="text-right ml-auto flex flex-col justify-between">
+
+  <button
+    onClick={() => removeItem(item.id)}
+    className="self-end mb-2 text-red-400 hover:text-red-300"
+  >
+    <Trash2 size={18} />
+  </button>
                   <p className="text-gray-400 text-sm">
   Product: ₹{item.price * item.qty}
 </p>

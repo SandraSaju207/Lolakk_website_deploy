@@ -503,6 +503,11 @@ const similarProducts = selectedProduct
       {item.name}
     </h3>
 
+    <p className="text-gray-400 text-sm mt-1 line-clamp-2 min-h-[40px]">
+  {item.description || "Premium luxury earring collection"}
+</p>
+
+
     <p className="text-2xl text-amber-400 mt-2">
       ₹{item.price}
     </p>
@@ -627,7 +632,7 @@ const similarProducts = selectedProduct
                   {/* GO TO CART */}
                   <button
                     onClick={() => (window.location.href = "/cart")}
-                    className="w-full py-3.5rounded-2xl border border-amber-500/30 bg-white/5 backdrop-blur-md text-amber-300 uppercase tracking-[0.25em] text-sm hover:bg-amber-500 hover:text-black transition-all duration-500"
+                    className="w-full py-3.5 rounded-2xl border border-amber-500/30 bg-white/5 backdrop-blur-md text-amber-300 uppercase tracking-[0.25em] text-sm hover:bg-amber-500 hover:text-black transition-all duration-500"
                   >
                     Go to Cart
                   </button>

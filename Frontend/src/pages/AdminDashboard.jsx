@@ -21,6 +21,7 @@ export default function AdminDashboard() {
   const [materialType, setMaterialType] = useState("gold");
   const [ItemType,setItemType] = useState("bangle");
   const [kidsItemType, setKidsItemType] = useState("hair_bun");
+  const [savingProduct, setSavingProduct] = useState(false);
 
   const notifications = useNotifications();
 
@@ -45,6 +46,7 @@ export default function AdminDashboard() {
   // Form States for Modal
   const [formData, setFormData] = useState({
     name: "",
+    description: "",
     stock: 0,
     price: 0,
     audience: "Women",
@@ -108,11 +110,13 @@ console.log("Products Response:", productRes.data);
     }
   };
 
+  
   // ===================== EDIT LOGIC =====================
   const handleEditClick = (product) => {
     setEditingProduct(product);
     setFormData({
       name: product.name,
+       description: product.description || "",
       stock: product.stock,
       price: product.price,
       audience: product.audience,
@@ -150,13 +154,17 @@ const authConfig = {
 
   // ===================== SAVE/UPDATE LOGIC =====================
   const handleSaveProduct = async () => {
-    try {
-      if (!formData.name || !productType) {
-        return alert("Product name and category are required.");
-      }
+  try {
+    setSavingProduct(true);
 
-      const formDataToSend = new FormData();
+    if (!formData.name || !productType) {
+      setSavingProduct(false);
+      return alert("Product name and category are required.");
+    }
+
+    const formDataToSend = new FormData();
       formDataToSend.append("name", formData.name);
+      formDataToSend.append("description", formData.description);
       formDataToSend.append("stock", formData.stock);
       formDataToSend.append("price", formData.price);
       formDataToSend.append("type", productType);
@@ -199,11 +207,13 @@ if (productType === "bracelets") {
       setFormData({ name: "", stock: 0, price: 0, audience: "Women", extra: "" });
       fetchAll(); 
       
-    } catch (err) {
-      console.error("Save Error:", err);
-      alert(err.response?.data?.message || "Failed to save product.");
-    }
-  };
+     } catch (err) {
+    console.error("Save Error:", err);
+    alert(err.response?.data?.message || "Failed to save product.");
+  } finally {
+    setSavingProduct(false);
+  }
+};
 
   // ===================== STATUS HANDLERS =====================
   const handleOrderStatusChange = (id, status) => {
@@ -437,6 +447,9 @@ const trendingProducts = Array.isArray(products)
 
                   <div className="space-y-1">
                    <h3 className="text-sm md:text-base text-white font-medium truncate">{p.name}</h3>
+                   <p className="text-xs text-gray-400 line-clamp-2 min-h-[32px]">
+  {p.description || "No description"}
+</p>
                     <div className="flex justify-between items-end">
                       <div>
                         <p className="text-gray-400 text-xs uppercase tracking-wider">{p.type}</p>
@@ -490,6 +503,24 @@ const trendingProducts = Array.isArray(products)
                 <label className="text-xs text-gray-500 ml-1">Product Name</label>
                 <input value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} placeholder="Ex: Regal Gold Bangle" className="w-full p-3 rounded-xl bg-black/40 border border-white/10 text-white focus:border-[#d4af37] outline-none transition" />
               </div>
+              <div className="space-y-1 md:col-span-2">
+  <label className="text-xs text-gray-500 ml-1">
+    Description
+  </label>
+
+  <textarea
+    value={formData.description}
+    onChange={(e) =>
+      setFormData({
+        ...formData,
+        description: e.target.value,
+      })
+    }
+    rows={4}
+    placeholder="Enter product description..."
+    className="w-full p-3 rounded-xl bg-black/40 border border-white/10 text-white focus:border-[#d4af37] outline-none transition resize-none"
+  />
+</div>
               <div className="space-y-1">
                 <label className="text-xs text-gray-500 ml-1">Price (₹)</label>
                 <input value={formData.price} onChange={(e) => setFormData({...formData, price: e.target.value})} type="number" className="w-full p-3 rounded-xl bg-black/40 border border-white/10 text-white focus:border-[#d4af37] outline-none transition" />
@@ -632,9 +663,21 @@ const trendingProducts = Array.isArray(products)
 
            <div className="mt-8 flex flex-col md:flex-row gap-3 md:space-x-4">
               <button onClick={() => setShowModal(false)} className="flex-1 px-6 py-3 rounded-xl bg-white/5 text-white hover:bg-white/10 transition">Cancel</button>
-              <button onClick={handleSaveProduct} className="flex-1 px-6 py-3 rounded-xl bg-gradient-to-r from-[#d4af37] to-[#b8962e] text-black font-bold transition">
-                {editingProduct ? "Update Product" : "Save Product"}
-              </button>
+              <button
+  onClick={handleSaveProduct}
+  disabled={savingProduct}
+  className={`flex-1 px-6 py-3 rounded-xl font-bold transition ${
+    savingProduct
+      ? "bg-gray-500 cursor-not-allowed"
+      : "bg-gradient-to-r from-[#d4af37] to-[#b8962e] text-black"
+  }`}
+>
+  {savingProduct
+    ? "Saving Product..."
+    : editingProduct
+      ? "Update Product"
+      : "Save Product"}
+</button>
             </div>
           </div>
         </div>
