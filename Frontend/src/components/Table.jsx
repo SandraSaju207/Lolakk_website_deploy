@@ -107,6 +107,14 @@ await fetch(`${API}/api/orders/${id}`, {
     >
       <div className="flex flex-col md:flex-row md:justify-between gap-4">
         <div>
+          <div className="flex gap-4">
+  <img
+    src={item.productImage}
+    alt={item.itemName}
+    className="w-24 h-24 rounded-xl object-cover border border-amber-500/20"
+  />
+
+  <div>
           <h3 className="text-xl font-semibold text-amber-400">
             {item.itemName}
           </h3>

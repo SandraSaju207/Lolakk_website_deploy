@@ -329,6 +329,7 @@ const handleConfirm = async () => {
    const response = await axios.post(`${API}/api/rentals`, {
       customerName,
       itemName: selectedItem.name,
+       productImage: selectedItem.image,
       rentalPeriod: {
         start: startDate,
         end: returnDate
