@@ -54,7 +54,6 @@ router.post("/", async (req, res) => {
       const io = req.app.get("socketio");
 
 if (io) {
-  console.log("🔥 EMITTING NEW RENTAL");
   io.emit("newRental", {
     customer: savedRental.customerName,
     item: savedRental.itemName,
