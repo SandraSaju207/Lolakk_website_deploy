@@ -22,14 +22,15 @@ const orderSchema = new mongoose.Schema({
   status: { 
     type: String, 
     // Updated to match your specific requirements
-    enum: [
-      "Order Confirmed", 
-      "Ready to be Shipped", 
-      "Shipped", 
-      "Delivered", 
-      "Cancelled", 
-      "Returned"
-    ], 
+   enum: [
+  "Order Confirmed",
+  "Processing",
+  "Ready to be Shipped",
+  "Shipped",
+  "Delivered",
+  "Cancelled",
+  "Returned"
+],
     default: "Order Confirmed" 
   },
 shippingAddress: {
