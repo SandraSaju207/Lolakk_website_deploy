@@ -56,6 +56,7 @@ customerPhone: decoded.phone,
 
 export const verifyPayment = async (req, res) => {
   try {
+    console.log("🔥 VERIFY PAYMENT HIT");
     console.log("🔥 VERIFY PAYMENT:", req.body);
 
     const {
