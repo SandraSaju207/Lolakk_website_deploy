@@ -207,8 +207,8 @@ await fetch(`${API}/api/orders/${id}`, {
       </h3>
 
        <p className="text-gray-400 text-xs">
-      Qty: {product.quantity}
-    </p>
+  Qty: {item.items?.[0]?.quantity || 1}
+</p>
 
       <p className="text-gray-300 mt-2">
         Customer: {item.userId?.name || item.customerName}
@@ -292,37 +292,7 @@ await fetch(`${API}/api/orders/${id}`, {
           </div>
         </div>
 
-        <div className="mb-4">
-          <h4 className="text-white font-medium mb-2">
-            Ordered Items
-          </h4>
-
-          {item.items?.map((product, index) => (
-            <div
-              key={index}
-             className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-zinc-800 py-3 gap-2"
-            >
-      <div className="flex items-center gap-3 w-full">
-  {/* <img
-    src={product.image}
-    alt={product.name}
-    onClick={() => setPreviewImage(product.image)}
-    className="w-14 h-14 rounded-lg object-cover border border-zinc-700 cursor-pointer"
-  /> */}
-
-  <div>
-    {/* <p className="text-white text-sm font-medium">
-      {product.name}
-    </p> */}
-
-   
-  </div>
-</div>
-
-              
-            </div>
-          ))}
-        </div>
+       
 
        <div className="mt-4 border-t border-zinc-700 pt-3 text-sm md:text-base">
   <div className="flex justify-between text-gray-400">
