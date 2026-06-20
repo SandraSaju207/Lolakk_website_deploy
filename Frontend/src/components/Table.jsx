@@ -206,6 +206,10 @@ await fetch(`${API}/api/orders/${id}`, {
         {item.items?.[0]?.name || "Order"}
       </h3>
 
+       <p className="text-gray-400 text-xs">
+      Qty: {product.quantity}
+    </p>
+
       <p className="text-gray-300 mt-2">
         Customer: {item.userId?.name || item.customerName}
       </p>
@@ -299,21 +303,19 @@ await fetch(`${API}/api/orders/${id}`, {
              className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-zinc-800 py-3 gap-2"
             >
       <div className="flex items-center gap-3 w-full">
-  <img
+  {/* <img
     src={product.image}
     alt={product.name}
     onClick={() => setPreviewImage(product.image)}
     className="w-14 h-14 rounded-lg object-cover border border-zinc-700 cursor-pointer"
-  />
+  /> */}
 
   <div>
-    <p className="text-white text-sm font-medium">
+    {/* <p className="text-white text-sm font-medium">
       {product.name}
-    </p>
+    </p> */}
 
-    <p className="text-gray-400 text-xs">
-      Qty: {product.quantity}
-    </p>
+   
   </div>
 </div>
 
