@@ -8,6 +8,14 @@ import { cancelOrder } from "../controllers/orderController.js";
 
 const router = express.Router();
 
+router.get("/test-route", (req, res) => {
+  res.json({
+    success: true,
+    message: "Order routes working",
+  });
+});
+
+
 router.put("/:id/cancel", protect, cancelOrder);
 
 router.get("/", protect, async (req, res) => {
