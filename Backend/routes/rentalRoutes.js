@@ -29,24 +29,24 @@ router.post("/", async (req, res) => {
     const rentalId =
       "RLK-" + Date.now();
 
-    const newRental = new Rental({
-      rentalId,
-      customerName: req.body.customerName,
-      itemName: req.body.itemName,
-          productId: product?._id,
-       productImage: product?.image,
+   const newRental = new Rental({
+  rentalId,
+  customerName: req.body.customerName,
+  itemName: req.body.itemName,
 
-      rentalPeriod: {
-        start: req.body.rentalPeriod.start,
-        end: req.body.rentalPeriod.end,
-      },
+  productImage: req.body.productImage,
 
-      total: req.body.total,
+  rentalPeriod: {
+    start: req.body.rentalPeriod.start,
+    end: req.body.rentalPeriod.end,
+  },
 
-      status:
-        req.body.status ||
-        "Rental Order Accepted",
-    });
+  total: req.body.total,
+
+  status:
+    req.body.status ||
+    "Rental Order Accepted",
+});
 
     const savedRental =
       await newRental.save();
