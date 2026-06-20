@@ -59,6 +59,23 @@ await fetch(`${API}/api/orders/${id}`, {
     return matchSearch && matchStatus;
   });
 
+  const deleteOrder = async (id) => {
+  if (!window.confirm("Delete this cancelled order?")) {
+    return;
+  }
+
+  const token = localStorage.getItem("token");
+
+  await fetch(`${API}/api/orders/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  refresh();
+};
+
   return (
     <div>
      <div className="flex flex-col sm:flex-row gap-3 mb-4">
@@ -329,6 +346,14 @@ await fetch(`${API}/api/orders/${id}`, {
     <option>Delivered</option>
     <option>Cancelled</option>
   </select>
+  {item.status === "Cancelled" && (
+  <button
+    onClick={() => deleteOrder(item._id)}
+    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+  >
+    Delete Order
+  </button>
+)}
 
   <div className="flex flex-col">
   <label className="text-xs text-gray-400 mb-1">

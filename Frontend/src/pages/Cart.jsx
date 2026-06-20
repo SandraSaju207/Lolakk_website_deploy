@@ -16,6 +16,7 @@ export default function Cart() {
   const [loading, setLoading] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
   const [showAddressWarning, setShowAddressWarning] = useState(false);
+  const [processingItem, setProcessingItem] = useState(null);
 
   const navigate = useNavigate();
 
@@ -92,10 +93,15 @@ export default function Cart() {
   // =========================
   // PAYMENT FIXED
   // =========================
-  const proceedToPayment = async (itemsToPay, isSingleItem = false) => {
+const proceedToPayment = async (
+  itemsToPay,
+  isSingleItem = false,
+  itemId = null
+) => {
     if (loading) return;
 
     try {
+      setProcessingItem(itemId);
       setLoading(true);
 
       const res = await fetch(`${API}/api/user/me`, {
@@ -207,14 +213,27 @@ console.log(
 const verifyData =
   JSON.parse(verifyText);
 
-            if (verifyData.success) {
-              alert("Payment Successful");
+         if (verifyData.success) {
+  if (isSingleItem) {
+    const purchasedId = itemsToPay[0].id;
 
-              setCart([]);
-              localStorage.removeItem(cartKey);
+    const updatedCart = cart.filter(
+      (item) => item.id !== purchasedId
+    );
 
-              navigate("/");
-            } else {
+    setCart(updatedCart);
+
+    localStorage.setItem(
+      cartKey,
+      JSON.stringify(updatedCart)
+    );
+  } else {
+    setCart([]);
+    localStorage.removeItem(cartKey);
+  }
+
+  navigate("/");
+} else {
               alert("Payment Failed");
             }
           } catch (err) {
@@ -233,6 +252,7 @@ const verifyData =
       alert(error.message);
     } finally {
       setLoading(false);
+      setProcessingItem(null);
     }
   };
 
@@ -244,6 +264,9 @@ const verifyData =
   const deliveryCharge = cart.length > 0 ? 100 : 0;
 
 const grandTotal = cartTotal + deliveryCharge;
+
+const defaultAddress =
+  addresses.find((a) => a.isDefault) || addresses[0];
 
   if (!isInitialized) return null;
 
@@ -336,11 +359,15 @@ const grandTotal = cartTotal + deliveryCharge;
 </p>
 
                   <button
-                    disabled={loading}
-                    onClick={() => proceedToPayment([item], true)}
+                   disabled={processingItem === item.id}
+                    onClick={() =>
+  proceedToPayment([item], true, item.id)
+}
                   className="mt-2 px-4 py-2 bg-amber-500 text-black rounded-lg text-sm font-semibold"
                   >
-                    {loading ? "Processing..." : "Checkout"}
+                   {processingItem === item.id
+  ? "Processing..."
+  : "Checkout"}
                   </button>
                 </div>
               </div>
@@ -351,6 +378,43 @@ const grandTotal = cartTotal + deliveryCharge;
            <h2 className="text-xl font-bold mb-4 text-amber-400">
   Order Summary
 </h2>
+
+{defaultAddress && (
+  <div className="mb-4 p-3 rounded-xl bg-zinc-800 border border-white/10">
+    <div className="flex items-center justify-between mb-2">
+      <h3 className="text-sm font-semibold text-amber-400">
+        Delivery Address
+      </h3>
+
+      <button
+        onClick={() => navigate("/profile")}
+        className="text-xs text-amber-400 hover:underline"
+      >
+        Change
+      </button>
+    </div>
+
+    <p className="text-white text-sm font-medium">
+      {defaultAddress.name}
+    </p>
+
+    <p className="text-gray-400 text-xs mt-1">
+      {defaultAddress.fullAddress}
+    </p>
+
+    <p className="text-gray-500 text-xs">
+      {defaultAddress.district}, {defaultAddress.state}
+    </p>
+
+    <p className="text-gray-500 text-xs">
+      PIN: {defaultAddress.pincode}
+    </p>
+
+    <p className="text-gray-500 text-xs">
+      Phone: {defaultAddress.phone}
+    </p>
+  </div>
+)}
 
             <p>Items: {cart.length}</p>
            <p>Subtotal: ₹{cartTotal}</p>

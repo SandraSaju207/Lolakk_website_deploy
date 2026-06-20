@@ -229,14 +229,16 @@ const options = {
     const verifyData = await verifyResponse.json();
 
     if (verifyData.success) {
-      // ✅ SHOW ONLY YOUR UI
-      setShowSuccess(true);
+  const userId = localStorage.getItem("userId");
 
-      setTimeout(() => {
-        setShowSuccess(false);
-        navigate("/");
-      }, 2500);
-    } else {
+  localStorage.removeItem(`lolakk_cart_${userId}`);
+
+  setShowSuccess(true);
+
+  setTimeout(() => {
+    navigate("/", { replace: true });
+  }, 5000);
+} else {
       setShowFailed(true);
 
       setTimeout(() => {
