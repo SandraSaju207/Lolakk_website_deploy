@@ -189,26 +189,58 @@ await fetch(`${API}/api/orders/${id}`, {
     return (
       <div
         key={item._id}
-    className="relative rounded-xl p-[1px] bg-gradient-to-r from-[#d4af37] via-[#f5e6b3] to-[#d4af37] animate-pulse"
+    className="relative rounded-xl p-[1px] bg-gradient-to-r from-[#d4af37] via-[#f5e6b3] to-[#d4af37]"
       >
-        <div className="bg-zinc-900 rounded-xl p-3 md:p-5">
-       <div className="flex flex-col md:flex-row justify-between items-start gap-3 mb-4">
+      <div className="bg-zinc-900 rounded-xl p-3 md:p-5">
+
+  <div className="flex gap-4 mb-5">
+    <img
+      src={item.items?.[0]?.image}
+      alt={item.items?.[0]?.name}
+      onClick={() => setPreviewImage(item.items?.[0]?.image)}
+      className="w-24 h-24 rounded-xl object-cover border border-amber-500/20 cursor-pointer"
+    />
+
+    <div className="flex-1">
+      <h3 className="text-xl font-semibold text-amber-400">
+        {item.items?.[0]?.name || "Order"}
+      </h3>
+
+      <p className="text-gray-300 mt-2">
+        Customer: {item.userId?.name || item.customerName}
+      </p>
+
+      <p className="text-gray-400">
+        {item.customerEmail || item.userId?.email}
+      </p>
+
+      <p className="text-gray-400 text-sm">
+        Order ID: {item._id}
+      </p>
+
+      <p className="text-gray-400 text-sm">
+        {new Date(item.createdAt).toLocaleString()}
+      </p>
+    </div>
+  </div>
+
+  <div className="flex flex-col md:flex-row justify-between items-start gap-3 mb-4">
          <div>
- <h3 className="text-base md:text-lg font-semibold text-white break-words">
+ {/* <h3 className="text-base md:text-lg font-semibold text-white break-words">
     {item.userId?.name || item.customerName || "Guest User"}
   </h3>
 
  <p className="text-sm text-gray-400">
   {item.customerEmail || item.userId?.email || "No email"}
-</p>
+</p> */}
 
-<p className="text-xs md:text-sm text-gray-400 break-all">
+{/* <p className="text-xs md:text-sm text-gray-400 break-all">
   Order ID: {item._id}
 </p>
 
   <p className="text-sm text-gray-400">
     Date: {new Date(item.createdAt).toLocaleString()}
-  </p>
+  </p> */}
 
 
   {/* ADDRESS */}
@@ -266,25 +298,21 @@ await fetch(`${API}/api/orders/${id}`, {
               key={index}
              className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-zinc-800 py-3 gap-2"
             >
-             <div className="flex items-center gap-4 w-full">
+      <div className="flex items-center gap-3 w-full">
   <img
     src={product.image}
     alt={product.name}
     onClick={() => setPreviewImage(product.image)}
-    className="w-24 h-24 rounded-xl object-cover border border-amber-500/20 cursor-pointer hover:scale-105 transition"
+    className="w-14 h-14 rounded-lg object-cover border border-zinc-700 cursor-pointer"
   />
 
   <div>
-    <h4 className="text-white font-medium text-base">
+    <p className="text-white text-sm font-medium">
       {product.name}
-    </h4>
-
-    <p className="text-gray-400">
-      Qty: {product.quantity}
     </p>
 
-    <p className="text-amber-400 font-semibold">
-      ₹{product.price}
+    <p className="text-gray-400 text-xs">
+      Qty: {product.quantity}
     </p>
   </div>
 </div>
@@ -410,7 +438,7 @@ await fetch(`${API}/api/orders/${id}`, {
         src={previewImage}
         style={{
           width: "100%",
-          maxHeight: "80px",
+          maxHeight: "80vh",
           objectFit: "contain",
           borderRadius: "8px",
         }}
