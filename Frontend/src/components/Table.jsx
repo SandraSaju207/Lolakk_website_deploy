@@ -6,15 +6,9 @@ const API = import.meta.env.VITE_API_URL;
 export function Table({ data, type, refresh }) {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
-  const [previewImage, setPreviewImage] = useState(null);
+ 
 
-  useEffect(() => {
-  if (previewImage) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "auto";
-  }
-}, [previewImage]);
+
 
   const updateStatus = async (id, status) => {
    const token = localStorage.getItem("token");
@@ -194,12 +188,11 @@ await fetch(`${API}/api/orders/${id}`, {
       <div className="bg-zinc-900 rounded-xl p-3 md:p-5">
 
   <div className="flex gap-4 mb-5">
-    <img
-      src={item.items?.[0]?.image}
-      alt={item.items?.[0]?.name}
-      onClick={() => setPreviewImage(item.items?.[0]?.image)}
-      className="w-24 h-24 rounded-xl object-cover border border-amber-500/20 cursor-pointer"
-    />
+   <img
+  src={item.items?.[0]?.image}
+  alt={item.items?.[0]?.name}
+  className="w-24 h-24 rounded-xl object-cover border border-amber-500/20"
+/>
 
     <div className="flex-1">
       <h3 className="text-xl font-semibold text-amber-400">
@@ -360,64 +353,7 @@ await fetch(`${API}/api/orders/${id}`, {
     );
   })}
 </div>
-{previewImage && (
-  <div
-    onClick={() => setPreviewImage(null)}
-    style={{
-      position: "fixed",
-      top: 0,
-      left: 0,
-      width: "100vw",
-      height: "100vh",
-      background: "rgba(0,0,0,0.75)",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      zIndex: 999999,
-      backdropFilter: "blur(4px)",
-    }}
-  >
-    <div
-      onClick={(e) => e.stopPropagation()}
-      style={{
-        position: "relative",
-        background: "#111",
-        padding: "12px",
-        borderRadius: "12px",
-        boxShadow: "0 10px 30px rgba(0,0,0,0.6)",
-        maxWidth: "600px",
-        width: "90%",
-      }}
-    >
-      {/* Close button */}
-      <button
-        onClick={() => setPreviewImage(null)}
-        style={{
-          position: "absolute",
-          top: "6px",
-          right: "8px",
-          background: "transparent",
-          border: "none",
-          color: "#fff",
-          fontSize: "18px",
-          cursor: "pointer",
-        }}
-      >
-        ✕
-      </button>
 
-      <img
-        src={previewImage}
-        style={{
-          width: "100%",
-          maxHeight: "80vh",
-          objectFit: "contain",
-          borderRadius: "8px",
-        }}
-      />
-    </div>
-  </div>
-)}
     </div>
   );
 }
