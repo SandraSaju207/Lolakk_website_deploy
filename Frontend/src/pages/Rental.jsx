@@ -811,7 +811,7 @@ setTimeout(() => {
             <button
               key={item}
               onClick={() => { updateFilter("category", item);
-              setShowFilters(false);
+             setMobileFilterOpen(false);
               }}
               className={`block text-left text-sm mb-2 ${
                 filters.category === item
@@ -834,7 +834,7 @@ setTimeout(() => {
             <button
               key={item}
               onClick={() => { updateFilter("type", item)
-                setShowFilters(false);
+                setMobileFilterOpen(false);
               }}
               className={`block text-left text-sm mb-2 ${
                 filters.type === item
@@ -862,7 +862,7 @@ setTimeout(() => {
             <button
               key={p.value}
               onClick={() => { updateFilter("price", p.value)
-                setShowFilters(false);
+                setMobileFilterOpen(false);
               }}
               className={`block text-left text-sm mb-2 ${
                 filters.price === p.value
@@ -879,7 +879,7 @@ setTimeout(() => {
        <button
   onClick={() => {
     clearAllFilters();
-    setShowFilters(false);
+   setMobileFilterOpen(false);
   }}
   className="w-full py-3 bg-amber-500 text-black font-semibold rounded-xl"
 >
