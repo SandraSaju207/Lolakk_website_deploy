@@ -639,6 +639,15 @@ setTimeout(() => {
   src={item.image}
    className="h-48 md:h-64 w-full object-cover group-hover:scale-105 transition-transform duration-500"
 />
+
+<h3 className="text-white mt-4 font-medium">
+    {item.name}
+  </h3>
+
+   <p className="text-gray-400 text-sm mt-1 line-clamp-2 min-h-[40px]">
+    {item.description || "Premium luxury ring collection"}
+  </p>
+
 </div>
                
   
