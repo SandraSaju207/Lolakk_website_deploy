@@ -67,6 +67,7 @@ const [products, setProducts] = useState([]);
     setFilters(INITIAL_FILTERS);
     setSort("latest");
     setCurrentPage(1);
+      setShowFilters(false);
   };
 
   const filteredItems = products.filter((item) => {
@@ -334,8 +335,8 @@ const buyNow = (item) => {
     <div
       className="
         fixed left-0 top-0
-        w-[70%]
-        max-w-[250px]
+        w-[60%]
+        max-w-[240px]
         h-screen
         bg-[#0b0b0b]
         border-r border-amber-500/20
@@ -567,18 +568,20 @@ const buyNow = (item) => {
            {paginatedItems.map((item) => (
   <div
     key={item._id}
-    className="border border-white/10 p-3 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition cursor-pointer"
+    className="border border-white/10 p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition-all group cursor-pointer relative overflow-hidden flex flex-col"
     onClick={() => openModal(item)}
   >
-    <img
-      src={
-        item.image.startsWith("http")
-          ? item.image
-          : `${API_URL}${item.image}`
-      }
-      className="aspect-[4/5] w-full object-cover rounded-lg"
-      alt={item.name}
-    />
+   <div className="overflow-hidden rounded-lg">
+  <img
+    src={
+      item.image.startsWith("http")
+        ? item.image
+        : `${API_URL}${item.image}`
+    }
+    className="h-48 md:h-64 w-full object-cover group-hover:scale-105 transition-transform duration-500"
+    alt={item.name}
+  />
+</div>
 
     <h3 className="text-white mt-4 font-medium">
       {item.name}
@@ -593,7 +596,7 @@ const buyNow = (item) => {
     </p>
 
     {/* BUY BUTTON */}
-    <div className="mt-4">
+  <div className="mt-auto pt-4">
       <button
         onClick={(e) => {
           e.stopPropagation();

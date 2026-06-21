@@ -96,6 +96,7 @@ setTimeout(() => setLoading(false), 2500);
   const clearAllFilters = () => {
     setFilters(INITIAL_FILTERS);
     setSort("latest");
+     setMobileFilterOpen(false);
     //setCurrentPage(1);
   };
 
@@ -535,7 +536,11 @@ setTimeout(() => {
   {["all", "gold", "diamond", "gemstone"].map((item) => (
     <button
       key={item}
-      onClick={() => updateFilter("category", item)}
+     onClick={() => {
+  updateFilter("category", item);
+  setMobileFilterOpen(false);
+}}
+      
       className={`block text-left text-sm mb-2 ${
         filters.category === item
           ? "text-amber-400 font-medium"
@@ -550,7 +555,10 @@ setTimeout(() => {
           <div>
             <h3 className="text-sm uppercase mb-3 text-amber-500 font-semibold tracking-wider">Product Type</h3>
             {["all", "traditional", "modern", "casual"].map((item) => (
-              <button key={item} onClick={() => updateFilter("type", item)} className={`block text-left text-sm mb-2 ${filters.type === item ? "text-amber-400 font-medium" : "text-gray-400 hover:text-amber-400"}`}>
+              <button key={item} onClick={() => {
+  updateFilter("type", item);
+  setMobileFilterOpen(false);
+}} className={`block text-left text-sm mb-2 ${filters.type === item ? "text-amber-400 font-medium" : "text-gray-400 hover:text-amber-400"}`}>
                 {item}
               </button>
             ))}
@@ -564,7 +572,12 @@ setTimeout(() => {
               { label: "₹1500 - ₹2000", value: "mid" },
               { label: "Above ₹2000", value: "high" },
             ].map((p) => (
-              <button key={p.value} onClick={() => updateFilter("price", p.value)} className={`block text-left text-sm mb-2 ${filters.price === p.value ? "text-amber-400 font-medium" : "text-gray-400 hover:text-amber-400"}`}>
+              <button key={p.value} 
+             onClick={() => {
+  updateFilter("price", p.value);
+  setMobileFilterOpen(false);
+}}
+              className={`block text-left text-sm mb-2 ${filters.price === p.value ? "text-amber-400 font-medium" : "text-gray-400 hover:text-amber-400"}`}>
                 {p.label}
               </button>
             ))}
@@ -750,7 +763,18 @@ setTimeout(() => {
       )}
       {mobileFilterOpen && (
   <div className="fixed inset-0 z-[999] bg-black/70 flex">
-  <div className="w-[75%] max-w-xs h-full bg-zinc-900 p-5 overflow-y-auto animate-slideIn">
+  <div
+  className="
+    w-[70%]
+    max-w-[250px]
+    h-screen
+    bg-[#0b0b0b]
+    border-r border-amber-500/20
+    p-5
+    overflow-y-auto
+    animate-slideIn
+  "
+>
       
       {/* HEADER */}
       <div className="flex justify-between items-center mb-6">

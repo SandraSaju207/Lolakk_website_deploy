@@ -507,7 +507,10 @@ const filteredItems = products.filter((item) => {
         {["all", "gold", "diamond", "gemstone"].map((item) => (
           <button
             key={item}
-            onClick={() => updateFilter("materialType", item)}
+           onClick={() => {
+  updateFilter("materialType", item);
+  setShowFilters(false);
+}}
             className={`block text-sm mb-2 ${
               filters.materialType === item
                 ? "text-amber-400 font-bold"
@@ -528,7 +531,10 @@ const filteredItems = products.filter((item) => {
         {["all", "traditional", "modern", "casual"].map((item) => (
           <button
             key={item}
-            onClick={() => updateFilter("style", item)}
+           onClick={() => {
+  updateFilter("style", item);
+  setShowFilters(false);
+}}
             className={`block text-sm mb-2 ${
               filters.style === item
                 ? "text-amber-400 font-bold"
@@ -548,7 +554,10 @@ const filteredItems = products.filter((item) => {
   {sizeOptions.map((size) => (
     <button
       key={size}
-      onClick={() => updateFilter("size", size)}
+     onClick={() => {
+  updateFilter("size", size);
+  setShowFilters(false);
+}}
       className={`block text-sm mb-2 ${
         filters.size === size
           ? "text-amber-400 font-bold"
@@ -574,7 +583,10 @@ const filteredItems = products.filter((item) => {
         ].map((item) => (
           <button
             key={item.value}
-            onClick={() => updateFilter("price", item.value)}
+           onClick={() => {
+  updateFilter("price", item.value);
+  setShowFilters(false);
+}}
             className={`block text-sm mb-2 ${
               filters.price === item.value
                 ? "text-amber-400 font-bold"
@@ -588,7 +600,10 @@ const filteredItems = products.filter((item) => {
 
       {/* CLEAR BUTTON (RINGS STYLE) */}
       <button
-        onClick={clearAllFilters}
+       onClick={() => {
+  clearAllFilters();
+  setShowFilters(false);
+}}
         className="
           w-full py-3
           bg-amber-500
@@ -613,7 +628,7 @@ const filteredItems = products.filter((item) => {
               <div
   key={item._id}
   onClick={() => openModal(item)}
-  className="border border-white/10 p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition cursor-pointer"
+  className="border border-white/10 p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition cursor-pointer flex flex-col h-full"
 >
                 <img
   src={getImage(item.image)}
@@ -632,7 +647,7 @@ const filteredItems = products.filter((item) => {
   ₹{item.price}
 </p>
 
-<div className="mt-4 flex gap-2">
+<div className="mt-auto pt-4 flex gap-2">
   <button
     onClick={(e) => {
       e.stopPropagation();

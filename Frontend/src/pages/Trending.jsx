@@ -359,7 +359,10 @@ export default function Trending() {
       {/* CLEAR FILTERS (MATCH RINGS STYLE) */}
       {isFiltered && (
         <button
-          onClick={clearAllFilters}
+           onClick={() => {
+    clearAllFilters();
+    setShowFilters(false);
+  }}
           className="
             w-full py-3
             bg-amber-500

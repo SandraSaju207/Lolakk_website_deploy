@@ -406,7 +406,10 @@ const similarProducts = selectedProduct
       </div>
 
       <button
-        onClick={clearFilters}
+        onClick={() => {
+    clearAllFilters();
+    setShowFilters(false);
+  }}
         className="w-full py-3 bg-amber-500 text-black font-semibold rounded-xl"
       >
         Clear Filters

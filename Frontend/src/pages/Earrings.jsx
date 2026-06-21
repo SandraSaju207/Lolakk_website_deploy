@@ -455,11 +455,14 @@ const similarProducts = selectedProduct
       </div>
 
       <button
-        onClick={clearAllFilters}
-        className="w-full py-3 bg-amber-500 text-black font-semibold rounded-xl"
-      >
-        Clear Filters
-      </button>
+  onClick={() => {
+    clearAllFilters();
+    setShowFilters(false);
+  }}
+  className="w-full py-3 bg-amber-500 text-black font-semibold rounded-xl"
+>
+  Clear Filters
+</button>
     </div>
   </>
 )}
@@ -547,11 +550,11 @@ const similarProducts = selectedProduct
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
             {sortedItems.map((item) => (
-              <div
-                key={item._id}
-                className="border border-white/10 p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition cursor-pointer"
-                onClick={() => openModal(item)}
-              >
+             <div
+  key={item._id}
+  className="border border-white/10 p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition cursor-pointer flex flex-col"
+  onClick={() => openModal(item)}
+>
                <img
   src={getImage(item.image)}
   className="aspect-[4/5] w-full object-cover rounded-lg"
@@ -570,7 +573,7 @@ const similarProducts = selectedProduct
                 </p>
 
                 {/* ✅ ADDED BUTTONS */}
-                <div className="mt-4">
+                <div className="mt-auto pt-4">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();

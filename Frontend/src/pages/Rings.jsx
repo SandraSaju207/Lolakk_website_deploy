@@ -16,6 +16,7 @@ export default function Rings() {
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState(INITIAL_FILTERS);
   const [sort, setSort] = useState("latest");
+
   const normalize = (val) => val?.toLowerCase();
 
   // const [currentPage, setCurrentPage] = useState(1);
@@ -59,6 +60,7 @@ console.log("Rings Data:", ringData);
   const clearAllFilters = () => {
     setFilters(INITIAL_FILTERS);
     setSort("latest");
+     setShowFilters(false);
     // setCurrentPage(1);
   };
 
@@ -388,7 +390,7 @@ const paginatedRings = sortedRings;
     {/* DRAWER */}
     <div className="
   fixed left-0 top-0
- w-[60%] max-w-[240px]
+w-[70%] max-w-[250px]
   h-screen
   bg-[#0b0b0b]
   border-r border-amber-500/20
@@ -468,9 +470,10 @@ const paginatedRings = sortedRings;
           {["all", 6, 7, 8, 9, 10 , 11 ,12].map((item) => (
             <button
               key={item}
-              onClick={() =>
-                updateFilter("size", String(item))
-              }
+              onClick={() => {
+  updateFilter("size", String(item));
+  setShowFilters(false);
+}}
               className={`px-3 py-1 text-xs rounded-full border ${
                 String(filters.size) === String(item)
                   ? "bg-amber-500 text-black border-amber-500"
@@ -497,9 +500,10 @@ const paginatedRings = sortedRings;
         ].map((p) => (
           <button
             key={p.value}
-            onClick={() =>
-              updateFilter("price", p.value)
-            }
+           onClick={() => {
+  updateFilter("price", p.value);
+  setShowFilters(false);
+}}
             className={`block text-sm mb-2 ${
               filters.price === p.value
                 ? "text-amber-400 font-bold"
@@ -633,12 +637,14 @@ const paginatedRings = sortedRings;
   />
 </div>
 
-    <h3 className="text-white mt-4 font-medium">{ring.name}</h3>
+   <h3 className="text-white mt-4 font-medium min-h-[48px] line-clamp-2">
+  {ring.name}
+</h3>
     <p className="text-gray-400 text-sm mt-1 line-clamp-2 min-h-[40px]">
   {ring.description || "Premium luxury ring collection"}
 </p>
 
-<div className="mt-2 flex items-center gap-2">
+<div className="mt-2 flex items-center gap-2 min-h-[40px]">
   <span className="text-2xl font-light text-amber-400 tracking-wide">
     ₹{ring.price}
   </span>
@@ -648,7 +654,7 @@ const paginatedRings = sortedRings;
   </span>
 </div>
 
-    <div className="mt-4">
+    <div className="mt-auto pt-4">
   <button
   onClick={() => {
     if (!isLoggedIn) {
