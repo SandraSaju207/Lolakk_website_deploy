@@ -810,7 +810,9 @@ setTimeout(() => {
           {["all", "gold", "diamond", "gemstone"].map((item) => (
             <button
               key={item}
-              onClick={() => updateFilter("category", item)}
+              onClick={() => { updateFilter("category", item);
+              setShowFilters(false);
+              }}
               className={`block text-left text-sm mb-2 ${
                 filters.category === item
                   ? "text-amber-400 font-medium"
@@ -831,7 +833,9 @@ setTimeout(() => {
           {["all", "traditional", "modern", "casual"].map((item) => (
             <button
               key={item}
-              onClick={() => updateFilter("type", item)}
+              onClick={() => { updateFilter("type", item)
+                setShowFilters(false);
+              }}
               className={`block text-left text-sm mb-2 ${
                 filters.type === item
                   ? "text-amber-400 font-medium"
@@ -857,7 +861,9 @@ setTimeout(() => {
           ].map((p) => (
             <button
               key={p.value}
-              onClick={() => updateFilter("price", p.value)}
+              onClick={() => { updateFilter("price", p.value)
+                setShowFilters(false);
+              }}
               className={`block text-left text-sm mb-2 ${
                 filters.price === p.value
                   ? "text-amber-400 font-medium"
@@ -870,18 +876,15 @@ setTimeout(() => {
         </div>
 
         {/* CLEAR */}
-        <button
-        onClick={clearAllFilters}
-        className="
-          w-full py-3
-          bg-amber-500
-          text-black
-          font-semibold
-          rounded-xl
-        "
-      >
-        Clear Filters
-      </button>
+       <button
+  onClick={() => {
+    clearAllFilters();
+    setShowFilters(false);
+  }}
+  className="w-full py-3 bg-amber-500 text-black font-semibold rounded-xl"
+>
+  Clear Filters
+</button>
 
       </div>
     </div>

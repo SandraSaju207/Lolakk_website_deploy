@@ -516,17 +516,14 @@ w-[70%] max-w-[250px]
       </div>
 
       <button
-        onClick={clearAllFilters}
-        className="
-          w-full py-3
-          bg-amber-500
-          text-black
-          font-semibold
-          rounded-xl
-        "
-      >
-        Clear Filters
-      </button>
+  onClick={() => {
+    clearAllFilters();
+    setShowFilters(false);
+  }}
+  className="w-full py-3 bg-amber-500 text-black font-semibold rounded-xl"
+>
+  Clear Filters
+</button>
     </div>
   </>
 )}
