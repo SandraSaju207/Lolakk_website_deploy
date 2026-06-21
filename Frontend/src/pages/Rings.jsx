@@ -637,14 +637,14 @@ w-[70%] max-w-[250px]
   />
 </div>
 
-   <h3 className="text-white mt-4 font-medium min-h-[48px] line-clamp-2">
+   <h3 className="text-white mt-4 font-medium min-h-[36px] line-clamp-2">
   {ring.name}
 </h3>
     <p className="text-gray-400 text-sm mt-1 line-clamp-2 min-h-[40px]">
   {ring.description || "Premium luxury ring collection"}
 </p>
 
-<div className="mt-2 flex items-center gap-2 min-h-[40px]">
+<div className="mt-2 flex items-center gap-2 min-h-[32px]">
   <span className="text-2xl font-light text-amber-400 tracking-wide">
     ₹{ring.price}
   </span>
