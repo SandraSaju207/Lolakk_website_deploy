@@ -38,6 +38,14 @@ export default function Footer() {
         >
           WhatsApp
         </a>
+
+        <a
+  href="/policies"
+  className="text-xs uppercase hover:text-amber-400 transition"
+>
+  Policies
+</a>
+
       </div>
 
       {/* Footer Bottom */}

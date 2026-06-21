@@ -26,6 +26,7 @@ import Cart from "./pages/Cart.jsx";
 import Payment from "./pages/Payment.jsx";
 import Orders from "./pages/Orders.jsx";
 import Profile from "./pages/Profile.jsx";
+import Policies from "./pages/Policies";
 
 function Layout() {
   const location = useLocation();
@@ -79,6 +80,7 @@ const hideNavbar =
         <Route path="/payment" element={<Payment />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/policies" element={<Policies />} />
       </Routes>
     </>
   );
