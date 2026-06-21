@@ -47,6 +47,8 @@ app.use(
 const allowedOrigins = [
   "http://localhost:5173",
   "https://lolakk-website-deploy-l9ad.vercel.app",
+  "https://lolakk.in",
+  "https://www.lolakk.in",
 ];
 
 app.use(
