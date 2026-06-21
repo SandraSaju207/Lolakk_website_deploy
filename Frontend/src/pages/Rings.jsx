@@ -622,53 +622,47 @@ w-[70%] max-w-[250px]
 
         {/* PRODUCTS */}
         <div className="md:col-span-3">
-         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {paginatedRings.map((ring) => (
-  <div
+ <div
   key={ring._id}
- className="border border-white/10 p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition-all group cursor-pointer relative overflow-hidden flex flex-col"
+  className="border border-white/10 p-3 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition cursor-pointer"
   onClick={() => openModal(ring)}
 >
-    <div className="overflow-hidden rounded-lg">
   <img
-    src={ring.image.startsWith("http") ? ring.image : `${API_URL}${ring.image}`}
-    className="h-48 md:h-64 w-full object-cover group-hover:scale-105 transition-transform duration-500"
+    src={
+      ring.image.startsWith("http")
+        ? ring.image
+        : `${API_URL}${ring.image}`
+    }
+    className="aspect-[4/5] w-full object-cover rounded-lg"
     alt={ring.name}
   />
-</div>
 
-   <h3 className="text-white mt-4 font-medium min-h-[36px] line-clamp-2">
-  {ring.name}
-</h3>
-    <p className="text-gray-400 text-sm mt-1 line-clamp-2 min-h-[40px]">
-  {ring.description || "Premium luxury ring collection"}
-</p>
+  <h3 className="text-white mt-4 font-medium">
+    {ring.name}
+  </h3>
 
-<div className="mt-2 flex items-center gap-2 min-h-[32px]">
-  <span className="text-2xl font-light text-amber-400 tracking-wide">
+  <p className="text-gray-400 text-sm mt-1 line-clamp-2 min-h-[40px]">
+    {ring.description || "Premium luxury ring collection"}
+  </p>
+
+  <p className="text-2xl text-amber-400 mt-2">
     ₹{ring.price}
-  </span>
+  </p>
 
-  <span className="text-[11px] uppercase tracking-[0.2em] text-gray-500">
-    Original Price
-  </span>
-</div>
-
-    <div className="mt-auto pt-4">
-  <button
-  onClick={() => {
-    if (!isLoggedIn) {
-      window.location.href = "/login";
-      return;
-    }
-    openModal(ring);
-  }}
-  className="w-full bg-amber-500 text-black font-bold px-4 py-2 rounded hover:bg-amber-400 transition"
->
-  Buy Now
-</button>
-</div>
+  <div className="mt-4">
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        openModal(ring);
+      }}
+      className="w-full bg-amber-500 text-black font-bold px-4 py-2 rounded hover:bg-amber-400 transition"
+    >
+      Buy Now
+    </button>
   </div>
+</div>
 ))}
           </div>
           {/* <button

@@ -550,15 +550,15 @@ const similarProducts = selectedProduct
     className="border border-white/10 p-3 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition cursor-pointer"
     onClick={() => openModal(item)}
   >
-    <img
-      src={
-        item.image.startsWith("http")
-          ? item.image
-          : `${API_URL}${item.image}`
-      }
-      className="aspect-[4/5] w-full object-cover rounded-lg"
-      alt={item.name}
-    />
+   <img
+  src={
+    item.image.startsWith("http")
+      ? item.image
+      : `${API_URL}${item.image}`
+  }
+  className="aspect-[4/5] w-full object-cover rounded-lg"
+  alt={item.name}
+/>
 
     <h3 className="text-white mt-4 font-medium">
       {item.name}

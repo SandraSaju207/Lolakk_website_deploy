@@ -568,26 +568,26 @@ const buyNow = (item) => {
            {paginatedItems.map((item) => (
   <div
     key={item._id}
-    className="border border-white/10 p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition-all group cursor-pointer relative overflow-hidden flex flex-col"
+    className="border border-white/10 p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition-all group cursor-pointer relative overflow-hidden flex flex-col h-full"
     onClick={() => openModal(item)}
   >
    <div className="overflow-hidden rounded-lg">
-  <img
-    src={
-      item.image.startsWith("http")
-        ? item.image
-        : `${API_URL}${item.image}`
-    }
-    className="h-48 md:h-64 w-full object-cover group-hover:scale-105 transition-transform duration-500"
-    alt={item.name}
-  />
+ <img
+  src={
+    item.image.startsWith("http")
+      ? item.image
+      : `${API_URL}${item.image}`
+  }
+  className="h-40 md:h-60 w-full object-cover group-hover:scale-105 transition-transform duration-500"
+  alt={item.name}
+/>
 </div>
 
     <h3 className="text-white mt-4 font-medium">
       {item.name}
     </h3>
 
-<p className="text-gray-400 text-sm mt-1 line-clamp-2 min-h-[40px]">
+<p className="text-gray-400 text-sm mt-1 line-clamp-2 h-10">
   {item.description || "Premium luxury earring collection"}
 </p>
 
