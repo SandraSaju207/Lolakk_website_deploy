@@ -39,7 +39,8 @@ export default function Rings() {
         const res = await axios.get(`${API_URL}/api/products`);
         // Filter specifically for "rings" type as defined in your Product model
         const ringData = res.data.filter(p => p.type === 'rings');
-        setRings(ringData);
+      setRings(ringData);
+console.log("Rings Data:", ringData);
         
         // Match your custom loader timing
         setTimeout(() => setLoading(false), 2500);
@@ -147,8 +148,8 @@ const addToCart = (ring) => {
 
 const filteredRings = rings.filter((ring) => {
 
-  const ringPrice = Number(ring.price || 0);
-  const ringSize = Number(ring.size || 0);
+ const ringPrice = Number(ring.price || 0);
+const ringSize = Number(ring.extra || 0);
 
   return (
 
@@ -442,7 +443,10 @@ const paginatedRings = sortedRings;
         {["all", "traditional", "modern", "casual"].map((item) => (
           <button
             key={item}
-            onClick={() => updateFilter("type", item)}
+           onClick={() => {
+  updateFilter("type", item);
+  setShowFilters(false);
+}}
             className={`block text-sm mb-2 ${
               filters.type === item
                 ? "text-amber-400 font-bold"
@@ -461,7 +465,7 @@ const paginatedRings = sortedRings;
         </h3>
 
         <div className="flex flex-wrap gap-2">
-          {["all", 6, 7, 8, 9].map((item) => (
+          {["all", 6, 7, 8, 9, 10 , 11 ,12].map((item) => (
             <button
               key={item}
               onClick={() =>
@@ -545,7 +549,10 @@ const paginatedRings = sortedRings;
           {["all", "traditional", "modern", "casual"].map((item) => (
               <button
                 key={item}
-                onClick={() => updateFilter("type", item)}
+                onClick={() => {
+  updateFilter("type", item);
+  setShowFilters(false);
+}}
                 className={`block text-sm mb-2 ${
                   filters.type === item ? "text-amber-400 font-bold" : "text-gray-400"
                 }`}
@@ -558,7 +565,7 @@ const paginatedRings = sortedRings;
           <div>
             <h3 className="text-amber-500 text-sm uppercase mb-3">Size</h3>
             <div className="flex flex-wrap gap-2">
-                {["all", 6, 7, 8, 9].map((item) => (
+                {["all", 6, 7, 8, 9, 10, 11, 12].map((item) => (
               <button
                 key={item}
                 onClick={() => updateFilter("size", String(item))}

@@ -9,6 +9,7 @@ const API_URL = API;
 
 const INITIAL_FILTERS = {
   itemType: "all",
+   ageGroup: "all",
   price: "all",
 };
 
@@ -18,6 +19,15 @@ export default function KidsProducts() {
 
   const [filters, setFilters] = useState(INITIAL_FILTERS);
   const [sort, setSort] = useState("latest");
+
+  const ageOptions = [
+  "all",
+  ...new Set(
+    kids
+      .map((p) => p.extra)
+      .filter(Boolean)
+  ),
+];
 
   
 
@@ -129,6 +139,11 @@ const isLoggedIn = !!localStorage.getItem("token");
   return (
     (filters.itemType === "all" ||
       p.itemType === filters.itemType) &&
+
+
+      (filters.ageGroup === "all" ||
+ p.extra === filters.ageGroup) &&
+
 
     (filters.price === "all" ||
       (filters.price === "below100" && price < 100) ||
@@ -338,6 +353,29 @@ const similarProducts = selectedProduct
         ))}
       </div>
 
+      <div className="mb-8">
+  <h3 className="text-amber-500 text-sm uppercase mb-3">
+    Age Group
+  </h3>
+
+  {ageOptions.map((age) => (
+    <button
+      key={age}
+      onClick={() => {
+        updateFilter("ageGroup", age);
+        setShowFilters(false);
+      }}
+      className={`block text-sm mb-2 ${
+        filters.ageGroup === age
+          ? "text-amber-400 font-bold"
+          : "text-gray-400"
+      }`}
+    >
+      {age}
+    </button>
+  ))}
+</div>
+
       {/* PRICE */}
       <div className="mb-8">
         <h3 className="text-amber-500 text-sm uppercase mb-3">
@@ -416,6 +454,26 @@ const similarProducts = selectedProduct
                 )
               )}
             </div>
+
+            <div>
+  <h3 className="text-amber-500 text-sm uppercase mb-3">
+    Age Group
+  </h3>
+
+  {ageOptions.map((age) => (
+    <button
+      key={age}
+      onClick={() => updateFilter("ageGroup", age)}
+      className={`block text-sm mb-2 ${
+        filters.ageGroup === age
+          ? "text-amber-400 font-bold"
+          : "text-gray-400"
+      }`}
+    >
+      {age}
+    </button>
+  ))}
+</div>
 
             <div>
               <h3 className="text-amber-500 text-sm uppercase mb-3">

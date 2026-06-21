@@ -9,6 +9,7 @@ const INITIAL_FILTERS = {
   itemType: "all",
   materialType: "all",
   style: "all",
+   size: "all",
    price: "all",
 };
 
@@ -21,6 +22,14 @@ export default function BraceletsBangles() {
   const [filters, setFilters] = useState(INITIAL_FILTERS);
   const [sort, setSort] = useState("latest");
 
+  const sizeOptions = [
+  "all",
+  ...new Set(
+    products
+      .map((p) => p.extra)
+      .filter(Boolean)
+  ),
+];
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
 
@@ -75,6 +84,7 @@ const clearAllFilters = () => {
 
 const filteredItems = products.filter((item) => {
   const price = parseFloat(item.price) || 0;
+  const size = String(item.extra || "").trim();
 
   return (
     // TYPE
@@ -88,6 +98,9 @@ const filteredItems = products.filter((item) => {
     // STYLE
     (filters.style === "all" ||
       item.style?.toLowerCase() === filters.style) &&
+
+       (filters.size === "all" ||
+    size === filters.size) &&
 
     // PRICE (NEW FIXED LOGIC)
     (
@@ -369,6 +382,27 @@ const filteredItems = products.filter((item) => {
 </div>
 
 <div>
+  <h3 className="text-amber-500 text-sm uppercase mb-3">
+    Size
+  </h3>
+
+  {sizeOptions.map((size) => (
+    <button
+      key={size}
+      onClick={() => updateFilter("size", size)}
+      className={`block text-sm mb-2 ${
+        filters.size === size
+          ? "text-amber-400 font-bold"
+          : "text-gray-400"
+      }`}
+    >
+      {size}
+    </button>
+  ))}
+</div>
+
+
+<div>
   <h3 className="text-amber-500 text-sm uppercase mb-3">Price</h3>
 
   {[
@@ -505,6 +539,26 @@ const filteredItems = products.filter((item) => {
           </button>
         ))}
       </div>
+
+     <div className="mb-8">
+  <h3 className="text-amber-500 text-sm uppercase mb-3">
+    Size
+  </h3>
+
+  {sizeOptions.map((size) => (
+    <button
+      key={size}
+      onClick={() => updateFilter("size", size)}
+      className={`block text-sm mb-2 ${
+        filters.size === size
+          ? "text-amber-400 font-bold"
+          : "text-gray-400"
+      }`}
+    >
+      {size}
+    </button>
+  ))}
+</div>
 
       {/* PRICE */}
       <div className="mb-8">

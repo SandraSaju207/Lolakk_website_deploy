@@ -546,26 +546,51 @@ const trendingProducts = Array.isArray(products)
                 </select>
               </div>
 
-              {productType === "kids" && (
-  <div className="space-y-1">
-    <label className="text-xs text-gray-500 ml-1">
-      Kids Product Type
-    </label>
+  {productType === "kids" && (
+  <>
+    <div className="space-y-1">
+      <label className="text-xs text-gray-500 ml-1">
+        Kids Product Type
+      </label>
 
-    <select
-      value={kidsItemType}
-      onChange={(e) => setKidsItemType(e.target.value)}
-      className="w-full p-3 rounded-xl bg-black/40 border border-white/10 text-white focus:border-[#d4af37] outline-none transition"
-    >
-      <option value="hair_bun">Hair Bun</option>
-      <option value="hair_clip">Hair Clip</option>
-      <option value="hair_bow">Hair Bow</option>
-      <option value="kids_bangles">Kids Bangles</option>
-<option value="kids_necklace">Kids Necklace</option>
-    </select>
-  </div>
+      <select
+        value={kidsItemType}
+        onChange={(e) => setKidsItemType(e.target.value)}
+        className="w-full p-3 rounded-xl bg-black/40 border border-white/10 text-white focus:border-[#d4af37] outline-none transition"
+      >
+        <option value="hair_bun">Hair Bun</option>
+        <option value="hair_clip">Hair Clip</option>
+        <option value="hair_bow">Hair Bow</option>
+        <option value="kids_bangles">Kids Bangles</option>
+        <option value="kids_necklace">Kids Necklace</option>
+      </select>
+    </div>
+
+    <div className="space-y-1">
+      <label className="text-xs text-gray-500 ml-1">
+        Age Group
+      </label>
+
+      <select
+        value={formData.extra}
+        onChange={(e) =>
+          setFormData({
+            ...formData,
+            extra: e.target.value,
+          })
+        }
+        className="w-full p-3 rounded-xl bg-black/40 border border-white/10 text-white focus:border-[#d4af37] outline-none transition"
+      >
+        <option value="">Select Age Group</option>
+        <option value="0-1 Years">0-1 Years</option>
+        <option value="1-3 Years">1-3 Years</option>
+        <option value="3-5 Years">3-5 Years</option>
+        <option value="5-8 Years">5-8 Years</option>
+        <option value="8-12 Years">8-12 Years</option>
+      </select>
+    </div>
+  </>
 )}
-
               {productType === "bracelets" && (
   <div className="space-y-1 ">
     <label className="text-xs text-gray-500 ml-1">
@@ -627,14 +652,15 @@ const trendingProducts = Array.isArray(products)
               </div>
               {/* ================= DYNAMIC EXTRA DETAILS FIELD ================= */}
            {/* ================= DYNAMIC EXTRA DETAILS FIELD ================= */}
-{["rentals", "rings", "bracelets", "necklaces"].includes(productType) && (
+{["rentals", "rings", "bracelets", "necklaces","kids"].includes(productType) && (
   <div className="space-y-1 md:col-span-2">
     <label className="text-xs text-gray-500 ml-1">
       {{
         rentals: "Rental Period & Rules",
         rings: "Ring Size (Standard)",
         bracelets: "Bracelet / Bangle Size",
-        necklaces: "Necklace Chain Length"
+        necklaces: "Necklace Chain Length",
+          kids: "Age Group"
       }[productType]}
     </label>
 
@@ -647,7 +673,8 @@ const trendingProducts = Array.isArray(products)
         rentals: "Ex: 3 days minimum, security deposit ₹5000",
         rings: "Ex: 6, 7, 8 (US) or 12, 14 (IN)",
         bracelets: "Ex: 2.4, 2.6, 60mm or Bangle size",
-        necklaces: "Ex: 18 inches, 24 inches"
+        necklaces: "Ex: 18 inches, 24 inches",
+         kids: "Ex: 0-1 Years, 1-3 Years, 3-5 Years, 5-8 Years"
       }[productType]}
       className="w-full p-3 rounded-xl bg-black/40 border border-white/10 text-white focus:border-[#d4af37] outline-none transition placeholder:text-gray-600"
     />
