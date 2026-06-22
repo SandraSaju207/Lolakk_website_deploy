@@ -50,7 +50,7 @@ export default function Footer() {
 
       {/* Footer Bottom */}
       <div className="mt-10 text-xs text-gray-600">
-        © {new Date().getFullYear()} Lolakk Fine Jewelry • Kerala, India
+        © 2025 Lolakk Fine Jewelry • Kerala, India
       </div>
 
     </footer>

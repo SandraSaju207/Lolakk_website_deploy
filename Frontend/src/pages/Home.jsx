@@ -69,7 +69,7 @@ export default function KeralaLuxuryHomeScreen() {
       </div>
 
      <div className="relative z-10 px-4 sm:px-6 py-12 md:py-20 w-full max-w-5xl mx-auto">
-        <span className="text-amber-500 uppercase tracking-[0.5em] text-[10px] mb-6 block">Est. 2026 • Kerala</span>
+        <span className="text-amber-500 uppercase tracking-[0.5em] text-[10px] mb-6 block">Est. 2025 • Kerala</span>
         <h1 className="relative overflow-hidden inline-block text-5xl sm:text-6xl md:text-8xl serif mb-6 leading-tight bg-gradient-to-r from-yellow-400 via-amber-200 to-yellow-600 bg-clip-text text-transparent px-2
                        after:content-[''] after:absolute after:top-0 after:left-[-150%] after:w-1/2 after:h-full after:bg-gradient-to-r after:from-transparent after:via-white/30 after:to-transparent after:skew-x-[-20deg] after:animate-[shimmerOnce_3s_ease_forwards]">
           Lolakk{" "}
