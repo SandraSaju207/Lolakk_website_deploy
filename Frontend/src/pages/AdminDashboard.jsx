@@ -22,6 +22,7 @@ export default function AdminDashboard() {
   const [ItemType,setItemType] = useState("bangle");
   const [kidsItemType, setKidsItemType] = useState("hair_bun");
   const [savingProduct, setSavingProduct] = useState(false);
+  const [stockFilter, setStockFilter] = useState("all");
 
   const notifications = useNotifications();
 
@@ -295,6 +296,11 @@ const trendingProducts = Array.isArray(products)
   ? products.filter(p => p.trending === true)
   : [];
 
+  const filteredProducts =
+  stockFilter === "all"
+    ? products
+    : products.filter((p) => p.type === stockFilter);
+
   return (
     <AdminLayout activeTab={activeTab} setActiveTab={setActiveTab}>
       
@@ -406,9 +412,24 @@ const trendingProducts = Array.isArray(products)
           </div>
 
           <div className="p-6 rounded-2xl bg-white/5 backdrop-blur-2xl border border-white/10 relative z-10">
+          <div className="mb-6">
+  <select
+    value={stockFilter}
+    onChange={(e) => setStockFilter(e.target.value)}
+    className="p-3 rounded-xl bg-black/40 border border-white/10 text-white"
+  >
+    <option value="all">All Products</option>
+    <option value="rentals">Rentals</option>
+    <option value="rings">Rings</option>
+    <option value="bracelets">Bracelets</option>
+    <option value="necklaces">Necklaces</option>
+    <option value="kids">Kids</option>
+    <option value="earrings">Earrings</option>
+  </select>
+</div>
             <h2 className="text-lg text-[#d4af37] font-semibold mb-6">Current Inventory</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
-              {products.map((p) => (
+              {filteredProducts.map((p) => (
                 <div key={p._id} className="p-3 md:p-4 rounded-xl bg-black/40 border border-white/10 group relative overflow-hidden transition-all duration-300 hover:border-[#d4af37]/30">
                   
                   {/* TRENDING BADGE */}
@@ -420,7 +441,7 @@ const trendingProducts = Array.isArray(products)
                     </div>
                   )}
 
-                  <div className="absolute top-3 left-3 z-30 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                  <div className="absolute top-3 left-3 z-30 flex gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300">
                     <button onClick={() => handleEditClick(p)} className="p-2 rounded-full bg-[#d4af37]/10 text-[#d4af37] hover:bg-[#d4af37] hover:text-black backdrop-blur-md transition-colors">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
