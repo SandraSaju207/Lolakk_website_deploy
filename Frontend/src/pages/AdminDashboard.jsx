@@ -411,37 +411,120 @@ const trendingProducts = Array.isArray(products)
             </button>
           </div>
 
-         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+          <div className="p-6 rounded-2xl bg-white/5 backdrop-blur-2xl border border-white/10 relative z-10">
 
+           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+  
   <h2 className="text-lg text-[#d4af37] font-semibold">
     Current Inventory
   </h2>
 
-  <div className="flex flex-wrap gap-2 justify-start sm:justify-end">
-    {[
-      "all",
-      "rentals",
-      "rings",
-      "bracelets",
-      "necklaces",
-      "kids",
-      "earrings",
-    ].map((type) => (
-      <button
-        key={type}
-        onClick={() => setStockFilter(type)}
-        className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
-          stockFilter === type
-            ? "bg-gradient-to-r from-[#d4af37] to-[#b8962e] text-black shadow-[0_0_15px_rgba(212,175,55,0.3)]"
-            : "bg-black/40 border border-white/10 text-gray-300 hover:border-[#d4af37]/40 hover:text-[#d4af37]"
-        }`}
+  <div className="relative">
+    <select
+      value={stockFilter}
+      onChange={(e) => setStockFilter(e.target.value)}
+      className="
+        appearance-none
+        bg-black/40
+        backdrop-blur-xl
+        border border-[#d4af37]/20
+        text-[#d4af37]
+        rounded-xl
+        px-4 py-2.5
+        pr-10
+        text-sm
+        font-medium
+        outline-none
+        transition-all
+        duration-300
+        hover:border-[#d4af37]/50
+        focus:border-[#d4af37]
+        focus:shadow-[0_0_15px_rgba(212,175,55,0.2)]
+      "
+    >
+      <option value="all">All Products</option>
+      <option value="rentals">Rentals</option>
+      <option value="rings">Rings</option>
+      <option value="bracelets">Bracelets</option>
+      <option value="necklaces">Necklaces</option>
+      <option value="kids">Kids</option>
+      <option value="earrings">Earrings</option>
+    </select>
+
+    <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-[#d4af37]">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-4 w-4"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
       >
-        {type.charAt(0).toUpperCase() + type.slice(1)}
-      </button>
-    ))}
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M19 9l-7 7-7-7"
+        />
+      </svg>
+    </div>
   </div>
 
 </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
+              {filteredProducts.map((p) => (
+                <div key={p._id} className="p-3 md:p-4 rounded-xl bg-black/40 border border-white/10 group relative overflow-hidden transition-all duration-300 hover:border-[#d4af37]/30">
+                  
+                  {/* TRENDING BADGE */}
+                  {p.trending && (
+                    <div className="absolute top-0 right-0 z-40">
+                      <div className="bg-gradient-to-l from-[#d4af37] to-[#b8962e] text-black text-[10px] font-bold px-3 py-1 rounded-bl-xl shadow-[0_0_15px_rgba(212,175,55,0.3)] flex items-center gap-1 uppercase tracking-tighter">
+                        <span className="animate-pulse">★</span> Trending
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="absolute top-3 left-3 z-30 flex gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300">
+                    <button onClick={() => handleEditClick(p)} className="p-2 rounded-full bg-[#d4af37]/10 text-[#d4af37] hover:bg-[#d4af37] hover:text-black backdrop-blur-md transition-colors">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                      </svg>
+                    </button>
+                    <button onClick={() => handleDeleteProduct(p._id)} className="p-2 rounded-full bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white backdrop-blur-md transition-colors">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  <div className="h-28 sm:h-32 md:h-40 w-full mb-3 rounded-lg overflow-hidden bg-black/60 border border-white/5 relative">
+                    {p.image ? (
+                      <img
+  src={getImage(p.image)}
+  alt={p.name}
+  className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+/>
+                    ) : (
+                      <div className="flex items-center justify-center h-full text-gray-600 text-xs italic">No Image</div>
+                    )}
+                  </div>
+
+                  <div className="space-y-1">
+                   <h3 className="text-sm md:text-base text-white font-medium truncate">{p.name}</h3>
+                   <p className="text-xs text-gray-400 line-clamp-2 min-h-[32px]">
+  {p.description || "No description"}
+</p>
+                    <div className="flex justify-between items-end">
+                      <div>
+                        <p className="text-gray-400 text-xs uppercase tracking-wider">{p.type}</p>
+                        <p className={`font-semibold ${p.stock < 5 ? 'text-red-400' : 'text-[#d4af37]'}`}>Stock: {p.stock}</p>
+                      </div>
+                      <p className="text-white/80 text-sm">₹{p.price}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       )}
 
