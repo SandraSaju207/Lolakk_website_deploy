@@ -412,22 +412,59 @@ const trendingProducts = Array.isArray(products)
           </div>
 
           <div className="p-6 rounded-2xl bg-white/5 backdrop-blur-2xl border border-white/10 relative z-10">
-          <div className="mb-6">
-  <select
-    value={stockFilter}
-    onChange={(e) => setStockFilter(e.target.value)}
-    className="p-3 rounded-xl bg-black/40 border border-white/10 text-white"
-  >
-    <option value="all">All Products</option>
-    <option value="rentals">Rentals</option>
-    <option value="rings">Rings</option>
-    <option value="bracelets">Bracelets</option>
-    <option value="necklaces">Necklaces</option>
-    <option value="kids">Kids</option>
-    <option value="earrings">Earrings</option>
-  </select>
-</div>
             <h2 className="text-lg text-[#d4af37] font-semibold mb-6">Current Inventory</h2>
+            <div className="mb-6 flex justify-end">
+  <div className="relative">
+    <select
+      value={stockFilter}
+      onChange={(e) => setStockFilter(e.target.value)}
+      className="
+        appearance-none
+        bg-black/40
+        backdrop-blur-xl
+        border border-[#d4af37]/20
+        text-[#d4af37]
+        rounded-xl
+        px-5
+        py-3
+        pr-12
+        font-medium
+        outline-none
+        transition-all
+        duration-300
+        hover:border-[#d4af37]/50
+        focus:border-[#d4af37]
+        focus:shadow-[0_0_15px_rgba(212,175,55,0.2)]
+      "
+    >
+      <option value="all">All Products</option>
+      <option value="rentals">Rentals</option>
+      <option value="rings">Rings</option>
+      <option value="bracelets">Bracelets</option>
+      <option value="necklaces">Necklaces</option>
+      <option value="kids">Kids</option>
+      <option value="earrings">Earrings</option>
+    </select>
+
+    {/* Custom Arrow */}
+    <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-[#d4af37]">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-4 w-4"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M19 9l-7 7-7-7"
+        />
+      </svg>
+    </div>
+  </div>
+</div>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
               {filteredProducts.map((p) => (
                 <div key={p._id} className="p-3 md:p-4 rounded-xl bg-black/40 border border-white/10 group relative overflow-hidden transition-all duration-300 hover:border-[#d4af37]/30">
