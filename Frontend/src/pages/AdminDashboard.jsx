@@ -413,17 +413,18 @@ const trendingProducts = Array.isArray(products)
 
           <div className="p-6 rounded-2xl bg-white/5 backdrop-blur-2xl border border-white/10 relative z-10">
 
-           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
   
   <h2 className="text-lg text-[#d4af37] font-semibold">
     Current Inventory
   </h2>
 
-  <div className="relative">
+ <div className="relative w-full md:w-auto">
     <select
       value={stockFilter}
       onChange={(e) => setStockFilter(e.target.value)}
       className="
+      w-full md:w-auto
         appearance-none
         bg-black/40
         backdrop-blur-xl
