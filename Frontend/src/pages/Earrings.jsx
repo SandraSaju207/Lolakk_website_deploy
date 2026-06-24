@@ -559,37 +559,49 @@ const similarProducts = selectedProduct
   src={getImage(item.image)}
   className="aspect-[4/5] w-full object-cover rounded-lg"
 />
+ <div className="space-y-2">
 
-                <div className="flex flex-col flex-1">
-  <h3 className="text-white mt-4 font-medium min-h-[48px]">
-    {item.name}
-  </h3>
+    <h3 className="text-sm md:text-base text-white font-medium truncate">
+      {item.name}
+    </h3>
 
-  <p className="text-xs text-gray-400 line-clamp-2 h-[40px] mt-1">
-    {item.description || "Premium luxury earring collection"}
-  </p>
-
-  <div className="mt-auto">
-    <p className="text-2xl text-amber-400 mt-3">
-      ₹{item.price}
+    <p className="text-xs text-gray-400 line-clamp-2 min-h-[36px] mt-1">
+      {item.description || "Premium luxury earring collection"}
     </p>
+
+    <div className="mt-3">
+      <p className="text-gray-400 text-xs uppercase tracking-wider">
+        Price
+      </p>
+
+      <p className="text-xl md:text-2xl text-amber-400 font-semibold">
+        ₹{item.price}
+      </p>
+    </div>
+
+    {/* BUTTON ALWAYS AT BOTTOM */}
+    <div className=" pt-3">
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          openModal(item);
+        }}
+        className="
+          w-full
+          bg-amber-500
+          text-black
+          font-semibold
+          py-2.5
+          rounded-lg
+          hover:bg-amber-400
+          transition
+        "
+      >
+        Buy Now
+      </button>
+    </div>
+
   </div>
-</div>
-
-                {/* ✅ ADDED BUTTONS */}
-                <div className="mt-auto pt-4">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      openModal(item);
-                    }}
-                    className="w-full bg-amber-500 text-black font-bold px-4 py-2 rounded hover:bg-amber-400 transition"
-                  >
-                    Buy Now
-                  </button>
-
-                  
-                </div>
               </div>
             ))}
           </div>

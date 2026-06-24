@@ -680,7 +680,7 @@ const similarItems = selectedItem
     </h3>
 
     <p className="text-xs text-gray-400 line-clamp-2 min-h-[32px] mt-1">
-      {item.description || "Premium luxury ring collection"}
+      {item.description || "Premium luxury rental collection"}
     </p>
 
     <div className="mt-3">
