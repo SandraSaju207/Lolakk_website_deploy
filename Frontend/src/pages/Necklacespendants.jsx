@@ -569,7 +569,7 @@ const buyNow = (item) => {
  <div
   key={item._id}
   className="
-    h-[420px] md:h-[500px]
+   
     p-3 md:p-4
     rounded-xl
     bg-black/40
