@@ -365,7 +365,7 @@ const buyNow = (item) => {
           Category
         </h3>
 
-        {["all", "gold", "diamond", "stone"].map((item) => (
+        {["all", "gold", "diamond", "gemstone"].map((item) => (
           <button
             key={item}
             onClick={() => {
@@ -563,7 +563,7 @@ const buyNow = (item) => {
           </div>
 
 
-            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
 
            {paginatedItems.map((item) => (
  <div
