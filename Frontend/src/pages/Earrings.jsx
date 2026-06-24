@@ -564,7 +564,7 @@ const similarProducts = selectedProduct
                   {item.name}
                 </h3>
 
-                <p className="text-gray-400 text-sm mt-1 line-clamp-2 min-h-[40px]">
+                <p className="text-xs text-gray-400 line-clamp-2 h-[40px] mt-1">
   {item.description || "Premium luxury earring collection"}
 </p>
 
