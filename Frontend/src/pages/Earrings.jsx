@@ -11,8 +11,8 @@ const INITIAL_FILTERS = {
   price: "all",
 };
 
-export default function Earitems() {
-  const [earitems, setEaritems] = useState([]);
+export default function Earrings() {
+  const [earrings, setEarrings] = useState([]);
 
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState(INITIAL_FILTERS);
@@ -28,7 +28,7 @@ export default function Earitems() {
 
   // ---------------- FETCH FROM BACKEND ----------------
   useEffect(() => {
-    const fetchEaritems = async () => {
+    const fetchEarrings = async () => {
       try {
        const res = await axios.get(`${API_URL}/api/products`);
 
@@ -41,20 +41,20 @@ const products = Array.isArray(res.data)
   ? res.data
   : res.data.products || [];
 
-const earitemData = products.filter(
-  (p) => p.type === "earitems" || p.category === "earitems"
+const earringData = products.filter(
+  (p) => p.type === "earrings" || p.category === "earrings"
 );
 
-setEaritems(earitemData);
-        setEaritems(earitemData);
+setEarrings(earringData);
+        setEarrings(earringData);
       } catch (err) {
-        console.error("Error fetching earitems:", err);
+        console.error("Error fetching earrings:", err);
       } finally {
         setTimeout(() => setLoading(false), 1500);
       }
     };
 
-    fetchEaritems();
+    fetchEarrings();
   }, []);
 
   // ---------------- IMAGE HELPER ----------------
@@ -63,7 +63,7 @@ setEaritems(earitemData);
 
   // ---------------- FILTERS ----------------
   const isFiltered =
-    JSON.stitemify(filters) !== JSON.stitemify(INITIAL_FILTERS) ||
+    JSON.stringify(filters) !== JSON.stringify(INITIAL_FILTERS) ||
     sort !== "latest";
 
   const clearAllFilters = () => {
@@ -125,7 +125,7 @@ setEaritems(earitemData);
 
   localStorage.setItem(
     `lolakk_cart_${userId}`,
-    JSON.stitemify(updatedCart)
+    JSON.stringify(updatedCart)
   );
 
   setCart(updatedCart);
@@ -146,7 +146,7 @@ setEaritems(earitemData);
 
     localStorage.setItem(
       "lolakk_buy_now",
-      JSON.stitemify({
+      JSON.stringify({
         id: item._id,
         name: item.name,
         price: item.price,
@@ -161,7 +161,7 @@ setEaritems(earitemData);
   };
 
   // ---------------- FILTERED + SORTED ----------------
-  const filteredItems = earitems.filter((item) => {
+  const filteredItems = earrings.filter((item) => {
     const price = parseFloat(item.price) || 0;
 
     return (
@@ -178,7 +178,7 @@ setEaritems(earitemData);
   });
 
   // const similarProducts = selectedProduct
-  //   ? earitems.filter(
+  //   ? earrings.filter(
   //       (r) =>
   //         r.type === selectedProduct.type &&
   //         r._id !== selectedProduct._id
@@ -200,7 +200,7 @@ const sortedItems = [...filteredItems].sort((a, b) => {
 
 // ✅ SIMILAR PRODUCTS
 const similarProducts = selectedProduct
-  ? earitems.filter(
+  ? earrings.filter(
       (item) =>
         item.type === selectedProduct.type &&
         item._id !== selectedProduct._id
@@ -262,13 +262,13 @@ const similarProducts = selectedProduct
       {/* HEADER */}
       {/* HEADER */}
 <div className="text-center mb-6">
-  <h1 className="text-4xl text-amber-400">Earitem Collection</h1>
+  <h1 className="text-4xl text-amber-400">Earring Collection</h1>
 
   <p className="text-gray-500 text-sm italic mt-2">
     Luxury crafted for elegance
   </p>
 
-  {/* SORTING (moved under header like items page) */}
+  {/* SORTING (moved under header like rings page) */}
   {/* <div className="flex justify-end mt-2">
     <div className="flex gap-3 text-xs uppercase">
       {[
@@ -550,45 +550,43 @@ const similarProducts = selectedProduct
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
             {sortedItems.map((item) => (
-            <div
+             <div
   key={item._id}
-  className="border border-white/10 p-3 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition cursor-pointer"
-  onClick={() => openModal(earitems)}
+  className="border border-white/10 p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition cursor-pointer flex flex-col"
+  onClick={() => openModal(item)}
 >
-  <img
-    src={
-      item.image.startsWith("http")
-        ? item.image
-        : `${API_URL}${item.image}`
-    }
-    className="aspect-[4/5] w-full object-cover rounded-lg"
-    alt={item.name}
-  />
+               <img
+  src={getImage(item.image)}
+  className="aspect-[4/5] w-full object-cover rounded-lg"
+/>
 
-  <h3 className="text-white mt-4 font-medium">
-    {item.name}
-  </h3>
+                <h3 className="text-white mt-4 font-medium">
+                  {item.name}
+                </h3>
 
-  <p className="text-gray-400 text-sm mt-1 line-clamp-2 min-h-[40px]">
-    {item.description || "Premium luxury earring collection"}
-  </p>
+                <p className="text-gray-400 text-sm mt-1 line-clamp-2 min-h-[40px]">
+  {item.description || "Premium luxury earring collection"}
+</p>
 
-  <p className="text-2xl text-amber-400 mt-2">
-    ₹{item.price}
-  </p>
+                <p className="text-2xl text-amber-400 mt-2">
+                  ₹{item.price}
+                </p>
 
-  <div className="mt-4">
-    <button
-      onClick={(e) => {
-        e.stopPropagation();
-        openModal(item);
-      }}
-      className="w-full bg-amber-500 text-black font-bold px-4 py-2 rounded hover:bg-amber-400 transition"
-    >
-      Buy Now
-    </button>
-  </div>
-</div>
+                {/* ✅ ADDED BUTTONS */}
+                <div className="mt-auto pt-4">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openModal(item);
+                    }}
+                    className="w-full bg-amber-500 text-black font-bold px-4 py-2 rounded hover:bg-amber-400 transition"
+                  >
+                    Buy Now
+                  </button>
+
+                  
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -654,7 +652,7 @@ const similarProducts = selectedProduct
                 {/* DESCRIPTION */}
                 <p className="text-gray-400 leading-relaxed mt-6 text-sm md:text-base">
                   {selectedProduct.description ||
-                    "A timeless handcrafted luxury item designed with elegance and sophistication for modern beauty."}
+                    "A timeless handcrafted luxury ring designed with elegance and sophistication for modern beauty."}
                 </p>
       
                 {/* PRICE */}

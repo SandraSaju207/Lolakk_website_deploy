@@ -636,29 +636,31 @@ w-[70%] max-w-[250px]
     alt={ring.name}
   />
 
-  <h3 className="text-white mt-4 font-medium">
-    {ring.name}
-  </h3>
+  <h3 className="text-white mt-4 font-medium min-h-[48px]">
+  {item.name}
+</h3>
 
-  <p className="text-gray-400 text-sm mt-1 line-clamp-2 min-h-[40px]">
-    {ring.description || "Premium luxury ring collection"}
+<p className="text-gray-400 text-sm mt-1 line-clamp-2 min-h-[40px]">
+  {item.description || "Premium luxury earring collection"}
+</p>
+
+<div className="mt-auto">
+  <p className="text-2xl text-amber-400 mt-3">
+    ₹{item.price}
   </p>
 
-  <p className="text-2xl text-amber-400 mt-2">
-    ₹{ring.price}
-  </p>
-
-  <div className="mt-4">
+  <div className="pt-4">
     <button
       onClick={(e) => {
         e.stopPropagation();
-        openModal(ring);
+        openModal(item);
       }}
       className="w-full bg-amber-500 text-black font-bold px-4 py-2 rounded hover:bg-amber-400 transition"
     >
       Buy Now
     </button>
   </div>
+</div>
 </div>
 ))}
           </div>
