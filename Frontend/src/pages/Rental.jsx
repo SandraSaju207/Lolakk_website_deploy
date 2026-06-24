@@ -55,6 +55,7 @@ const rentalData = data.filter(
 const formattedData = rentalData.map((p) => ({
   id: p._id,
   name: p.name,
+   description: p.description || "",
   rent: Number(p.price || 0),
 
 category: (p.materialType ?? "").toString().toLowerCase().trim(),
