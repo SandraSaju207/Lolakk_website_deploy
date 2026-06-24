@@ -612,7 +612,7 @@ const filteredItems = products.filter((item) => {
           rounded-xl
         "
       >
-        Clear Filters
+        Clear Filter
       </button>
     </div>
   </>
