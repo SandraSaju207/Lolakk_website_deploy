@@ -560,17 +560,21 @@ const similarProducts = selectedProduct
   className="aspect-[4/5] w-full object-cover rounded-lg"
 />
 
-                <h3 className="text-white mt-4 font-medium">
-                  {item.name}
-                </h3>
+                <div className="flex flex-col flex-1">
+  <h3 className="text-white mt-4 font-medium min-h-[48px]">
+    {item.name}
+  </h3>
 
-                <p className="text-xs text-gray-400 line-clamp-2 h-[40px] mt-1">
-  {item.description || "Premium luxury earring collection"}
-</p>
+  <p className="text-xs text-gray-400 line-clamp-2 h-[40px] mt-1">
+    {item.description || "Premium luxury earring collection"}
+  </p>
 
-                <p className="text-2xl text-amber-400 mt-2">
-                  ₹{item.price}
-                </p>
+  <div className="mt-auto">
+    <p className="text-2xl text-amber-400 mt-3">
+      ₹{item.price}
+    </p>
+  </div>
+</div>
 
                 {/* ✅ ADDED BUTTONS */}
                 <div className="mt-auto pt-4">
