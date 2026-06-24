@@ -601,7 +601,7 @@ const buyNow = (item) => {
   </div>
 
   {/* CONTENT */}
-  <div className="flex flex-col flex-1">
+  <div className="space-y-2">
 
     <h3 className="text-sm md:text-base text-white font-medium truncate">
       {item.name}
@@ -622,7 +622,7 @@ const buyNow = (item) => {
     </div>
 
     {/* BUTTON ALWAYS AT BOTTOM */}
-    <div className="mt-auto pt-4">
+    <div className=" pt-3">
       <button
         onClick={(e) => {
           e.stopPropagation();
