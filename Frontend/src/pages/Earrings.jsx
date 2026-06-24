@@ -552,7 +552,7 @@ const similarProducts = selectedProduct
             {sortedItems.map((item) => (
              <div
   key={item._id}
-  className="border border-white/10 p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition cursor-pointer flex flex-col"
+  className="border border-white/10 p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition cursor-pointer flex flex-col h-full"
   onClick={() => openModal(item)}
 >
                <img
@@ -560,7 +560,7 @@ const similarProducts = selectedProduct
   className="aspect-[4/5] w-full object-cover rounded-lg"
 />
 
-                <h3 className="text-white mt-4 font-medium">
+                <h3 className="text-white mt-4 font-medium line-clamp-2 min-h-[48px]">
                   {item.name}
                 </h3>
 
