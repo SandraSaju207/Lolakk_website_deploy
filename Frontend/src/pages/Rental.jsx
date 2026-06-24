@@ -411,6 +411,16 @@ setTimeout(() => {
   }
 };
 
+const similarItems = selectedItem
+  ? items
+      .filter(
+        (p) =>
+          p.id !== selectedItem.id &&
+          p.category === selectedItem.category
+      )
+      .slice(0, 4)
+  : [];
+
   if (loading) {
     return (
       <div className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center p-6 text-center">
@@ -633,39 +643,76 @@ setTimeout(() => {
 </div> */}
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 gap-8">
             {sortedItems.map((item) => (
-              <div key={item.id} className="border border-white/10 p-3 md:p-4 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition-all group">
-                <div className="overflow-hidden rounded-xl">
-  <img
-  src={item.image}
-   className="h-48 md:h-64 w-full object-cover group-hover:scale-105 transition-transform duration-500"
-/>
+              <div
+  key={item.id}
+  className="
+    h-[320px] md:h-[500px]
+    p-3 md:p-4
+    rounded-xl
+    bg-black/40
+    border border-white/10
+    group
+    overflow-hidden
+    transition-all duration-300
+    hover:border-amber-500/30
+    flex flex-col
+  "
+>
+  {/* IMAGE */}
+  <div className="h-40 md:h-64 w-full mb-3 rounded-lg overflow-hidden">
+    <img
+      src={item.image}
+      alt={item.name}
+      className="
+        w-full h-full object-cover
+        group-hover:scale-105
+        transition duration-500
+      "
+    />
+  </div>
 
-<h3 className="text-white mt-4 font-medium">
-    {item.name}
-  </h3>
+  {/* CONTENT */}
+  <div className="flex flex-col flex-1">
+    
+    <h3 className="text-sm md:text-base text-white font-medium truncate">
+      {item.name}
+    </h3>
 
-   <p className="text-gray-400 text-sm mt-1 line-clamp-2 min-h-[40px]">
-    {item.description || "Premium luxury ring collection"}
-  </p>
+    <p className="text-xs text-gray-400 line-clamp-2 min-h-[32px] mt-1">
+      {item.description || "Premium luxury ring collection"}
+    </p>
 
+    <div className="mt-3">
+      <p className="text-gray-400 text-xs uppercase tracking-wider">
+        Rental Price
+      </p>
+
+      <p className="text-xl md:text-2xl text-amber-400 font-semibold">
+        ₹{item.rent}
+      </p>
+    </div>
+
+    {/* PUSH BUTTON TO BOTTOM */}
+    <div className="mt-auto pt-4">
+      <button
+        onClick={() => openModal(item)}
+        className="
+          w-full
+          bg-amber-500
+          text-black
+          font-semibold
+          py-2.5
+          rounded-lg
+          hover:bg-amber-400
+          transition
+        "
+      >
+        Book Now
+      </button>
+    </div>
+
+  </div>
 </div>
-               
-  
-<div className="mt-3 flex flex-col gap-2">
-  <div className="flex justify-between items-center">
-    <span className="text-2xl text-amber-400 font-light">
-      ₹{item.rent}
-    </span>
-
-    <span className="text-[11px] text-gray-500 uppercase">
-      Rental Price
-    </span>
-  </div>
-  </div>
-                <button onClick={() => openModal(item)} className="mt-4 w-full bg-amber-500 text-black font-bold px-4 py-2 rounded hover:bg-amber-400 transition transform active:scale-95">
-                  Book Now
-                </button>
-              </div>
             ))}
           </div>
 
@@ -887,6 +934,45 @@ setTimeout(() => {
 </button>
 
       </div>
+    </div>
+  </div>
+)}
+{selectedItem && similarItems.length > 0 && (
+  <div className="mt-20">
+    <h2 className="text-2xl text-amber-400 mb-8">
+      Similar Products
+    </h2>
+
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+      {similarItems.map((item) => (
+        <div
+          key={item.id}
+          className="bg-zinc-900 rounded-xl overflow-hidden border border-white/10"
+        >
+          <img
+            src={item.image}
+            alt={item.name}
+            className="w-full h-48 object-cover"
+          />
+
+          <div className="p-4">
+            <h3 className="text-white text-sm">
+              {item.name}
+            </h3>
+
+            <p className="text-amber-400 mt-2">
+              ₹{item.rent}
+            </p>
+
+            <button
+              onClick={() => openModal(item)}
+              className="mt-3 w-full bg-amber-500 text-black py-2 rounded-lg"
+            >
+              Book Now
+            </button>
+          </div>
+        </div>
+      ))}
     </div>
   </div>
 )}
