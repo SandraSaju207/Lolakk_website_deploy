@@ -686,6 +686,7 @@ const trendingProducts = Array.isArray(products)
         <option value="gold">Gold</option>
         <option value="diamond">Diamond</option>
         <option value="gemstone">Gemstone</option>
+          <option value="silver">Silver</option>
       </select>
     </div>
 

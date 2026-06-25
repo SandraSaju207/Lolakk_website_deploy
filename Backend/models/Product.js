@@ -65,7 +65,7 @@ const productSchema = new mongoose.Schema({
   },
   materialType: {
   type: String,
-  enum: ['gold', 'diamond', 'gemstone'],
+  enum: ['gold', 'diamond', 'gemstone','silver'],
   lowercase: true,
   default: 'gold'
 },
