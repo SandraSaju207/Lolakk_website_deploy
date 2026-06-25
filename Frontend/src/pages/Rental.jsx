@@ -132,6 +132,16 @@ const filteredItems = items.filter((item) => {
     return 0;
   });
 
+  const similarItems = selectedItem
+  ? items
+      .filter(
+        (p) =>
+          p.id !== selectedItem.id &&
+          p.category === selectedItem.category
+      )
+      .slice(0, 4)
+  : [];
+
  /* const totalPages = Math.ceil(sortedItems.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedItems = sortedItems.slice(startIndex, startIndex + itemsPerPage);*/
@@ -148,7 +158,7 @@ const filteredItems = items.filter((item) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };*/
 
- const openModal = (item) => {
+ const openModal = () => {
   const token = localStorage.getItem("token");
 
   if (!token) {
@@ -161,7 +171,7 @@ const filteredItems = items.filter((item) => {
     return;
   }
 
-  setSelectedItem(item);
+
   setShowModal(true);
 };
   const closeModal = () => {
@@ -412,15 +422,7 @@ setTimeout(() => {
   }
 };
 
-const similarItems = selectedItem
-  ? items
-      .filter(
-        (p) =>
-          p.id !== selectedItem.id &&
-          p.category === selectedItem.category
-      )
-      .slice(0, 4)
-  : [];
+
 
   if (loading) {
     return (
@@ -644,8 +646,9 @@ const similarItems = selectedItem
 </div> */}
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 gap-8">
             {sortedItems.map((item) => (
-              <div
+  <div
   key={item.id}
+  onClick={() => setSelectedItem(item)}
   className="
     h-[320px] md:h-[500px]
     p-3 md:p-4
@@ -657,6 +660,7 @@ const similarItems = selectedItem
     transition-all duration-300
     hover:border-amber-500/30
     flex flex-col
+    cursor-pointer
   "
 >
   {/* IMAGE */}
@@ -696,20 +700,21 @@ const similarItems = selectedItem
     {/* PUSH BUTTON TO BOTTOM */}
     <div className="mt-auto pt-4">
       <button
-        onClick={() => openModal(item)}
-        className="
-          w-full
-          bg-amber-500
-          text-black
-          font-semibold
-          py-2.5
-          rounded-lg
-          hover:bg-amber-400
-          transition
-        "
-      >
-        Book Now
-      </button>
+  onClick={(e) => {
+    e.stopPropagation();
+    setSelectedItem(item);
+  }}
+  className="
+    w-full
+    bg-amber-500
+    text-black
+    font-semibold
+    py-2.5
+    rounded-lg
+  "
+>
+  View Details
+</button>
     </div>
 
   </div>
@@ -741,6 +746,103 @@ const similarItems = selectedItem
     <p className="text-sm text-gray-300 leading-relaxed">
       {successMessage}
     </p>
+
+  </div>
+)}
+
+
+{selectedItem && !showModal && (
+  <div className="fixed inset-0 z-[120] bg-black/80 backdrop-blur-sm flex justify-center items-center p-4">
+
+    <div className="bg-zinc-900 w-full max-w-5xl rounded-2xl border border-white/10 overflow-hidden max-h-[90vh] overflow-y-auto">
+
+      {/* Header */}
+      <div className="relative">
+        <button
+          onClick={() => setSelectedItem(null)}
+          className="absolute top-4 right-4 text-white text-xl z-10"
+        >
+          ✕
+        </button>
+
+        <img
+          src={selectedItem.image}
+          alt={selectedItem.name}
+          className="w-full h-[350px] object-cover"
+        />
+      </div>
+
+      <div className="p-6">
+
+        <h2 className="text-3xl text-white font-semibold">
+          {selectedItem.name}
+        </h2>
+
+        <p className="text-gray-400 mt-3 leading-relaxed">
+          {selectedItem.description}
+        </p>
+
+        <div className="mt-6">
+          <p className="text-xs uppercase text-gray-500">
+            Rental Price
+          </p>
+
+          <p className="text-3xl text-amber-400 font-bold">
+            ₹{selectedItem.rent}
+          </p>
+        </div>
+
+        <button
+          onClick={() => setShowModal(true)}
+          className="mt-6 px-8 py-3 bg-amber-500 text-black rounded-xl font-semibold hover:bg-amber-400"
+        >
+          Book Now
+        </button>
+
+        {/* Similar Products */}
+        {similarItems.length > 0 && (
+          <div className="mt-12">
+
+            <h3 className="text-xl text-amber-400 mb-6">
+              Similar Products
+            </h3>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+              {similarItems.map((product) => (
+                <div
+                  key={product.id}
+                  onClick={() => setSelectedItem(product)}
+                  className="cursor-pointer bg-black/40 border border-white/10 rounded-xl overflow-hidden hover:border-amber-500/40"
+                >
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-40 object-cover"
+                  />
+
+                  <div className="p-3">
+
+                    <h4 className="text-white text-sm line-clamp-2">
+                      {product.name}
+                    </h4>
+
+                    <p className="text-amber-400 mt-2">
+                      ₹{product.rent}
+                    </p>
+
+                  </div>
+                </div>
+              ))}
+
+            </div>
+
+          </div>
+        )}
+
+      </div>
+
+    </div>
 
   </div>
 )}
@@ -938,163 +1040,42 @@ const similarItems = selectedItem
     </div>
   </div>
 )}
-{showModal && selectedProduct && (
-  <div
-    className="fixed inset-0 z-[999] bg-black/90 backdrop-blur-md flex items-start justify-center pt-20 pb-10 px-3 overflow-y-auto"
-    onClick={closeModal}
-  >
-    <div
-     className="relative w-full max-w-3xl rounded-[1.5rem] overflow-hidden border border-white/10 bg-[#111111]"
-      onClick={(e) => e.stopPropagation()}
-    >
-      {/* GOLD GLOW */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(251,191,36,0.15),transparent_35%)] pointer-events-none"></div>
+{selectedItem && similarItems.length > 0 && (
+  <div className="mt-20">
+    <h2 className="text-2xl text-amber-400 mb-8">
+      Similar Products
+    </h2>
 
-      {/* CLOSE BUTTON */}
-      <button
-        onClick={closeModal}
-        className="absolute top-5 right-5 z-20 w-10 h-10 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-gray-300 hover:text-amber-400 hover:border-amber-500 transition-all duration-300"
-      >
-        ✕
-      </button>
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+      {similarItems.map((item) => (
+        <div
+          key={item.id}
+          className="bg-zinc-900 rounded-xl overflow-hidden border border-white/10"
+        >
+          <img
+            src={item.image}
+            alt={item.name}
+            className="w-full h-48 object-cover"
+          />
 
-<div className="grid grid-cols-1 md:grid-cols-2">        
-        
- {/* IMAGE SIDE */}
-<div className="relative bg-black h-full min-h-[480px] overflow-hidden">
-  <img
-    src={
-      selectedProduct.image.startsWith("http")
-        ? selectedProduct.image
-        : `${API_URL}${selectedProduct.image}`
-    }
-    className="w-full h-full object-cover object-center"
-    alt={selectedProduct.name}
-  />
+          <div className="p-4">
+            <h3 className="text-white text-sm">
+              {item.name}
+            </h3>
 
-  {/* IMAGE OVERLAY */}
-  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+            <p className="text-amber-400 mt-2">
+              ₹{item.rent}
+            </p>
 
-  {/* LUXURY BADGE */}
-  <div className="absolute top-6 left-6 px-4 py-2 rounded-full bg-amber-500/20 border border-amber-400/30 backdrop-blur-md text-amber-300 text-xs uppercase tracking-[0.3em]">
-    Premium Collection
-  </div>
-</div>
-
-        {/* CONTENT SIDE */}
-        <div className="p-6 md:p-8 flex flex-col justify-center">
-          
-          {/* CATEGORY */}
-          <p className="text-xs uppercase tracking-[0.4em] text-amber-500 mb-4">
-            LOLAKK Luxury
-          </p>
-
-          {/* TITLE */}
-          <h2 className="text-3xl md:text-4xl serif text-white leading-tight">
-            {selectedProduct.name}
-          </h2>
-
-          {/* DESCRIPTION */}
-          <p className="text-gray-400 leading-relaxed mt-6 text-sm md:text-base">
-            {selectedProduct.description ||
-              "A timeless handcrafted luxury ring designed with elegance and sophistication for modern beauty."}
-          </p>
-
-          {/* PRICE */}
-          <div className="mt-8 flex items-end gap-3">
-            <span className="text-4xl font-light text-amber-400 tracking-wide">
-              ₹{selectedProduct.price}
-            </span>
-
-            <span className="text-xs uppercase tracking-[0.3em] text-gray-500 pb-2">
-              Exclusive Price
-            </span>
-          </div>
-
-          {/* BUTTONS */}
-          <div className="mt-8 space-y-3">
-            
-            {/* ADD TO CART */}
             <button
-              onClick={() => addToCart(selectedProduct)}
-              className="relative overflow-hidden group w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 text-black font-semibold tracking-wide shadow-[0_0_25px_rgba(251,191,36,0.25)] hover:shadow-[0_0_40px_rgba(251,191,36,0.45)] transition-all duration-500"
+              onClick={() => openModal(item)}
+              className="mt-3 w-full bg-amber-500 text-black py-2 rounded-lg"
             >
-              <span className="absolute top-0 left-[-120%] h-full w-[50%] bg-white/30 skew-x-[-20deg] group-hover:left-[130%] transition-all duration-1000"></span>
-
-              <span className="relative flex items-center justify-center gap-3 uppercase tracking-[0.25em] text-sm">
-                <ShoppingBag className="w-5 h-5" />
-                Add to Cart
-              </span>
+              Book Now
             </button>
-
-            {/* GO TO CART */}
-            <button
-                    onClick={() => (window.location.href = "/cart")}
-                    className="w-full py-3.5 rounded-2xl border border-amber-500/30 bg-white/5 backdrop-blur-md text-amber-300 uppercase tracking-[0.25em] text-sm hover:bg-amber-500 hover:text-black transition-all duration-500"
-                  >
-                    Go to Cart
-                  </button>
-          </div>
-
-          {/* EXTRA DETAILS */}
-          <div className="mt-10 pt-6 border-t border-white/10 grid grid-cols-3 gap-4 text-center">
-            <div>
-              <p className="text-amber-400 text-lg">✦</p>
-              <p className="text-xs text-gray-500 mt-1">Premium Quality</p>
-            </div>
-
-            <div>
-              <p className="text-amber-400 text-lg">✦</p>
-              <p className="text-xs text-gray-500 mt-1">Luxury Finish</p>
-            </div>
-
-            <div>
-              <p className="text-amber-400 text-lg">✦</p>
-              <p className="text-xs text-gray-500 mt-1">Elegant Design</p>
-            </div>
           </div>
         </div>
-      </div>
-
-      {/* SIMILAR PRODUCTS */}
-      {similarProducts.length > 0 && (
-        <div className="border-t border-white/10 px-6 md:px-8 py-6 bg-white/[0.02]">
-          <h3 className="text-sm uppercase tracking-[0.3em] text-amber-400 mb-6">
-            Similar Products
-          </h3>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-            {similarProducts.map((item) => (
-              <div
-                key={item._id}
-                onClick={() => selectedItem(item)}
-                className="group cursor-pointer"
-              >
-                <div className="overflow-hidden rounded-2xl border border-white/10 bg-black">
-                  <img
-                    src={
-                      item.image.startsWith("http")
-                        ? item.image
-                        : `${API_URL}${item.image}`
-                    }
-                    className="h-40 w-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    alt={item.name}
-                  />
-                </div>
-
-                <p className="text-sm text-gray-300 mt-3 group-hover:text-amber-400 transition">
-                  {item.name}
-                </p>
-
-
-                <p className="text-amber-500 text-sm mt-1">
-                  ₹{item.price}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      ))}
     </div>
   </div>
 )}
