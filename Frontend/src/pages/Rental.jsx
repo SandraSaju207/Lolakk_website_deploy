@@ -271,7 +271,7 @@ const generatePDF = async (data) => {
 
     doc.text(`Rental Duration: ${data.duration} Days`, 20, 154);
 
-    doc.text(`Rental Amount: ₹${data.total}`, 20, 166);
+    // doc.text(`Rental Amount: ₹${data.total}`, 20, 166);
 
     // =========================
     // IMPORTANT MESSAGE
