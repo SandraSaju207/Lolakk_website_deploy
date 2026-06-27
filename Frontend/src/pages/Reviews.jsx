@@ -4,7 +4,7 @@ import axios from "axios";
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Review() {
-  const [Reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
@@ -146,34 +146,46 @@ export default function Review() {
             No reviews yet.
           </p>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {Reviews.map((review) => (
-              <div
-                key={review._id}
-                className="bg-zinc-900 border border-white/10 rounded-2xl p-6"
-              >
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-white font-medium">
-                    {review.name}
-                  </h3>
+          <div className="overflow-hidden py-10">
+  <div className="flex gap-6 overflow-x-auto no-scrollbar px-4 snap-x snap-mandatory">
 
-                  <span className="text-amber-400">
-                    {"★".repeat(review.rating)}
-                  </span>
-                </div>
+    {reviews.map((review) => (
+      <div
+        key={review._id}
+        className="
+          min-w-[300px]
+          md:min-w-[380px]
+          snap-center
+          bg-white/5
+          border border-white/10
+          rounded-2xl
+          p-6
+          backdrop-blur-xl
+          flex-shrink-0
+        "
+      >
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="font-semibold text-lg text-white">
+            {review.name}
+          </h3>
 
-                <p className="text-gray-400 text-sm leading-relaxed">
-                  {review.comment}
-                </p>
+          <span className="text-amber-400">
+            {"★".repeat(review.rating)}
+          </span>
+        </div>
 
-                <div className="mt-5 text-xs text-gray-600">
-                  {new Date(
-                    review.createdAt
-                  ).toLocaleDateString()}
-                </div>
-              </div>
-            ))}
-          </div>
+        <p className="text-gray-300 text-sm leading-relaxed">
+          "{review.comment}"
+        </p>
+
+        <p className="text-xs text-gray-500 mt-4">
+          {new Date(review.createdAt).toLocaleDateString()}
+        </p>
+      </div>
+    ))}
+
+  </div>
+</div>
         )}
       </div>
 

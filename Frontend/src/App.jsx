@@ -51,6 +51,7 @@ const hideNavbar =
               <Jewelry />
               <Collection />
               <Feedback />
+              <Review />  
               <Footer />
               
             </>

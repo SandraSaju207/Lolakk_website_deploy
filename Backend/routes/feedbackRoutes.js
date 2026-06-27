@@ -14,7 +14,9 @@ router.post("/feedback", async (req, res) => {
 
 router.get("/feedback", async (req, res) => {
   try {
-    const feedbacks = await Feedback.find().sort({
+    const feedbacks = await Feedback.find({
+      approved: true,
+    }).sort({
       createdAt: -1,
     });
 
@@ -48,17 +50,6 @@ router.put("/feedback/:id/approve", async (req, res) => {
   }
 });
 
-router.put("/feedback/:id/approve", async (req, res) => {
-  try {
-    await Feedback.findByIdAndUpdate(req.params.id, {
-      approved: true,
-    });
-
-    res.json({ success: true });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
 
 router.delete("/feedback/:id", async (req, res) => {
   try {
