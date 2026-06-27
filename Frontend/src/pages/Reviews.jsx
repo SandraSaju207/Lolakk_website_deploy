@@ -6,6 +6,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 export default function Review() {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showForm, setShowForm] = useState(false);
 
   const [form, setForm] = useState({
     name: "",
@@ -49,6 +50,8 @@ export default function Review() {
         comment: "",
       });
 
+      setShowForm(false);
+
       setLoading(false);
     } catch (err) {
       console.error(err);
@@ -57,10 +60,10 @@ export default function Review() {
   };
 
   return (
-    <section className="pt-32 pb-20 px-6 max-w-6xl mx-auto">
+    <section className="pt-12 pb-8 px-6 max-w-6xl mx-auto">
 
       {/* HEADER */}
-      <div className="text-center mb-16">
+      <div className="text-center mb-10">
         <h1 className="text-4xl md:text-5xl serif text-amber-400">
           Customer Review
         </h1>
@@ -72,68 +75,80 @@ export default function Review() {
       </div>
 
       {/* FORM */}
-      <div className="max-w-2xl mx-auto bg-zinc-900 border border-white/10 rounded-3xl p-8 mb-20">
+      {/* ADD REVIEW BUTTON */}
+<div className="text-center mb-10">
+  <button
+    onClick={() => setShowForm(!showForm)}
+    className="bg-amber-500 text-black px-8 py-3 rounded-full font-semibold hover:bg-amber-400 transition"
+  >
+    {showForm ? "Close Review Form" : "Add Your Review"}
+  </button>
+</div>
 
-        <h2 className="text-2xl text-white mb-6">
-          Leave a Review
-        </h2>
+{/* REVIEW FORM */}
+{showForm && (
+  <div className="max-w-2xl mx-auto bg-zinc-900 border border-white/10 rounded-3xl p-8 mb-12">
+    <h2 className="text-2xl text-white mb-6">
+      Leave a Review
+    </h2>
 
-        <form
-          onSubmit={submitReview}
-          className="space-y-5"
-        >
-          <input
-            type="text"
-            placeholder="Your Name"
-            value={form.name}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                name: e.target.value,
-              })
-            }
-            className="w-full bg-black border border-white/10 rounded-xl p-3 text-white"
-          />
+    <form
+      onSubmit={submitReview}
+      className="space-y-5"
+    >
+      <input
+        type="text"
+        placeholder="Your Name"
+        value={form.name}
+        onChange={(e) =>
+          setForm({
+            ...form,
+            name: e.target.value,
+          })
+        }
+        className="w-full bg-black border border-white/10 rounded-xl p-3 text-white"
+      />
 
-          <select
-            value={form.rating}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                rating: Number(e.target.value),
-              })
-            }
-            className="w-full bg-black border border-white/10 rounded-xl p-3 text-white"
-          >
-            <option value={5}>★★★★★ (5)</option>
-            <option value={4}>★★★★☆ (4)</option>
-            <option value={3}>★★★☆☆ (3)</option>
-            <option value={2}>★★☆☆☆ (2)</option>
-            <option value={1}>★☆☆☆☆ (1)</option>
-          </select>
+      <select
+        value={form.rating}
+        onChange={(e) =>
+          setForm({
+            ...form,
+            rating: Number(e.target.value),
+          })
+        }
+        className="w-full bg-black border border-white/10 rounded-xl p-3 text-white"
+      >
+        <option value={5}>★★★★★ (5)</option>
+        <option value={4}>★★★★☆ (4)</option>
+        <option value={3}>★★★☆☆ (3)</option>
+        <option value={2}>★★☆☆☆ (2)</option>
+        <option value={1}>★☆☆☆☆ (1)</option>
+      </select>
 
-          <textarea
-            rows="5"
-            placeholder="Share your experience..."
-            value={form.comment}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                comment: e.target.value,
-              })
-            }
-            className="w-full bg-black border border-white/10 rounded-xl p-3 text-white"
-          />
+      <textarea
+        rows="5"
+        placeholder="Share your experience..."
+        value={form.comment}
+        onChange={(e) =>
+          setForm({
+            ...form,
+            comment: e.target.value,
+          })
+        }
+        className="w-full bg-black border border-white/10 rounded-xl p-3 text-white"
+      />
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-amber-500 text-black font-semibold py-3 rounded-xl hover:bg-amber-400 transition"
-          >
-            {loading ? "Submitting..." : "Submit Review"}
-          </button>
-        </form>
-      </div>
+      <button
+        type="submit"
+        disabled={loading}
+        className="w-full bg-amber-500 text-black font-semibold py-3 rounded-xl hover:bg-amber-400 transition"
+      >
+        {loading ? "Submitting..." : "Submit Review"}
+      </button>
+    </form>
+  </div>
+)}
 
       {/* REVIEWS */}
       <div>
