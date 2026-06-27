@@ -66,6 +66,13 @@ export default function AdminDashboard() {
   // ===================== RENTAL STATUS CONTROL =====================
   const [pendingRentalStatus, setPendingRentalStatus] = useState({});
   const [lockedRentals, setLockedRentals] = useState({});
+
+  const [accessoryType, setAccessoryType] =
+  useState("bow");
+
+const [occasion, setOccasion] =
+  useState("daily");
+
   const rentalTimeouts = useRef({});
 
   useEffect(() => {
@@ -129,6 +136,8 @@ console.log("Products Response:", productRes.data);
     setIsTrending(product.trending || false);
     setMaterialType(product.materialType || "gold");
     setItemType(product.itemType || "bangle");
+    setAccessoryType(product.accessoryType || "bow");
+    setOccasion(product.occasion || "daily");
     setShowModal(true);
   };
 
@@ -183,6 +192,18 @@ if (productType === "kids") {
 
 if (productType === "bracelets") {
   formDataToSend.append("itemType", ItemType);
+}
+
+if (productType === "hair-accessories") {
+  formDataToSend.append(
+    "accessoryType",
+    accessoryType
+  );
+
+  formDataToSend.append(
+    "occasion",
+    occasion
+  );
 }
       
       if (selectedFile) {
@@ -301,6 +322,8 @@ const trendingProducts = Array.isArray(products)
   stockFilter === "all"
     ? products
     : products.filter((p) => p.type === stockFilter);
+
+    
 
   return (
     <AdminLayout activeTab={activeTab} setActiveTab={setActiveTab}>
@@ -451,6 +474,7 @@ const trendingProducts = Array.isArray(products)
       <option value="necklaces">Necklaces</option>
       <option value="kids">Kids</option>
       <option value="earrings">Earrings</option>
+      <option value="hair-accessories">Hair Accessories</option>
     </select>
 
     <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-[#d4af37]">
@@ -625,6 +649,7 @@ const trendingProducts = Array.isArray(products)
                   <option value="earrings">Earrings</option>
                   <option value="bracelets">Bracelets & Bangles</option>
                   <option value="necklaces">Necklaces & Pendants</option>
+                   <option value="hair-accessories">Hair Accessories</option>
                   <option value="kids">Kids</option>
                 </select>
               </div>
@@ -690,6 +715,52 @@ const trendingProducts = Array.isArray(products)
     </select>
   </div>
 )}
+
+{productType === "hair-accessories" && (
+  <>
+    <div>
+      <label className="text-xs text-gray-500">
+        Accessory Type
+      </label>
+
+      <select
+        value={accessoryType}
+        onChange={(e) =>
+          setAccessoryType(e.target.value)
+        }
+        className="w-full p-3 rounded-xl bg-black/40 border border-white/10 text-white"
+      >
+        <option value="bow">Bow</option>
+        <option value="clip">Clip</option>
+        <option value="scrunchie">Scrunchie</option>
+        <option value="bun">Bun</option>
+        <option value="headband">Headband</option>
+        <option value="hairpin">Hair Pin</option>
+      </select>
+    </div>
+
+    <div>
+      <label className="text-xs text-gray-500">
+        Occasion
+      </label>
+
+      <select
+        value={occasion}
+        onChange={(e) =>
+          setOccasion(e.target.value)
+        }
+        className="w-full p-3 rounded-xl bg-black/40 border border-white/10 text-white"
+      >
+        <option value="daily">Daily Wear</option>
+        <option value="party">Party</option>
+        <option value="wedding">Wedding</option>
+        <option value="festival">Festival</option>
+        <option value="school">School</option>
+      </select>
+    </div>
+  </>
+)}
+
              {productType !== "kids" && (
   <>
     <div className="space-y-1">

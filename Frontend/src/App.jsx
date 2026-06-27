@@ -28,6 +28,7 @@ import Orders from "./pages/Orders.jsx";
 import Profile from "./pages/Profile.jsx";
 import Policies from "./pages/Policies";
 import Review from "./pages/Reviews.jsx";
+import HairAccessories from "./pages/HairAccessories";
 
 
 function Layout() {
@@ -65,6 +66,7 @@ const hideNavbar =
         <Route path="/kids" element={<Kids />} />
         <Route path="/earrings" element={<Earrings />} />
         <Route path="/bracelets-bangles" element={<BraceletsBangles />} />
+        <Route path="/hair-accessories" element={<HairAccessories/>}/>
         <Route path="/solitaries" element={<Solitaries />} />
         <Route path="/rental" element={<Rental />} />
         <Route path="/necklaces-pendants" element={<NecklacesPendants />} />

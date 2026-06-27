@@ -31,7 +31,7 @@ const productSchema = new mongoose.Schema({
     required: true,
     lowercase: true, // Standardizes 'Rings' to 'rings'
     trim: true,
-    enum: ['rentals', 'rings', 'earrings', 'bracelets', 'necklaces','kids', 'other'], 
+    enum: ['rentals', 'rings', 'earrings', 'bracelets', 'necklaces','kids', 'hair-accessories'], 
   }, 
   style: {
   type: String,
@@ -57,6 +57,30 @@ const productSchema = new mongoose.Schema({
     "kids_bangles",
     "kids_necklace"
   ],
+},
+accessoryType: {
+  type: String,
+  enum: [
+    "bow",
+    "clip",
+    "scrunchie",
+    "bun",
+    "headband",
+    "hairpin"
+  ],
+  lowercase: true
+},
+
+occasion: {
+  type: String,
+  enum: [
+    "daily",
+    "party",
+    "wedding",
+    "festival",
+    "school"
+  ],
+  lowercase: true
 },
   audience: { 
     type: String, 

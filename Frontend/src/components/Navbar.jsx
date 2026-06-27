@@ -106,12 +106,7 @@ export default function Navbar() {
     Visit Us
   </a>
 
-  <button
-    onClick={() => navigate("/Reviews")}
-    className="hover:text-amber-500 transition"
-  >
-    customer reviews
-  </button>
+  
 
 
   <button
@@ -249,15 +244,7 @@ export default function Navbar() {
   Visit Us
 </button>
 
-<button
-  onClick={() => {
-    navigate("/reviews");
-    setMobileMenuOpen(false);
-  }}
-  className="w-full text-left px-4 py-2 hover:bg-white/10"
->
-  Customer Reviews
-</button>
+
 
   </div>
 )}
@@ -296,8 +283,8 @@ export default function Navbar() {
     {/* <a href="/Gifting" className="hover:text-white transition-colors duration-300">Gifting</a>
     <span className="text-white/20">|</span> */}
 
-    {/* <a href="/More-jewellery" className="hover:text-white transition-colors duration-300">More</a>
-    <span className="text-white/20">|</span> */}
+    <a href="/hair-accessories" className="hover:text-white transition-colors duration-300">Hair accessories</a>
+    <span className="text-white/20">|</span>
 
     <a href="/kids" className="hover:text-white transition-colors duration-300">Kids</a>
     <span className="text-white/20">|</span>
