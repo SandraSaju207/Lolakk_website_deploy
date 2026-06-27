@@ -4,6 +4,7 @@ import AdminLayout from "../components/AdminLayout";
 import useNotifications from "../hooks/useNotifications";
 import { Notifications } from "../components/Notifications";
 import { Table } from "../components/Table";
+import AdminReviews from "./AdminReviews";
 
 const API = import.meta.env.VITE_API_URL;
 console.log("API URL:", API);
@@ -552,6 +553,10 @@ const trendingProducts = Array.isArray(products)
           </div>
         </div>
       )}
+
+    {activeTab === "reviews" && (
+  <AdminReviews />
+)}
 
       {/* ================= MODAL ================= */}
       {showModal && (
