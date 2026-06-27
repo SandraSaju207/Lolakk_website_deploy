@@ -284,7 +284,7 @@ export default function Navbar() {
     <a href="/kids" className="hover:text-white transition-colors duration-300">Kids</a>
     <span className="text-white/20">|</span>
 
-    <a href="/Trending" className="hover:text-white transition-colors duration-300">Trending</a>
+    <a href="/Trending" className="hover:text-white transition-colors duration-300">customer Favorites</a>
   </div>
 </div>
     </>

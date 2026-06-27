@@ -479,21 +479,26 @@ export default function Trending() {
 
           {sorted.map((item) => (
               <div
-                key={item._id}
-                onClick={() => openModal(item)}
-               className="border border-white/10 p-3 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition cursor-pointer"
-              >
+  key={item._id}
+  onClick={() => openModal(item)}
+  className="border border-white/10 p-3 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition cursor-pointer flex flex-col h-full"
+>
                <img
   src={getImage(item.image)}
   className="h-36 sm:h-44 md:h-48 w-full object-cover rounded-lg"
 />
 
-               <div className="pt-3">
-                  <h3 className="text-white">{item.name}</h3>
-                  <p className="text-amber-400">₹{item.price}</p>
-                </div>
-                {/* BUY NOW BUTTON */}
-    <div className="mt-3">
+               <div className="pt-3 flex-grow">
+  <h3 className="text-white min-h-[48px]">
+    {item.name}
+  </h3>
+
+  <p className="text-amber-400 mt-1">
+    ₹{item.price}
+  </p>
+</div>
+
+<div className="mt-auto pt-3">
       <button
         onClick={(e) => {
           e.stopPropagation();
