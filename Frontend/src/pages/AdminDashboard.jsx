@@ -750,7 +750,7 @@ const trendingProducts = Array.isArray(products)
 
             <div className="mt-6 flex items-center space-x-3">
               <input type="checkbox" id="trending" checked={isTrending} onChange={(e) => setIsTrending(e.target.checked)} className="w-5 h-5 accent-[#d4af37]" />
-              <label htmlFor="trending" className="text-gray-300 cursor-pointer select-none">Mark as Trending Item</label>
+              <label htmlFor="trending" className="text-gray-300 cursor-pointer select-none">Mark as Customer Favorite</label>
             </div>
 
            <div className="mt-8 flex flex-col md:flex-row gap-3 md:space-x-4">

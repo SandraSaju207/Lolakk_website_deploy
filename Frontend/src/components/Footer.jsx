@@ -21,14 +21,6 @@ export default function Footer() {
           Instagram
         </a>
 
-        <a
-          href="https://maps.app.goo.gl/VHYug3drkWtcq6MU9"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-xs uppercase hover:text-amber-400 transition"
-        >
-          Directions
-        </a>
 
         <a
           href="https://wa.me/917994405335"
@@ -40,11 +32,29 @@ export default function Footer() {
         </a>
 
         <a
+    href="https://www.facebook.com/share/18uPLQx8xW/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-xs uppercase hover:text-amber-400 transition"
+  >
+    Facebook
+  </a>
+
+  <a
+          href="https://maps.app.goo.gl/VHYug3drkWtcq6MU9"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs uppercase hover:text-amber-400 transition"
+        >
+          Directions
+        </a>
+
+        {/* <a
   href="/policies"
   className="text-xs uppercase hover:text-amber-400 transition"
 >
   Policies
-</a>
+</a> */}
 
       </div>
 
