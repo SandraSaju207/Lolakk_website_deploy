@@ -554,8 +554,22 @@ const trendingProducts = Array.isArray(products)
         </div>
       )}
 
-    {activeTab === "reviews" && (
-  <AdminReviews />
+   {activeTab === "reviews" && (
+  <div className="relative space-y-8">
+    <div>
+      <h1 className="text-2xl md:text-3xl font-serif tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] via-[#f5e6b3] to-[#d4af37]">
+        Customer Reviews
+      </h1>
+
+      <p className="text-gray-400 text-sm mt-1">
+        Manage customer feedback
+      </p>
+    </div>
+
+    <div className="p-6 rounded-2xl bg-white/5 backdrop-blur-2xl border border-white/10">
+      <AdminReviews />
+    </div>
+  </div>
 )}
 
       {/* ================= MODAL ================= */}

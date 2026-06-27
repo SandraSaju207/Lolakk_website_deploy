@@ -28,7 +28,7 @@ import Orders from "./pages/Orders.jsx";
 import Profile from "./pages/Profile.jsx";
 import Policies from "./pages/Policies";
 import Review from "./pages/Reviews.jsx";
-import AdminReviews from "./pages/AdminReviews";
+
 
 function Layout() {
   const location = useLocation();
@@ -81,14 +81,7 @@ const hideNavbar =
 
   }
 />
-<Route
-  path="/admin/reviews"
-  element={
-    <AdminRoute>
-      <AdminReviews />
-    </AdminRoute>
-  }
-/>
+
         <Route path="/cart" element={<Cart />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/orders" element={<Orders />} />
