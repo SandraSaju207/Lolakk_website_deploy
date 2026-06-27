@@ -6,7 +6,7 @@ import useNotifications from "../hooks/useNotifications";
 
 export default function AdminLayout({ children, setActiveTab, activeTab }) {
   const notifications = useNotifications();
-  const menu = ["dashboard", "orders", "rentals", "stock"];
+  const menu = ["dashboard", "orders", "rentals", "stock","reviews",];
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -79,7 +79,12 @@ export default function AdminLayout({ children, setActiveTab, activeTab }) {
             <button
               key={item}
              onClick={() => {
-  setActiveTab(item);
+  if (item === "reviews") {
+    navigate("/admin/reviews");
+  } else {
+    setActiveTab(item);
+  }
+
   setSidebarOpen(false);
 }}
               className={`group w-full text-left px-4 py-3 rounded-xl transition-all duration-300 ${

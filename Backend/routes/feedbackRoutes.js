@@ -48,4 +48,26 @@ router.put("/feedback/:id/approve", async (req, res) => {
   }
 });
 
+router.put("/feedback/:id/approve", async (req, res) => {
+  try {
+    await Feedback.findByIdAndUpdate(req.params.id, {
+      approved: true,
+    });
+
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.delete("/feedback/:id", async (req, res) => {
+  try {
+    await Feedback.findByIdAndDelete(req.params.id);
+
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 export default router;

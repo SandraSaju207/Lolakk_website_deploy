@@ -28,6 +28,7 @@ import Orders from "./pages/Orders.jsx";
 import Profile from "./pages/Profile.jsx";
 import Policies from "./pages/Policies";
 import Review from "./pages/Reviews.jsx";
+import AdminReviews from "./pages/AdminReviews";
 
 function Layout() {
   const location = useLocation();
@@ -35,7 +36,7 @@ function Layout() {
   // Hide Navbar on Kids page
 const hideNavbar =
   location.pathname === "/kids" ||
-  location.pathname === "/admin";
+  location.pathname.startsWith("/admin");
 
   return (
     <>
@@ -76,6 +77,15 @@ const hideNavbar =
   element={
     <AdminRoute>
       <AdminDashboard />
+    </AdminRoute>
+
+  }
+/>
+<Route
+  path="/admin/reviews"
+  element={
+    <AdminRoute>
+      <AdminReviews />
     </AdminRoute>
   }
 />
