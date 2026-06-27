@@ -20,6 +20,7 @@ import productRoutes from "./routes/productRoutes.js";
 import rentalRoutes from "./routes/rentalRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import feedbackRoutes from "./routes/feedbackRoutes.js";
 
 const app = express();
 
@@ -125,6 +126,7 @@ app.use("/api/rentals", rentalRoutes);
 
 app.use("/api/payments", paymentRoutes);
 
+app.use("/api", feedbackRoutes);
 // ==============================
 // SOCKET EVENTS
 // ==============================

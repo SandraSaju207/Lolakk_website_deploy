@@ -51,7 +51,7 @@ const hideNavbar =
               <Collection />
               <Feedback />
               <Footer />
-              <Review/>
+              
             </>
           }
         />
@@ -68,6 +68,7 @@ const hideNavbar =
         <Route path="/necklaces-pendants" element={<NecklacesPendants />} />
         <Route path="/gifting" element={<Gifting />} />
         <Route path="/trending" element={<Trending />} />
+        <Route path="/reviews" element={<Review />} />
       
 
 <Route

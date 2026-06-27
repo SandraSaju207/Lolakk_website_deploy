@@ -107,6 +107,14 @@ export default function Navbar() {
   </a>
 
   <button
+    onClick={() => navigate("/Reviews")}
+    className="hover:text-amber-500 transition"
+  >
+    customer reviews
+  </button>
+
+
+  <button
     onClick={() => navigate("/cart")}
     className="hover:text-amber-500 transition"
   >

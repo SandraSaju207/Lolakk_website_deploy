@@ -15,7 +15,7 @@ export default function Review() {
 
   const fetchReviews = async () => {
     try {
-      const res = await axios.get(`${API_URL}/api/Review`);
+      const res = await axios.get(`${API_URL}/api/feedback`);
       setReviews(res.data);
     } catch (err) {
       console.error(err);
@@ -37,7 +37,7 @@ export default function Review() {
     try {
       setLoading(true);
 
-      await axios.post(`${API_URL}/api/Review`, form);
+     await axios.post(`${API_URL}/api/feedback`, form);
 
       alert(
         "Thank you! Your Review has been submitted for review."
