@@ -141,7 +141,7 @@ export default function Review() {
           What Our Customers Say
         </h2>
 
-        {Reviews.length === 0 ? (
+        {reviews.length === 0 ? (
           <p className="text-center text-gray-500">
             No reviews yet.
           </p>
