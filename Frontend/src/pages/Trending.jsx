@@ -215,7 +215,7 @@ export default function Trending() {
 
       {/* TITLE */}
      <div className="text-center mb-6">
-        <h1 className="text-4xl text-amber-400">Customer Favorites</h1>
+       <h1 className="text-2xl md:text-4xl text-amber-400">Customer Favorites</h1>
         <p className="text-gray-500 text-sm italic mt-2">Luxury crafted for elegance</p>
       </div>
 
