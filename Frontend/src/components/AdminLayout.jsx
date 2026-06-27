@@ -79,11 +79,7 @@ export default function AdminLayout({ children, setActiveTab, activeTab }) {
             <button
               key={item}
              onClick={() => {
-  if (item === "reviews") {
-    navigate("/admin/reviews");
-  } else {
-    setActiveTab(item);
-  }
+  setActiveTab(item);
 
   setSidebarOpen(false);
 }}

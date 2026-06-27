@@ -48,9 +48,7 @@ export default function AdminReviews() {
 
   return (
     <div className="p-6">
-      <h1 className="text-3xl mb-6">
-        Customer Reviews
-      </h1>
+    
 
       <div className="space-y-4">
         {reviews.map((review) => (
