@@ -249,6 +249,16 @@ export default function Navbar() {
   Visit Us
 </button>
 
+<button
+  onClick={() => {
+    navigate("/reviews");
+    setMobileMenuOpen(false);
+  }}
+  className="w-full text-left px-4 py-2 hover:bg-white/10"
+>
+  Customer Reviews
+</button>
+
   </div>
 )}
 
