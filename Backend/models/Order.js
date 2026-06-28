@@ -45,6 +45,15 @@ shippingAddress: {
 expectedDeliveryDate: {
   type: Date,
 },
+ trackingId: {
+  type: String,
+  default: "",
+},
+
+courier: {
+  type: String,
+  default: "",
+},
   paymentStatus: { type: String, default: "Unpaid" },
   deliveredAt: { type: Date }, // Needed to calculate the 7-day return window
   invoiceUrl: { type: String }  // Link to the generated bill

@@ -73,6 +73,23 @@ await fetch(`${API}/api/orders/${id}`, {
     },
   });
 
+  const updateTrackingId = async (id, trackingId) => {
+  const token = localStorage.getItem("token");
+
+  await fetch(`${API}/api/orders/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      trackingId,
+    }),
+  });
+
+  refresh();
+};
+
   refresh();
 };
 
@@ -371,6 +388,44 @@ await fetch(`${API}/api/orders/${id}`, {
       updateDeliveryDate(
         item._id,
         e.target.value
+      )
+    }
+    className="w-full sm:w-auto bg-black border border-zinc-700 p-3 rounded"
+  />
+</div>
+<div className="flex flex-col">
+  <label className="text-xs text-gray-400 mb-1">
+    Courier
+  </label>
+
+  <input
+    type="text"
+    defaultValue={item.courier || ""}
+    placeholder="DTDC"
+    onBlur={(e) =>
+      updateTracking(
+        item._id,
+        item.trackingId || "",
+        e.target.value
+      )
+    }
+    className="w-full sm:w-auto bg-black border border-zinc-700 p-3 rounded"
+  />
+</div>
+<div className="flex flex-col">
+  <label className="text-xs text-gray-400 mb-1">
+    Tracking ID
+  </label>
+
+  <input
+    type="text"
+    defaultValue={item.trackingId || ""}
+    placeholder="AWB Number"
+    onBlur={(e) =>
+      updateTracking(
+        item._id,
+        e.target.value,
+        item.courier || ""
       )
     }
     className="w-full sm:w-auto bg-black border border-zinc-700 p-3 rounded"

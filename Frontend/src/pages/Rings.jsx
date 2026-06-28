@@ -235,56 +235,223 @@ const paginatedRings = sortedRings;
 
   // LOADER VIEW
   if (loading) {
-    return (
-      <div className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center p-6 text-center">
-        <div className="relative w-64 h-64 flex flex-col items-center justify-center">
-          <div className="absolute inset-0 rounded-full bg-amber-900/20 blur-3xl transform scale-75 animate-[softGlow_4s_ease-in-out_infinite]"></div>
-          <div className="relative z-10 w-32 h-32 text-amber-400/90 animate-[iconBreathe_3s_ease-in-out_infinite]">
-            <svg viewBox="0 0 100 100" fill="currentColor" className="drop-shadow-[0_0_12px_rgba(251,191,36,0.4)]">
-              <defs>
-                <linearGradient id="handGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#fef3c7" />
-                  <stop offset="50%" stopColor="#fbbf24" />
-                  <stop offset="100%" stopColor="#b45309" />
-                </linearGradient>
-              </defs>
-              <path
-                fill="url(#handGradient)"
-                d="M50 10 C 55 25, 65 35, 65 55 C 65 75, 55 85, 50 90 C 45 85, 35 75, 35 55 C 35 35, 45 25, 50 10 Z M50 20 C 52 30, 58 38, 58 55 C 58 68, 54 75, 50 80 C 46 75, 42 68, 42 55 C 42 38, 48 30, 50 20 Z"
-              />
-              <rect x="49.5" y="15" width="1" height="70" fill="#fef3c7" opacity="0.5" />
-            </svg>
-          </div>
-          <div className="mt-6 relative z-10">
-            <h2 className="text-3xl md:text-4xl serif gold-gradient tracking-[0.25em] mb-1">LOLAKK</h2>
-            <p className="text-gray-400 italic font-light text-sm tracking-wide">by Athira</p>
-          </div>
-        </div>
-        <div className="mt-12 w-48 h-[1px] bg-white/5 rounded-full overflow-hidden relative">
-          <div className="absolute inset-0 bg-amber-500 animate-[progressBar_2.5s_linear_forwards]"></div>
-        </div>
-       <style jsx>{`
-  .serif {
-    font-family: 'Playfair Display', serif;
-  }
+  return (
+    <div className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center p-6 text-center overflow-hidden">
 
-  .glass {
-    background: rgba(255,255,255,0.03);
-    backdrop-filter: blur(10px);
-  }
+      {/* Background */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,220,120,.15),transparent_45%),radial-gradient(circle_at_center,rgba(255,255,255,.03),transparent_70%)]" />
 
-  @keyframes slideIn {
-    from {
-      transform: translateX(-100%);
-    }
-    to {
-      transform: translateX(0);
-    }
-  }
-`}</style>
+      {/* Main Content */}
+      <div className="relative w-72 h-60 flex flex-col items-center justify-center">
+
+        {/* Glow */}
+        <div className="absolute inset-0 rounded-full bg-amber-900/20 blur-3xl scale-75 animate-[softGlow_4s_ease-in-out_infinite]" />
+
+        {/* Earrings (CLOSER NOW) */}
+     <div className="relative z-10 flex gap-2 mb-0">
+          {[0, 1].map((i) => (
+            <div
+              key={i}
+              className="earring origin-top"
+              style={{ animationDelay: `${i * 0.15}s` }}
+            >
+             <svg width="50" height="120" viewBox="0 0 90 220">
+  <defs>
+    <linearGradient id={`gold${i}`} x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stopColor="#fff7d6" />
+      <stop offset="40%" stopColor="#fbbf24" />
+      <stop offset="100%" stopColor="#8b5a00" />
+    </linearGradient>
+  </defs>
+
+  {/* Floral Stud */}
+ <g>
+  {[0,45,90,135,180,225,270,315].map((r,n)=>(
+    <ellipse
+      key={n}
+      cx="45"
+      cy="25"
+      rx="5"
+      ry="13"
+      fill="none"
+      stroke={`url(#gold${i})`}
+      strokeWidth="3"
+      transform={`rotate(${r} 45 25)`}
+    />
+  ))}
+  <circle
+    cx="45"
+    cy="25"
+    r="10"
+    fill={`url(#gold${i})`}
+  />
+  <rect
+    x="40"
+    y="20"
+    width="10"
+    height="10"
+    rx="2"
+    fill="#fff2b2"
+    opacity=".4"
+  />
+</g>
+{/* Connector Ring */}
+{/* Small Ring */}
+<circle cx="45"
+ cy="48"
+  r="6"
+  fill="none"
+  stroke={`url(#gold${i})`}
+  strokeWidth="2.5"
+/>
+<path
+  d="
+    M32 58
+    Q45 50 58 58
+    Q60 64 55 72
+    Q45 78 35 72
+    Q30 64 32 58
+    Z
+  "
+  fill={`url(#gold${i})`}
+/>
+{/* Top Highlight */}
+<ellipse
+  cx="45"
+  cy="64"
+  rx="8"
+  ry="3"
+  fill="white"
+  opacity=".25"
+/>
+ {/* Main Jhumka Dome */}
+  <path
+  d="
+    M18 72
+    C22 120 68 120 72 72
+    Z
+  "
+  fill={`url(#gold${i})`}
+/>
+  {/* Dome Strands */}
+ {[22,28,34,40,45,50,56,62,68].map((x,n)=>(
+  <path
+    key={n}
+    d={`M45 74 Q${x} 100 ${x} 136`}
+    stroke="#fff2b2"
+    strokeWidth="2"
+    fill="none"
+    opacity=".9"
+  />
+))}
+  {/* Bottom Rim */}
+
+  <rect
+  x="18"
+  y="132"
+  width="54"
+  height="8"
+  rx="4"
+  fill={`url(#gold${i})`}
+/>
+
+  {/* Hanging Loops */}
+
+ {[22,30,38,46,54,62,70].map((x,n)=>(
+  <circle
+    key={n}
+    cx={x}
+    cy="147"
+    r="4"
+    fill="none"
+    stroke={`url(#gold${i})`}
+    strokeWidth="2"
+  />
+))}
+  {/* Pearls */}
+
+  {[22,30,38,46,54,62,70].map((x,n)=>(
+  <g key={n}>
+    <line
+      x1={x}
+      y1="150"
+      x2={x}
+      y2="164"
+      stroke="#D4AF37"
+      strokeWidth="1"
+    />
+    <circle
+      cx={x}
+      cy="168"
+      r="4.5"
+      fill="#fffef9"
+    />
+  </g>
+))}
+</svg>
+            </div>
+          ))}
+        </div>
+
+        {/* TEXT MOVED JUST BELOW EARRINGS */}
+     <div className="relative z-10 -mt-2">
+         <h2 className="text-4xl serif gold-gradient tracking-[0.30em] mb-0">
+            LOLAKK
+          </h2>
+          <p className="text-gray-400 italic font-light tracking-wide text-sm">
+            by Athira
+          </p>
+        </div>
+
       </div>
-    );
-  }
+
+      {/* Progress Bar */}
+     <div className="-mt-4 w-44 h-[2px] bg-white/5 rounded-full overflow-hidden relative">
+        <div className="absolute inset-0 bg-amber-500 animate-[progressBar_2.8s_linear_forwards]" />
+      </div>
+
+      {/* Styles */}
+      <style>{`
+        @keyframes softGlow {
+          0%,100% { opacity:.45; transform:scale(.75); }
+          50% { opacity:1; transform:scale(1); }
+        }
+
+        .serif {
+          font-family:'Playfair Display',serif;
+        }
+
+        .gold-gradient {
+          background: linear-gradient(to right, #b8860b, #fff2b2, #d4af37, #8b6508);
+          -webkit-background-clip:text;
+          background-clip:text;
+          color:transparent;
+        }
+
+        .earring {
+          transform-origin:45px 12px;
+           animation:swing 3.5s ease-in-out infinite;
+          filter:drop-shadow(0 0 8px rgba(251,191,36,.35));
+        }
+
+        .dome {
+          transform-origin:45px 40px;
+          animation:domeLag 2.8s ease-in-out infinite;
+        }
+
+        @keyframes swing {
+          0%,100% { transform:rotate(-16deg); }
+          50% { transform:rotate(16deg); }
+        }
+
+        @keyframes domeLag {
+          0%,100% { transform:rotate(-10deg); }
+          50% { transform:rotate(10deg); }
+        }
+      `}</style>
+    </div>
+  );
+}
 
   return (
    <section className="pt-32 pb-24 px-6 max-w-7xl mx-auto min-h-screen">
