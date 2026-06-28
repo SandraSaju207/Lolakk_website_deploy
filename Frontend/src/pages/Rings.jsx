@@ -786,6 +786,43 @@ w-[70%] max-w-[250px]
 
         {/* PRODUCTS */}
         <div className="md:col-span-3">
+          {/* DESKTOP SORT */}
+<div className="hidden md:flex justify-end mb-6 gap-3 text-xs uppercase">
+
+  <button
+    onClick={() => setSort("latest")}
+    className={`px-4 py-2 rounded-full border transition ${
+      sort === "latest"
+        ? "bg-amber-500 text-black border-amber-500"
+        : "border-white/20 text-gray-400 hover:text-amber-400 hover:border-amber-500"
+    }`}
+  >
+    Latest
+  </button>
+
+  <button
+    onClick={() => setSort("priceLow")}
+    className={`px-4 py-2 rounded-full border transition ${
+      sort === "priceLow"
+        ? "bg-amber-500 text-black border-amber-500"
+        : "border-white/20 text-gray-400 hover:text-amber-400 hover:border-amber-500"
+    }`}
+  >
+    Low → High
+  </button>
+
+  <button
+    onClick={() => setSort("priceHigh")}
+    className={`px-4 py-2 rounded-full border transition ${
+      sort === "priceHigh"
+        ? "bg-amber-500 text-black border-amber-500"
+        : "border-white/20 text-gray-400 hover:text-amber-400 hover:border-amber-500"
+    }`}
+  >
+    High → Low
+  </button>
+
+</div>
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
             {paginatedRings.map((ring) => (
  <div

@@ -767,15 +767,15 @@ setTimeout(() => {
         </div>
 
         <div className="md:col-span-3">
-          {/* SORT UI */}
-{/* <div className="hidden md:flex justify-end mb-6">
+     {/* Desktop Sort */}
+<div className="hidden md:flex justify-end gap-2 mb-6">
 
   <button
     onClick={() => setSort("latest")}
-    className={`px-3 py-1 rounded-full border ${
+    className={`px-4 py-2 rounded-full border transition ${
       sort === "latest"
-        ? "bg-amber-500 text-black"
-        : "border-white/10 text-gray-300"
+        ? "bg-amber-500 text-black border-amber-500"
+        : "border-white/10 text-gray-300 hover:border-amber-500/50"
     }`}
   >
     Latest
@@ -783,10 +783,10 @@ setTimeout(() => {
 
   <button
     onClick={() => setSort("priceLow")}
-    className={`px-3 py-1 rounded-full border ${
+    className={`px-4 py-2 rounded-full border transition ${
       sort === "priceLow"
-        ? "bg-amber-500 text-black"
-        : "border-white/10 text-gray-300"
+        ? "bg-amber-500 text-black border-amber-500"
+        : "border-white/10 text-gray-300 hover:border-amber-500/50"
     }`}
   >
     Low
@@ -794,16 +794,16 @@ setTimeout(() => {
 
   <button
     onClick={() => setSort("priceHigh")}
-    className={`px-3 py-1 rounded-full border ${
+    className={`px-4 py-2 rounded-full border transition ${
       sort === "priceHigh"
-        ? "bg-amber-500 text-black"
-        : "border-white/10 text-gray-300"
+        ? "bg-amber-500 text-black border-amber-500"
+        : "border-white/10 text-gray-300 hover:border-amber-500/50"
     }`}
   >
     High
   </button>
 
-</div> */}
+</div>
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 gap-8">
             {sortedItems.map((item) => (
   <div
