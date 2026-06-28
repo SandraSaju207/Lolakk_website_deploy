@@ -436,6 +436,19 @@ const updateTracking = async (
     }
     className="w-full sm:w-auto bg-black border border-zinc-700 p-3 rounded"
   />
+
+  {item.returnRequested && (
+  <div className="mt-4 p-3 rounded bg-red-900/20 border border-red-500">
+    <p className="text-red-400 font-semibold">
+      Return Requested
+    </p>
+
+    <p className="text-gray-300">
+      Reason: {item.returnReason}
+    </p>
+  </div>
+)}
+
 </div>
 </div>
         </div>

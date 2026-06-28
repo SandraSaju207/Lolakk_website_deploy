@@ -18,6 +18,60 @@ router.get("/test-route", (req, res) => {
 
 router.put("/:id/cancel", protect, cancelOrder);
 
+router.put(
+  "/:id/request-return",
+  protect,
+  async (req, res) => {
+    try {
+      const order = await Order.findById(
+        req.params.id
+      );
+
+      if (!order) {
+        return res.status(404).json({
+          message: "Order not found",
+        });
+      }
+
+      if (order.status !== "Delivered") {
+        return res.status(400).json({
+          message:
+            "Only delivered orders can be returned",
+        });
+      }
+
+      const days =
+        (Date.now() -
+          new Date(order.deliveredAt)) /
+        (1000 * 60 * 60 * 24);
+
+      if (days > 7) {
+        return res.status(400).json({
+          message:
+            "Return period expired",
+        });
+      }
+
+      order.returnRequested = true;
+      order.returnReason =
+        req.body.reason || "";
+
+      order.returnRequestedAt =
+        new Date();
+
+      await order.save();
+
+      res.json({
+        success: true,
+      });
+    } catch (err) {
+      res.status(500).json({
+        message: err.message,
+      });
+    }
+  }
+);
+
 router.get("/", protect, async (req, res) => {
   try {
     let query = {};
@@ -46,10 +100,16 @@ router.patch("/:id", protect, adminOnly, async (req, res) => {
 
 router.put("/:id", protect, adminOnly, async (req, res) => {
   try {
+    const updateData = { ...req.body };
+
+    if (req.body.status === "Delivered") {
+      updateData.deliveredAt = new Date();
+    }
+
     const order = await Order.findByIdAndUpdate(
       req.params.id,
-      req.body,
-      { returnDocument: "after"}
+      updateData,
+      { new: true }
     );
 
     res.json(order);

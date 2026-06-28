@@ -44,6 +44,35 @@ useEffect(() => {
   fetchOrders();
 }, []);
 
+const requestReturn = async (id) => {
+  const reason = prompt(
+    "Why do you want to return?"
+  );
+
+  if (!reason) return;
+
+  const token =
+    localStorage.getItem("token");
+
+  await fetch(
+    `${API}/api/orders/${id}/request-return`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type":
+          "application/json",
+        Authorization:
+          `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        reason,
+      }),
+    }
+  );
+
+  fetchOrders();
+};
+
   // 2. IMPROVED Helper function to fix image paths
   const getImageUrl = (path) => {
    if (!path)
@@ -178,6 +207,17 @@ useEffect(() => {
 >
   <CheckCircle size={14} />
   {order.status || "Confirmed"}
+  {order.status === "Delivered" &&
+ !order.returnRequested && (
+  <button
+    onClick={() =>
+      requestReturn(order._id)
+    }
+    className="bg-red-500 text-white px-4 py-2 rounded mt-3"
+  >
+    Request Return
+  </button>
+)}
 </div>
                     </div>
                     {["Order Confirmed", "Processing"].includes(status) && (
