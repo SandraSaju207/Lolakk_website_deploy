@@ -382,14 +382,16 @@ const updateTracking = async (
   <label className="text-xs text-gray-400 mb-1">
     Expected Delivery Date
   </label>
-
-  <input
+console.log(
+  "DB Date:",
+  item.expectedDeliveryDate
+);
+ <input
   type="date"
   value={
     item.expectedDeliveryDate
       ? new Date(item.expectedDeliveryDate)
-          .toISOString()
-          .split("T")[0]
+          .toLocaleDateString("en-CA")
       : ""
   }
   onChange={(e) =>
