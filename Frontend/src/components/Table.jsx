@@ -418,24 +418,19 @@ const updateTracking = async (
     className="w-full sm:w-auto bg-black border border-zinc-700 p-3 rounded"
   />
 </div>
-<div className="flex flex-col">
-  <label className="text-xs text-gray-400 mb-1">
-    Tracking ID
-  </label>
+<div className="mt-2">
+  <span className="text-gray-300">
+    Tracking ID:
+  </span>
 
-  <input
-    type="text"
-    defaultValue={item.trackingId || ""}
-    placeholder="AWB Number"
-    onBlur={(e) =>
-      updateTracking(
-        item._id,
-        e.target.value,
-        item.courier || ""
-      )
-    }
-    className="w-full sm:w-auto bg-black border border-zinc-700 p-3 rounded"
-  />
+ <a
+  href={`https://www.dtdc.in/tracking/tracking_results.asp?Ttype=awb_no&strCnno=${order.trackingId}`}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-block mt-3 px-4 py-2 bg-amber-500 text-black rounded-lg font-semibold hover:bg-amber-400"
+>
+  Track Package →
+</a>
 </div>
 </div>
         </div>
