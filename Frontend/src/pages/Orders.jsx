@@ -215,14 +215,21 @@ useEffect(() => {
             </p>
           )}
 
-          {order.trackingId && (
-            <p className="text-gray-300 mt-1">
-              Tracking ID:{" "}
-              <span className="text-white font-mono">
-                {order.trackingId}
-              </span>
-            </p>
-          )}
+          <div className="mt-2">
+  <span className="text-gray-300">
+    Tracking ID:
+  </span>
+
+  <a
+    href={`https://www.dtdc.in/tracking/tracking_results.asp?Ttype=awb_no&strCnno=${order.trackingId}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="ml-2 text-amber-400 underline font-mono hover:text-amber-300"
+  >
+    {order.trackingId}
+  </a>
+</div>
+
         </div>
       )}
     <div className="max-w-2xl mx-auto">

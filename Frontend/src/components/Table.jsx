@@ -426,7 +426,7 @@ const updateTracking = async (
   <input
     type="text"
     defaultValue={item.trackingId || ""}
-    placeholder="Enter Tracking ID"
+    placeholder="AWB Number"
     onBlur={(e) =>
       updateTracking(
         item._id,
@@ -437,17 +437,6 @@ const updateTracking = async (
     className="w-full sm:w-auto bg-black border border-zinc-700 p-3 rounded"
   />
 </div>
-
-{item.trackingId && (
-  <a
-    href={`https://www.dtdc.in/tracking/tracking_results.asp?Ttype=awb_no&strCnno=${item.trackingId}`}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="inline-block mt-2 px-4 py-2 bg-amber-500 text-black rounded-lg font-semibold hover:bg-amber-400"
-  >
-    Track Package →
-  </a>
-)}
 </div>
         </div>
       </div>
