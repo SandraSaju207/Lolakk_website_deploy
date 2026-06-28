@@ -462,22 +462,52 @@ const approveReturn = async (id) => {
     className="w-full sm:w-auto bg-black border border-zinc-700 p-3 rounded"
   />
 
-  {item.returnRequested && item.status !== "Returned" && (
+  {item.returnRequested && (
   <div className="mt-4 p-3 rounded bg-red-900/20 border border-red-500">
     <p className="text-red-400 font-semibold">
-      Return Requested
+      Return Request
     </p>
 
-    <p className="text-gray-300 mb-3">
+    <p className="text-gray-300">
       Reason: {item.returnReason}
     </p>
 
-    <button
-      onClick={() => approveReturn(item._id)}
-      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
-    >
-      Accept Return
-    </button>
+    <p className="mt-2 font-semibold text-amber-400">
+      Status: {item.returnStatus}
+    </p>
+
+    {item.returnStatus === "Pending" && (
+      <div className="flex gap-2 mt-3">
+        <button
+          onClick={() =>
+            approveReturn(item._id)
+          }
+          className="bg-green-600 px-3 py-2 rounded"
+        >
+          Accept Return
+        </button>
+
+        <button
+          onClick={() =>
+            rejectReturn(item._id)
+          }
+          className="bg-red-600 px-3 py-2 rounded"
+        >
+          Reject Return
+        </button>
+      </div>
+    )}
+
+    {item.returnStatus === "Approved" && (
+      <button
+        onClick={() =>
+          markReturned(item._id)
+        }
+        className="bg-amber-600 px-3 py-2 rounded mt-3"
+      >
+        Mark Product Returned
+      </button>
+    )}
   </div>
 )}
 
