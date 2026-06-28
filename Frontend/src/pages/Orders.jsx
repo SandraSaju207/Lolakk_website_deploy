@@ -227,14 +227,32 @@ const requestReturn = async (id) => {
 {order.returnRequested && (
   <div className="mt-3 p-3 rounded bg-red-900/30">
     <p>
-      <strong>Return Requested</strong>
+      <strong>Reason:</strong> {order.returnReason}
     </p>
 
-    <p>
-      Reason: {order.returnReason}
-    </p>
+    {order.returnStatus === "Pending" && (
+      <p className="text-yellow-400 font-semibold mt-2">
+        Return Requested ⏳
+      </p>
+    )}
 
-   
+    {order.returnStatus === "Approved" && (
+      <p className="text-green-400 font-semibold mt-2">
+        Return Approved ✅
+      </p>
+    )}
+
+    {order.returnStatus === "Rejected" && (
+      <p className="text-red-400 font-semibold mt-2">
+        Return Rejected ❌
+      </p>
+    )}
+
+    {order.returnStatus === "Returned" && (
+      <p className="text-blue-400 font-semibold mt-2">
+        Product Returned ↩️
+      </p>
+    )}
   </div>
 )}
 
