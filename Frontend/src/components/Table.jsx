@@ -384,20 +384,22 @@ const updateTracking = async (
   </label>
 
   <input
-    type="date"
-    value={
-      item.expectedDeliveryDate
-        ? item.expectedDeliveryDate.slice(0, 10)
-        : ""
-    }
-    onChange={(e) =>
-      updateDeliveryDate(
-        item._id,
-        e.target.value
-      )
-    }
-    className="w-full sm:w-auto bg-black border border-zinc-700 p-3 rounded"
-  />
+  type="date"
+  value={
+    item.expectedDeliveryDate
+      ? new Date(item.expectedDeliveryDate)
+          .toISOString()
+          .split("T")[0]
+      : ""
+  }
+  onChange={(e) =>
+    updateDeliveryDate(
+      item._id,
+      e.target.value
+    )
+  }
+  className="w-full sm:w-auto bg-black border border-zinc-700 p-3 rounded"
+/>
 </div>
 <div className="flex flex-col">
   <label className="text-xs text-gray-400 mb-1">
