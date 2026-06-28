@@ -47,6 +47,27 @@ await fetch(`${API}/api/orders/${id}`, {
   refresh();
 };
 
+const updateTracking = async (
+  id,
+  trackingId,
+  courier
+) => {
+  const token = localStorage.getItem("token");
+
+  await fetch(`${API}/api/orders/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      trackingId,
+      courier,
+    }),
+  });
+
+  refresh();
+};
   const filtered = data.filter((item) => {
     const matchSearch =
   item.customerName?.toLowerCase().includes(search.toLowerCase()) ||
@@ -73,22 +94,7 @@ await fetch(`${API}/api/orders/${id}`, {
     },
   });
 
-  const updateTrackingId = async (id, trackingId) => {
-  const token = localStorage.getItem("token");
-
-  await fetch(`${API}/api/orders/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-      trackingId,
-    }),
-  });
-
-  refresh();
-};
+ 
 
   refresh();
 };
