@@ -168,6 +168,7 @@ router.put(
       }
 
       order.returnStatus = "Approved";
+      order.refundStatus = "Pending";
 
       await order.save();
 
@@ -227,6 +228,36 @@ router.put(
       res.json({
         success: true,
         message: "Product marked returned",
+      });
+    } catch (err) {
+      res.status(500).json({
+        message: err.message,
+      });
+    }
+  }
+);
+
+router.put(
+  "/:id/refund",
+  protect,
+  adminOnly,
+  async (req, res) => {
+    try {
+      const order = await Order.findById(req.params.id);
+
+      if (!order) {
+        return res.status(404).json({
+          message: "Order not found",
+        });
+      }
+
+      order.refundStatus = "Refunded";
+
+      await order.save();
+
+      res.json({
+        success: true,
+        message: "Refund marked completed",
       });
     } catch (err) {
       res.status(500).json({

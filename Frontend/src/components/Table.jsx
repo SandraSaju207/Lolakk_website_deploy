@@ -99,6 +99,25 @@ const updateTracking = async (
   refresh();
 };
 
+const markRefunded = async (id) => {
+  const token = localStorage.getItem("token");
+
+  const res = await fetch(
+    `${API}/api/orders/${id}/refund`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  const data = await res.json();
+
+  alert(data.message);
+
+  refresh();
+};
 
 const approveReturn = async (id) => {
   const token = localStorage.getItem("token");
@@ -509,6 +528,25 @@ const approveReturn = async (id) => {
         Mark Product Returned
       </button>
     )}
+
+    {item.returnStatus === "Approved" && (
+  <div className="mt-3 p-3 rounded bg-yellow-900/20 border border-yellow-500">
+    <p className="text-yellow-400 font-semibold">
+      Refund Pending
+    </p>
+
+    <p>
+      Amount: ₹{item.total}
+    </p>
+
+    <button
+      onClick={() => markRefunded(item._id)}
+      className="mt-2 bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-white"
+    >
+      Mark Refunded
+    </button>
+  </div>
+)}
   </div>
 )}
 

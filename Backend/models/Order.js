@@ -78,6 +78,16 @@ returnStatus: {
   default: "None",
 },
 
+refundStatus: {
+  type: String,
+  enum: [
+    "None",
+    "Pending",
+    "Refunded",
+  ],
+  default: "None",
+},
+
 returnRequestedAt: {
   type: Date,
 
