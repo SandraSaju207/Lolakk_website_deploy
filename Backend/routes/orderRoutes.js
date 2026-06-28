@@ -55,6 +55,7 @@ router.put(
       order.returnRequested = true;
       order.returnReason =
         req.body.reason || "";
+        order.returnStatus = "Pending";
 
       order.returnRequestedAt =
         new Date();
@@ -151,5 +152,88 @@ router.delete("/:id", protect, adminOnly, async (req, res) => {
     });
   }
 });
+
+router.put(
+  "/:id/approve-return",
+  protect,
+  adminOnly,
+  async (req, res) => {
+    try {
+      const order = await Order.findById(req.params.id);
+
+      if (!order) {
+        return res.status(404).json({
+          message: "Order not found",
+        });
+      }
+
+      order.returnStatus = "Approved";
+
+      await order.save();
+
+      res.json({
+        success: true,
+        message: "Return approved",
+      });
+    } catch (err) {
+      res.status(500).json({
+        message: err.message,
+      });
+    }
+  }
+);
+router.put(
+  "/:id/reject-return",
+  protect,
+  adminOnly,
+  async (req, res) => {
+    try {
+      const order = await Order.findById(req.params.id);
+
+      if (!order) {
+        return res.status(404).json({
+          message: "Order not found",
+        });
+      }
+
+      order.returnStatus = "Rejected";
+
+      await order.save();
+
+      res.json({
+        success: true,
+        message: "Return rejected",
+      });
+    } catch (err) {
+      res.status(500).json({
+        message: err.message,
+      });
+    }
+  }
+);
+router.put(
+  "/:id/mark-returned",
+  protect,
+  adminOnly,
+  async (req, res) => {
+    try {
+      const order = await Order.findById(req.params.id);
+
+      order.status = "Returned";
+      order.returnStatus = "Returned";
+
+      await order.save();
+
+      res.json({
+        success: true,
+        message: "Product marked returned",
+      });
+    } catch (err) {
+      res.status(500).json({
+        message: err.message,
+      });
+    }
+  }
+);
 
 export default router;

@@ -99,6 +99,30 @@ const updateTracking = async (
   refresh();
 };
 
+const approveReturn = async (id) => {
+  const token = localStorage.getItem("token");
+
+  const res = await fetch(
+    `${API}/api/orders/${id}/approve-return`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    alert(data.message);
+    return;
+  }
+
+  alert("Return approved");
+  refresh();
+};
+
   return (
     <div>
      <div className="flex flex-col sm:flex-row gap-3 mb-4">
@@ -367,6 +391,7 @@ const updateTracking = async (
     <option>Shipped</option>
     <option>Out For Delivery</option>
     <option>Delivered</option>
+    <option>Returned</option>
     <option>Cancelled</option>
   </select>
   {item.status === "Cancelled" && (
@@ -437,15 +462,22 @@ const updateTracking = async (
     className="w-full sm:w-auto bg-black border border-zinc-700 p-3 rounded"
   />
 
-  {item.returnRequested && (
+  {item.returnRequested && item.status !== "Returned" && (
   <div className="mt-4 p-3 rounded bg-red-900/20 border border-red-500">
     <p className="text-red-400 font-semibold">
       Return Requested
     </p>
 
-    <p className="text-gray-300">
+    <p className="text-gray-300 mb-3">
       Reason: {item.returnReason}
     </p>
+
+    <button
+      onClick={() => approveReturn(item._id)}
+      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
+    >
+      Accept Return
+    </button>
   </div>
 )}
 

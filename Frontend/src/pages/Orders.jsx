@@ -39,7 +39,7 @@ export default function Orders() {
       setLoading(false);
     }
   };
-  
+
 useEffect(() => {
   fetchOrders();
 }, []);
@@ -207,6 +207,11 @@ const requestReturn = async (id) => {
 >
   <CheckCircle size={14} />
   {order.status || "Confirmed"}
+  {order.status === "Returned" && (
+  <span className="text-red-400 ml-2">
+    (Returned)
+  </span>
+)}
   {order.status === "Delivered" &&
  !order.returnRequested && (
   <button
@@ -218,6 +223,39 @@ const requestReturn = async (id) => {
     Request Return
   </button>
 )}
+
+{order.returnRequested && (
+  <div className="mt-3 p-3 rounded bg-red-900/30">
+    <p>
+      <strong>Return Requested</strong>
+    </p>
+
+    <p>
+      Reason: {order.returnReason}
+    </p>
+
+    <div className="flex gap-2 mt-2">
+      <button
+        onClick={() =>
+          approveReturn(order._id)
+        }
+        className="bg-green-600 px-3 py-1 rounded"
+      >
+        Approve
+      </button>
+
+      <button
+        onClick={() =>
+          rejectReturn(order._id)
+        }
+        className="bg-red-600 px-3 py-1 rounded"
+      >
+        Reject
+      </button>
+    </div>
+  </div>
+)}
+
 </div>
                     </div>
                     {["Order Confirmed", "Processing"].includes(status) && (

@@ -56,7 +56,7 @@ courier: {
 },
   paymentStatus: { type: String, default: "Unpaid" },
   deliveredAt: { type: Date }, // Needed to calculate the 7-day return window
-  returnRequested: {
+ returnRequested: {
   type: Boolean,
   default: false,
 },
@@ -66,8 +66,21 @@ returnReason: {
   default: "",
 },
 
+returnStatus: {
+  type: String,
+  enum: [
+    "None",
+    "Pending",
+    "Approved",
+    "Rejected",
+    "Returned",
+  ],
+  default: "None",
+},
+
 returnRequestedAt: {
   type: Date,
+
 },
   invoiceUrl: { type: String }  // Link to the generated bill
 }, { timestamps: true });
