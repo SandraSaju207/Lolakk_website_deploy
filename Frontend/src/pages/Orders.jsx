@@ -14,8 +14,7 @@ export default function Orders() {
   const [expandedOrderId, setExpandedOrderId] = useState(null);
   const navigate = useNavigate();
 
-useEffect(() => {
-  const fetchOrders = async () => {
+   const fetchOrders = async () => {
     try {
       const token = localStorage.getItem("token");
 
@@ -40,7 +39,8 @@ useEffect(() => {
       setLoading(false);
     }
   };
-
+  
+useEffect(() => {
   fetchOrders();
 }, []);
 
@@ -55,7 +55,7 @@ const requestReturn = async (id) => {
     localStorage.getItem("token");
 
   await fetch(
-    `${API}/api/orders/${id}/request-return`,
+    `${BASE_URL}/api/orders/${id}/request-return`,
     {
       method: "PUT",
       headers: {
