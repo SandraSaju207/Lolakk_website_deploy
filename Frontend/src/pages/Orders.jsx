@@ -234,25 +234,7 @@ const requestReturn = async (id) => {
       Reason: {order.returnReason}
     </p>
 
-    <div className="flex gap-2 mt-2">
-      <button
-        onClick={() =>
-          approveReturn(order._id)
-        }
-        className="bg-green-600 px-3 py-1 rounded"
-      >
-        Approve
-      </button>
-
-      <button
-        onClick={() =>
-          rejectReturn(order._id)
-        }
-        className="bg-red-600 px-3 py-1 rounded"
-      >
-        Reject
-      </button>
-    </div>
+   
   </div>
 )}
 
