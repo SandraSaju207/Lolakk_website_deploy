@@ -382,10 +382,6 @@ const updateTracking = async (
   <label className="text-xs text-gray-400 mb-1">
     Expected Delivery Date
   </label>
-console.log(
-  "DB Date:",
-  item.expectedDeliveryDate
-);
  <input
   type="date"
   value={
