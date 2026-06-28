@@ -198,6 +198,33 @@ useEffect(() => {
                 {/* Track Section */}
 {isExpanded && (
  <div className="p-4 md:p-8 bg-black/40 border-b border-white/5">
+  {order.status !== "Order Confirmed" &&
+      order.status !== "Processing" &&
+      (order.trackingId || order.courier) && (
+        <div className="mb-6 p-4 rounded-xl bg-zinc-900 border border-amber-500/20">
+          <h3 className="text-amber-400 font-semibold mb-2">
+            Shipment Details
+          </h3>
+
+          {order.courier && (
+            <p className="text-gray-300">
+              Courier:{" "}
+              <span className="text-white">
+                {order.courier}
+              </span>
+            </p>
+          )}
+
+          {order.trackingId && (
+            <p className="text-gray-300 mt-1">
+              Tracking ID:{" "}
+              <span className="text-white font-mono">
+                {order.trackingId}
+              </span>
+            </p>
+          )}
+        </div>
+      )}
     <div className="max-w-2xl mx-auto">
      <div className="relative space-y-6 md:space-y-8 ml-2 md:ml-4">
 
