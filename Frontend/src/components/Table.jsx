@@ -143,6 +143,59 @@ const approveReturn = async (id) => {
   refresh();
 };
 
+const rejectReturn = async (id) => {
+  const token = localStorage.getItem("token");
+
+  const res = await fetch(
+    `${API}/api/orders/${id}/reject-return`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    alert(data.message);
+    return;
+  }
+
+  alert("Return rejected");
+  refresh();
+};
+
+const markReturned = async (id) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(
+      `${API}/api/orders/${id}/mark-returned`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message || "Failed");
+      return;
+    }
+
+    alert("Order marked as returned");
+
+    refresh();
+  } catch (err) {
+    console.error(err);
+    alert("Something went wrong");
+  }
+};
   return (
     <div>
      <div className="flex flex-col sm:flex-row gap-3 mb-4">
@@ -518,34 +571,35 @@ const approveReturn = async (id) => {
       </div>
     )}
 
-    {item.returnStatus === "Approved" && (
-      <button
-        onClick={() =>
-          markReturned(item._id)
-        }
-        className="bg-amber-600 px-3 py-2 rounded mt-3"
-      >
-        Mark Product Returned
-      </button>
+{item.returnStatus === "Approved" && (
+  <>
+    {!item.refunded ? (
+      <div className="mt-3 p-3 rounded bg-yellow-900/20 border border-yellow-500">
+        <p className="text-yellow-400 font-semibold">
+          Refund Pending
+        </p>
+
+        <p>Amount: ₹{item.total}</p>
+
+        <button
+          onClick={() => markRefunded(item._id)}
+          className="mt-2 bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-white"
+        >
+          Mark Refunded
+        </button>
+      </div>
+    ) : (
+      <div className="mt-3 p-3 rounded bg-green-900/20 border border-green-500">
+        <p className="text-green-400 font-semibold">
+          Refund Completed
+        </p>
+
+        <p className="text-gray-300">
+          Amount Refunded: ₹{item.total}
+        </p>
+      </div>
     )}
-
-    {item.returnStatus === "Approved" && (
-  <div className="mt-3 p-3 rounded bg-yellow-900/20 border border-yellow-500">
-    <p className="text-yellow-400 font-semibold">
-      Refund Pending
-    </p>
-
-    <p>
-      Amount: ₹{item.total}
-    </p>
-
-    <button
-      onClick={() => markRefunded(item._id)}
-      className="mt-2 bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-white"
-    >
-      Mark Refunded
-    </button>
-  </div>
+  </>
 )}
   </div>
 )}
