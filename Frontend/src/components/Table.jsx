@@ -452,11 +452,11 @@ const markReturned = async (id) => {
   onChange={(e) =>
     updateStatus(item._id, e.target.value)
   }
-  className={`w-full sm:w-auto p-3 border rounded ${
-    item.status === "Cancelled"
-      ? "bg-zinc-800 text-gray-500 cursor-not-allowed"
-      : "bg-black border-zinc-700"
-  }`}
+  className={`w-full sm:w-[200px] h-[48px] p-3 border rounded truncate ${
+  item.status === "Cancelled"
+    ? "bg-zinc-800 text-gray-500 cursor-not-allowed"
+    : "bg-black border-zinc-700"
+}`}
 >
     <option>Order Confirmed</option>
     <option>Processing</option>
