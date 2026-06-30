@@ -138,7 +138,7 @@ export default function Navbar() {
             Book Appointment
           </a>
 
-          <div className="hidden md:flex items-center bg-white/10 border border-white/20 rounded-lg overflow-hidden">
+          <div className="flex items-center bg-white/10 border border-white/20 rounded-lg overflow-hidden">
   <input
     type="text"
     placeholder="Product ID"
