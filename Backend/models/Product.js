@@ -107,14 +107,12 @@ size: {
   }
 }, { timestamps: true });
 
-productSchema.pre("save", function (next) {
+productSchema.pre("save", function () {
   if (!this.productId) {
     this.productId =
       "KLH-" +
       Date.now().toString().slice(-8);
   }
-
-  next();
 });
 
 const Product = mongoose.models.Product || mongoose.model('Product', productSchema);
