@@ -150,7 +150,7 @@ export default function Navbar() {
 
   <input
     type="text"
-    placeholder=" search by ID"
+    placeholder="ID"
     value={searchId}
     onChange={(e) => setSearchId(e.target.value)}
     onKeyDown={(e) => e.key === "Enter" && handleProductSearch()}
