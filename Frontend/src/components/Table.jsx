@@ -571,15 +571,29 @@ const markReturned = async (id) => {
       </div>
     )}
 
-{item.returnStatus === "Approved" && (
+ {item.returnStatus === "Approved" &&
+ item.returnStatus !== "Returned" &&
+ item.refundStatus !== "Refunded" && (
+  <button
+    onClick={() => markReturned(item._id)}
+    className="bg-amber-600 px-3 py-2 rounded mt-3"
+  >
+    Mark Product Returned
+  </button>
+)}
+
+   {(item.returnStatus === "Approved" ||
+  item.returnStatus === "Returned") && (
   <>
-    {!item.refunded ? (
+    {item.refundStatus !== "Refunded" ? (
       <div className="mt-3 p-3 rounded bg-yellow-900/20 border border-yellow-500">
         <p className="text-yellow-400 font-semibold">
           Refund Pending
         </p>
 
-        <p>Amount: ₹{item.total}</p>
+        <p>
+          Amount: ₹{item.total}
+        </p>
 
         <button
           onClick={() => markRefunded(item._id)}

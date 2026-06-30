@@ -252,6 +252,8 @@ router.put(
       }
 
       order.refundStatus = "Refunded";
+      order.returnStatus = "Returned";
+      order.status = "Returned";
 
       await order.save();
 
