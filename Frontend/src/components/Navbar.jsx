@@ -138,21 +138,21 @@ export default function Navbar() {
             Book Appointment
           </a>
 
-          <div className="flex items-center bg-white/10 border border-white/20 rounded-lg overflow-hidden">
+      <div className="flex items-center bg-white/10 border border-white/20 rounded-lg overflow-hidden">
   <input
     type="text"
-    placeholder="Product ID"
+    placeholder="ID"
     value={searchId}
     onChange={(e) => setSearchId(e.target.value)}
     onKeyDown={(e) => e.key === "Enter" && handleProductSearch()}
-    className="bg-transparent px-3 py-2 text-sm text-white outline-none w-32"
+    className="bg-transparent px-2 py-2 text-xs text-white outline-none w-16 md:w-32"
   />
 
   <button
     onClick={handleProductSearch}
-    className="px-3 py-2 bg-amber-500 text-black text-sm font-semibold"
+    className="px-2 md:px-3 py-2 bg-amber-500 text-black text-xs font-semibold"
   >
-    Search
+    Go
   </button>
 </div>
 
