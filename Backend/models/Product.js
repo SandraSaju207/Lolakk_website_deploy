@@ -10,6 +10,10 @@ const productSchema = new mongoose.Schema({
     type: String,
     trim: true 
   },
+  productId: {
+  type: String,
+  unique: true,
+},
   price: { 
     type: Number, 
     required: [true, "Price is required"],
@@ -102,6 +106,16 @@ size: {
     default: "" 
   }
 }, { timestamps: true });
+
+productSchema.pre("save", function (next) {
+  if (!this.productId) {
+    this.productId =
+      "KLH-" +
+      Date.now().toString().slice(-8);
+  }
+
+  next();
+});
 
 const Product = mongoose.models.Product || mongoose.model('Product', productSchema);
 export default Product;

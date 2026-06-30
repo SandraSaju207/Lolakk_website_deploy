@@ -534,12 +534,20 @@ const trendingProducts = Array.isArray(products)
                     )}
                   </div>
 
-                  <div className="space-y-1">
-                   <h3 className="text-sm md:text-base text-white font-medium truncate">{p.name}</h3>
-                   <p className="text-xs text-gray-400 line-clamp-2 min-h-[32px]">
-  {p.description || "No description"}
-</p>
-                    <div className="flex justify-between items-end">
+                 <div className="space-y-1">
+  <h3 className="text-sm md:text-base text-white font-medium truncate">
+    {p.name}
+  </h3>
+
+  <p className="text-[11px] text-amber-400 font-mono">
+    ID: {p.productId}
+  </p>
+
+  <p className="text-xs text-gray-400 line-clamp-2 min-h-[32px]">
+    {p.description || "No description"}
+  </p>
+
+  <div className="flex justify-between items-end">
                       <div>
                         <p className="text-gray-400 text-xs uppercase tracking-wider">{p.type}</p>
                         <p className={`font-semibold ${p.stock < 5 ? 'text-red-400' : 'text-[#d4af37]'}`}>Stock: {p.stock}</p>
