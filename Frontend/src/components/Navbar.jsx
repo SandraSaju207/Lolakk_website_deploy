@@ -131,12 +131,12 @@ export default function Navbar() {
         {/* ACTIONS */}
         <div className="flex items-center gap-2 md:gap-4">
 
-          <a
+          {/* <a
             href="https://wa.me/917994405335"
            className="bg-amber-600 text-black px-2 py-1.5 md:px-5 md:py-2 text-[9px] md:text-xs font-bold whitespace-nowrap rounded"
           >
             Book Appointment
-          </a>
+          </a> */}
 
       <div className="flex items-center bg-white/10 border border-white/20 rounded-lg overflow-hidden">
   <input
