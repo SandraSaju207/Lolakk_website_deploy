@@ -777,6 +777,10 @@ const buyNow = (item) => {
       {item.name}
     </h3>
 
+    <p className="text-amber-500 text-xs uppercase tracking-wider mt-1">
+  ID: {item.productId}
+</p>
+
     <p className="text-xs text-gray-400 line-clamp-2 min-h-[36px] mt-1">
       {item.description || "Premium luxury necklace collection"}
     </p>

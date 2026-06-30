@@ -29,6 +29,7 @@ import Profile from "./pages/Profile.jsx";
 import Policies from "./pages/Policies";
 import Review from "./pages/Reviews.jsx";
 import HairAccessories from "./pages/HairAccessories";
+import ProductDetails from "./pages/ProductDetails";
 
 
 function Layout() {
@@ -73,6 +74,7 @@ const hideNavbar =
         <Route path="/gifting" element={<Gifting />} />
         <Route path="/trending" element={<Trending />} />
         <Route path="/reviews" element={<Review />} />
+        <Route path="/product/:productId" element={<ProductDetails />}/>
       
 
 <Route

@@ -845,6 +845,10 @@ w-[70%] max-w-[250px]
       {ring.name}
     </h3>
 
+     <p className="text-amber-500 text-xs uppercase tracking-wider mt-1">
+  ID: {ring.productId}
+</p>
+
     <p className="text-gray-400 text-sm mt-1 line-clamp-2 min-h-[40px]">
       {ring.description || "Premium luxury ring collection"}
     </p>

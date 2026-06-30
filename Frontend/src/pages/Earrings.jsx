@@ -773,6 +773,10 @@ const similarProducts = selectedProduct
                   {item.name}
                 </h3>
 
+                 <p className="text-amber-500 text-xs uppercase tracking-wider mt-1">
+  ID: {item.productId}
+</p>
+
                 <p className="text-gray-400 text-sm mt-1 line-clamp-2 min-h-[40px]">
   {item.description || "Premium luxury earring collection"}
 </p>

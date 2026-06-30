@@ -9,12 +9,20 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const [dropdownOpen, setDropdownOpen] = useState(false); // ✅ ADDED
+  const [searchId, setSearchId] = useState("");
   const dropdownRef = useRef(); // ✅ ADDED
 
   const navigate = useNavigate();
   const location = useLocation();
 
   const token = localStorage.getItem("token"); // ✅ ADDED
+
+  const handleProductSearch = () => {
+  if (!searchId.trim()) return;
+
+  navigate(`/product/${searchId.trim()}`);
+  setSearchId("");
+};
 
 
   
@@ -129,6 +137,24 @@ export default function Navbar() {
           >
             Book Appointment
           </a>
+
+          <div className="hidden md:flex items-center bg-white/10 border border-white/20 rounded-lg overflow-hidden">
+  <input
+    type="text"
+    placeholder="Product ID"
+    value={searchId}
+    onChange={(e) => setSearchId(e.target.value)}
+    onKeyDown={(e) => e.key === "Enter" && handleProductSearch()}
+    className="bg-transparent px-3 py-2 text-sm text-white outline-none w-32"
+  />
+
+  <button
+    onClick={handleProductSearch}
+    className="px-3 py-2 bg-amber-500 text-black text-sm font-semibold"
+  >
+    Search
+  </button>
+</div>
 
           {/* ✅ UPDATED PROFILE BUTTON */}
           <div ref={dropdownRef} className="relative">

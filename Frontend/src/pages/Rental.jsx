@@ -842,6 +842,9 @@ setTimeout(() => {
     <h3 className="text-sm md:text-base text-white font-medium truncate">
       {item.name}
     </h3>
+<p className="text-amber-500 text-xs uppercase tracking-wider mt-1">
+  ID: {item.productId}
+</p>
 
     <p className="text-xs text-gray-400 line-clamp-2 min-h-[32px] mt-1">
       {item.description || "Premium luxury rental collection"}
