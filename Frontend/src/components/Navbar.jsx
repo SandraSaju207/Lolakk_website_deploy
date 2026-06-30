@@ -131,22 +131,22 @@ export default function Navbar() {
         {/* ACTIONS */}
         <div className="flex items-center gap-2 md:gap-4">
 
-          <a
+         <a
   href="https://wa.me/917994405335"
   className="
     bg-amber-600 text-black
-    px-2 md:px-4
-    py-1 md:py-2
-    text-[8px] md:text-xs
+    px-3 md:px-4
+    py-2 md:py-2
+    text-[10px] md:text-xs
     font-bold
-    rounded
+    rounded-md
     whitespace-nowrap
   "
 >
   Book
   <span className="hidden md:inline"> Appointment</span>
 </a>
-      <div className="flex items-center bg-white/10 border border-white/20 rounded-md overflow-hidden">
+     <div className="flex items-center bg-white/10 border border-white/20 rounded-md overflow-hidden">
 
   <input
     type="text"
@@ -156,23 +156,23 @@ export default function Navbar() {
     onKeyDown={(e) => e.key === "Enter" && handleProductSearch()}
     className="
       bg-transparent
-      px-1 md:px-3
-      py-1.5 md:py-2
-      text-[10px] md:text-sm
+      px-2 md:px-3
+      py-2 md:py-2
+      text-xs md:text-sm
       text-white
       outline-none
-      w-10 md:w-28
+      w-12 md:w-28
     "
   />
 
   <button
     onClick={handleProductSearch}
     className="
-      px-2 md:px-3
-      py-1.5 md:py-2
+      px-2.5 md:px-3
+      py-2 md:py-2
       bg-amber-500
       text-black
-      text-[10px] md:text-sm
+      text-xs md:text-sm
       font-semibold
     "
   >
