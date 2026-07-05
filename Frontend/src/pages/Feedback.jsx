@@ -28,8 +28,9 @@ export default function Feedback() {
   {
     id: 5,
     type: "image",
-    src: "ring1.jpeg",
+    src: "earingred.jpeg",
   },
+
   {
     id: 6,
     type: "image",

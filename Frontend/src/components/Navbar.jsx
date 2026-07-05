@@ -313,14 +313,14 @@ export default function Navbar() {
   ${hideNav ? "top-0 bg-black/95" : "top-[80px] bg-zinc-900/90"}`}
 >
   <div className="flex items-center space-x-8 min-w-max mx-auto px-4">
-    <a href="/Rental" className="hover:text-white transition-colors duration-300">Rentals</a>
+    
+    <a href="/Earrings" className="hover:text-white transition-colors duration-300">Earrings</a>
     <span className="text-white/20">|</span>
 
     <a href="/Rings" className="hover:text-white transition-colors duration-300">Rings</a>
     <span className="text-white/20">|</span>
 
-    <a href="/Earrings" className="hover:text-white transition-colors duration-300">Earrings</a>
-    <span className="text-white/20">|</span>
+    
 
     <a href="/Bracelets-bangles" className="hover:text-white transition-colors duration-300">Bracelets & Bangles</a>
     <span className="text-white/20">|</span>
@@ -336,6 +336,11 @@ export default function Navbar() {
 
     <a href="/hair-accessories" className="hover:text-white transition-colors duration-300">Hair accessories</a>
     <span className="text-white/20">|</span>
+
+    <a href="/Rental" className="hover:text-white transition-colors duration-300">Rentals</a>
+    <span className="text-white/20">|</span>
+
+    
 
     <a href="/kids" className="hover:text-white transition-colors duration-300">Kids</a>
     <span className="text-white/20">|</span>
