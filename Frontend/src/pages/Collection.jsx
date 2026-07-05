@@ -28,21 +28,21 @@ export default function Collection() {
       name: "Antique Gold",
       tag: "Kerala Heritage",
       image:
-        "highlight.png",
+        "bangle2.jpeg",
     },
     {
       id: 2,
-      name: "Chandbali Earing",
-      tag: "Antique collection",
+      name: "Kundan Earing",
+      tag: "Modern collection",
       image:
-        "earing1.jpeg",
+        "earing4.jpeg",
     },
     {
       id: 3,
-      name: "Antique Gold",
-      tag: "Temble collection",
+      name: "American daimond",
+      tag: "modern collection",
       image:
-        "highlight3.jpeg",
+        "ring2.jpeg",
     },
   ];
 
