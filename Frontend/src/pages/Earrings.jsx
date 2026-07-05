@@ -554,7 +554,7 @@ const similarProducts = selectedProduct
           Material
         </h3>
 
-        {["all", "gold", "diamond","silver", "gemstone"].map((item) => (
+        {["all", "Antique gold", "AD","silver", "stone"].map((item) => (
           <button
             key={item}
             onClick={() => {
@@ -647,7 +647,7 @@ const similarProducts = selectedProduct
             <h3 className="text-sm uppercase mb-3 text-amber-500 font-bold">
               Material
             </h3>
-            {["all", "gold", "diamond","silver","gemstone"].map((item) => (
+            {["all", "Antique gold", "AD","silver","stone"].map((item) => (
               <button
                 key={item}
                 onClick={() => updateFilter("materialType", item)}

@@ -535,7 +535,7 @@ const buyNow = (item) => {
           Category
         </h3>
 
-        {["all", "gold", "diamond", "gemstone"].map((item) => (
+        {["all", "Antique gold", "AD", "stone"].map((item) => (
           <button
             key={item}
             onClick={() => {
@@ -628,7 +628,7 @@ const buyNow = (item) => {
     <h3 className="text-sm uppercase mb-3 text-amber-500 font-semibold tracking-wider">
       Category
     </h3>
-    {["all", "gold", "diamond", "gemstone"].map((item) => (
+    {["all", "Antique gold", "AD", "stone"].map((item) => (
       <button
         key={item}
         onClick={() => updateFilter("category", item)}

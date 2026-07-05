@@ -93,9 +93,9 @@ occasion: {
   },
   materialType: {
   type: String,
-  enum: ['gold', 'diamond', 'gemstone','silver'],
+  enum: [' Antique gold', 'AD', 'stone','silver'],
   lowercase: true,
-  default: 'gold'
+  default: ' Antique gold'
 },
 size: {
   type: Number,
