@@ -23,6 +23,27 @@ export default function Collection() {
       image:
         "highlight3.jpeg",
     },
+    {
+      id: 1,
+      name: "Antique Gold",
+      tag: "Kerala Heritage",
+      image:
+        "highlight.png",
+    },
+    {
+      id: 2,
+      name: "Chandbali Earing",
+      tag: "Antique collection",
+      image:
+        "earing1.jpeg",
+    },
+    {
+      id: 3,
+      name: "Antique Gold",
+      tag: "Temble collection",
+      image:
+        "highlight3.jpeg",
+    },
   ];
 
   // 🔥 Parallax Mouse Effect
