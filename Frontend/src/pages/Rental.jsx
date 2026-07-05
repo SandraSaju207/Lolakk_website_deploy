@@ -706,7 +706,7 @@ setTimeout(() => {
     Category
   </h3>
 
-  {["all", "Antique gold", "AD", "stone"].map((item) => (
+  {["all", "gold", "diamond", "gemstone"].map((item) => (
     <button
       key={item}
      onClick={() => {
@@ -1167,7 +1167,7 @@ setTimeout(() => {
             Category
           </h3>
 
-          {["all", "Antique gold", "AD", "stone"].map((item) => (
+          {["all", "gold", "diamond", "gemstone"].map((item) => (
             <button
               key={item}
               onClick={() => { updateFilter("category", item);

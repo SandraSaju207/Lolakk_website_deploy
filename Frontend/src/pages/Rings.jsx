@@ -585,7 +585,7 @@ w-[70%] max-w-[250px]
           Category
         </h3>
 
-        {["all", "Antique gold", "AD", "stone"].map((item) => (
+        {["all", "gold", "diamond", "gemstone"].map((item) => (
           <button
             key={item}
             onClick={() => {
@@ -699,7 +699,7 @@ w-[70%] max-w-[250px]
       <div className="hidden md:block space-y-8 sticky top-32 h-fit">
           <div>
             <h3 className="text-amber-500 text-sm uppercase mb-3">Category</h3>
-            {["all", "Antique gold", "AD", "stone"].map((item) => (
+            {["all", "gold", "diamond", "gemstone"].map((item) => (
               <button
                 key={item}
                 onClick={() => updateFilter("category", item)}

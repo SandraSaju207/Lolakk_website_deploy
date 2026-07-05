@@ -19,7 +19,7 @@ export default function AdminDashboard() {
   const [rentals, setRentals] = useState([]);
   const [products, setProducts] = useState([]);
   const [productStyle, setProductStyle] = useState("traditional");
-  const [materialType, setMaterialType] = useState("Antique gold");
+  const [materialType, setMaterialType] = useState("gold");
   const [ItemType,setItemType] = useState("bangle");
   const [kidsItemType, setKidsItemType] = useState("hair_bun");
   const [savingProduct, setSavingProduct] = useState(false);
@@ -134,7 +134,7 @@ console.log("Products Response:", productRes.data);
     setProductType(product.type);
     setProductStyle(product.style || "traditional");
     setIsTrending(product.trending || false);
-    setMaterialType(product.materialType || "Antique gold");
+    setMaterialType(product.materialType || "gold");
     setItemType(product.itemType || "bangle");
     setAccessoryType(product.accessoryType || "bow");
     setOccasion(product.occasion || "daily");
@@ -781,9 +781,9 @@ const trendingProducts = Array.isArray(products)
         onChange={(e) => setMaterialType(e.target.value)}
         className="w-full p-3 rounded-xl bg-black/40 border border-white/10 text-white focus:border-[#d4af37] outline-none transition"
       >
-        <option value="Antique gold">Gold</option>
-        <option value="AD">Diamond</option>
-        <option value="stone">Gemstone</option>
+        <option value="gold">Gold</option>
+        <option value="diamond">Diamond</option>
+        <option value="gemstone">Gemstone</option>
           <option value="silver">Silver</option>
       </select>
     </div>

@@ -516,7 +516,7 @@ const filteredItems = products.filter((item) => {
 
 <div>
   <h3 className="text-amber-500 text-sm uppercase mb-3">Material</h3>
-  {["all", "Antique gold", "AD", "stone"].map((item) => (
+  {["all", "gold", "diamond", "gemstone"].map((item) => (
   <button
     key={item}
     onClick={() => updateFilter("materialType", item)}
@@ -672,7 +672,7 @@ const filteredItems = products.filter((item) => {
           Material
         </h3>
 
-        {["all", "Antique gold", "AD", "stone"].map((item) => (
+        {["all", "gold", "diamond", "gemstone"].map((item) => (
           <button
             key={item}
            onClick={() => {
