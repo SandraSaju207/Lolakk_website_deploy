@@ -11,6 +11,8 @@ export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false); // ✅ ADDED
   const [searchId, setSearchId] = useState("");
   const dropdownRef = useRef(); // ✅ ADDED
+  const categoryRef = useRef(null);
+const isInteracting = useRef(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -61,6 +63,51 @@ export default function Navbar() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+  const container = categoryRef.current;
+  if (!container) return;
+
+  const start = () => (isInteracting.current = true);
+  const end = () => (isInteracting.current = false);
+
+  container.addEventListener("touchstart", start);
+  container.addEventListener("touchend", end);
+  container.addEventListener("mouseenter", start);
+  container.addEventListener("mouseleave", end);
+
+  let direction = 1;
+  let frame;
+
+  const animate = () => {
+    if (!isInteracting.current) {
+      container.scrollLeft += direction * 0.6;
+
+      if (
+        container.scrollLeft + container.clientWidth >=
+        container.scrollWidth - 1
+      ) {
+        direction = -1;
+      }
+
+      if (container.scrollLeft <= 0) {
+        direction = 1;
+      }
+    }
+
+    frame = requestAnimationFrame(animate);
+  };
+
+  frame = requestAnimationFrame(animate);
+
+  return () => {
+    cancelAnimationFrame(frame);
+    container.removeEventListener("touchstart", start);
+    container.removeEventListener("touchend", end);
+    container.removeEventListener("mouseenter", start);
+    container.removeEventListener("mouseleave", end);
+  };
+}, []);
 
   // ✅ ONLY LOGO NAVBAR (LOGIN + REGISTER)
   if (isAuthPage) {
@@ -305,8 +352,9 @@ export default function Navbar() {
 
 
       {/* CATEGORY NAV */}
-      <div
-  className={`fixed w-full z-40 px-6 py-3 flex overflow-x-auto no-scrollbar
+    <div
+  ref={categoryRef}
+  className={`fixed w-full z-40 px-6 py-3 flex overflow-x-auto whitespace-nowrap scroll-smooth no-scrollbar
   text-[10px] uppercase tracking-[0.3em] font-medium 
   text-amber-500/80 border-b border-white/5 
   transition-all duration-300

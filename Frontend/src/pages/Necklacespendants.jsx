@@ -98,12 +98,7 @@ const [products, setProducts] = useState([]);
     return 0;
   });
 
-  const totalPages = Math.ceil(sortedItems.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedItems = sortedItems.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
+  const paginatedItems = sortedItems;
 
   const updateFilter = (key, value) => {
     setFilters({ ...filters, [key]: value });

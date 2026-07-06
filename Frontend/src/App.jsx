@@ -19,6 +19,7 @@ import Gifting from "./pages/Gifting.jsx";
 import Trending from "./pages/Trending.jsx";
 import Rental from "./pages/Rental.jsx";
  import AdminRoute from "./components/AdminRoute";
+ import CategorySection from "./components/CategorySection";
 
 // ✅ ADD THIS LINE
 import AdminDashboard from "./pages/AdminDashboard.jsx";
@@ -51,6 +52,7 @@ const hideNavbar =
             <>
               <Home />
               <Jewelry />
+              <CategorySection />
               <Collection />
               <Feedback />
               <Review />  

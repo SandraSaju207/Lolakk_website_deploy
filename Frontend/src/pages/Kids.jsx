@@ -724,11 +724,11 @@ const similarProducts = selectedProduct
 
    
 {sorted.map((item) => (
-  <div
-    key={item._id}
-    className="border border-white/10 p-3 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition cursor-pointer"
-    onClick={() => openModal(item)}
-  >
+ <div
+  key={item._id}
+  className="border border-white/10 p-3 rounded-xl bg-zinc-900/50 hover:border-amber-500/30 transition cursor-pointer flex flex-col h-full"
+  onClick={() => openModal(item)}
+>
    <img
   src={
     item.image.startsWith("http")
@@ -751,13 +751,11 @@ const similarProducts = selectedProduct
   {item.description || "Premium luxury earring collection"}
 </p>
 
+<p className="text-2xl text-amber-400 mt-2">
+  ₹{item.price}
+</p>
 
-    <p className="text-2xl text-amber-400 mt-2">
-      ₹{item.price}
-    </p>
-
-    {/* BUY NOW BUTTON */}
-    <div className="mt-4">
+<div className="mt-auto pt-4">
       <button
         onClick={(e) => {
           e.stopPropagation();
