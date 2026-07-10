@@ -30,8 +30,7 @@ export default function BraceletsBangles() {
       .filter(Boolean)
   ),
 ];
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 12;
+  
 
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -126,10 +125,7 @@ const filteredItems = products.filter((item) => {
     return 0;
   });
 
-  const paginatedItems = sortedItems.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  
 
   // ---------------- MODAL ----------------
   const openModal = (item) => {
@@ -792,7 +788,7 @@ const filteredItems = products.filter((item) => {
 
           {/* GRID */}
          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {paginatedItems.map((item) => (
+           {sortedItems.map((item) => (
               <div
   key={item._id}
   onClick={() => openModal(item)}
