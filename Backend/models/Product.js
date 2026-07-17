@@ -110,7 +110,6 @@ size: {
 productSchema.pre("save", function () {
   if (!this.productId) {
     this.productId =
-      "Kl-" +
       Date.now().toString().slice(-4);
   }
 });
