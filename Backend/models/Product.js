@@ -11,7 +11,7 @@ const productSchema = new mongoose.Schema({
     trim: true 
   },
   productId: {
-  type: String,
+  type: Number,
   unique: true,
 },
   price: { 
@@ -107,12 +107,17 @@ size: {
   }
 }, { timestamps: true });
 
-productSchema.pre("save", function () {
+productSchema.pre("save", async function (next) {
   if (!this.productId) {
-    this.productId =
-      "KLH-" +
-      Date.now().toString().slice(-8);
+    const lastProduct = await mongoose
+      .model("Product")
+      .findOne()
+      .sort({ productId: -1 });
+
+    this.productId = lastProduct ? lastProduct.productId + 1 : 1001;
   }
+
+  next();
 });
 
 const Product = mongoose.models.Product || mongoose.model('Product', productSchema);
