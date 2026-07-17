@@ -9,6 +9,7 @@ import {
 import upload from "../middleware/upload.js";
 import { protect } from "../middleware/authMiddleware.js";
 import { adminOnly } from "../middleware/adminMiddleware.js";
+import Product from "../models/Product.js";
 
 const router = express.Router();
 

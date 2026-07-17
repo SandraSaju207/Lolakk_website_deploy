@@ -107,17 +107,11 @@ size: {
   }
 }, { timestamps: true });
 
-productSchema.pre("save", async function () {
+productSchema.pre("save", function () {
   if (!this.productId) {
-    const lastProduct = await this.constructor
-      .findOne()
-      .sort({ productId: -1 });
-
-    const nextId = lastProduct
-      ? parseInt(lastProduct.productId) + 1
-      : 1001;
-
-    this.productId = nextId.toString();
+    this.productId =
+      "Kl-" +
+      Date.now().toString().slice(-4);
   }
 });
 
