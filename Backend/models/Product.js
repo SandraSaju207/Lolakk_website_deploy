@@ -35,7 +35,7 @@ const productSchema = new mongoose.Schema({
     required: true,
     lowercase: true, // Standardizes 'Rings' to 'rings'
     trim: true,
-    enum: ['rentals', 'rings', 'earrings', 'bracelets', 'necklaces','kids', 'hair-accessories'], 
+    enum: ['rentals', 'rings', 'earrings', 'bracelets', 'necklaces','kids', 'hair-accessories', 'combo'], 
   }, 
   style: {
   type: String,

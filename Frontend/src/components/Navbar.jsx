@@ -393,6 +393,9 @@ const isInteracting = useRef(false);
     <a href="/kids" className="hover:text-white transition-colors duration-300">Kids</a>
     <span className="text-white/20">|</span>
 
+ <a href="/combo" className="hover:text-white transition-colors duration-300">Combo products</a>
+    <span className="text-white/20">|</span>
+
     <a href="/Trending" className="hover:text-white transition-colors duration-300">customer Favorites</a>
   </div>
 </div>

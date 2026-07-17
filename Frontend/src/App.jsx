@@ -31,6 +31,7 @@ import Policies from "./pages/Policies";
 import Review from "./pages/Reviews.jsx";
 import HairAccessories from "./pages/HairAccessories";
 import ProductDetails from "./pages/ProductDetails";
+import ComboProducts from "./pages/ComboProducts";
 
 
 function Layout() {
@@ -77,6 +78,7 @@ const hideNavbar =
         <Route path="/trending" element={<Trending />} />
         <Route path="/reviews" element={<Review />} />
         <Route path="/product/:productId" element={<ProductDetails />}/>
+        <Route path="/combo" element={<ComboProducts />} />
       
 
 <Route

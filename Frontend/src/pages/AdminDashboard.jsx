@@ -24,6 +24,7 @@ export default function AdminDashboard() {
   const [kidsItemType, setKidsItemType] = useState("hair_bun");
   const [savingProduct, setSavingProduct] = useState(false);
   const [stockFilter, setStockFilter] = useState("all");
+  const [comboType, setComboType] = useState("bridal");
 
   const notifications = useNotifications();
 
@@ -138,6 +139,7 @@ console.log("Products Response:", productRes.data);
     setItemType(product.itemType || "bangle");
     setAccessoryType(product.accessoryType || "bow");
     setOccasion(product.occasion || "daily");
+    setComboType(product.comboType || "bridal");
     setShowModal(true);
   };
 
@@ -205,6 +207,10 @@ if (productType === "hair-accessories") {
     occasion
   );
 }
+
+if (productType === "combo") {
+  formDataToSend.append("comboType", comboType);
+}
       
       if (selectedFile) {
         formDataToSend.append("image", selectedFile);
@@ -227,6 +233,7 @@ if (productType === "hair-accessories") {
       setShowModal(false);
       setEditingProduct(null);
       setSelectedFile(null);
+      setComboType("bridal");
       setFormData({ name: "", stock: 0, price: 0, audience: "Women", extra: "" });
       fetchAll(); 
       
@@ -475,6 +482,7 @@ const trendingProducts = Array.isArray(products)
       <option value="kids">Kids</option>
       <option value="earrings">Earrings</option>
       <option value="hair-accessories">Hair Accessories</option>
+      <option value="combo">combo</option>
     </select>
 
     <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-[#d4af37]">
@@ -659,6 +667,7 @@ const trendingProducts = Array.isArray(products)
                   <option value="necklaces">Necklaces & Pendants</option>
                    <option value="hair-accessories">Hair Accessories</option>
                   <option value="kids">Kids</option>
+                  <option value="combo">combo</option>
                 </select>
               </div>
 
@@ -769,6 +778,7 @@ const trendingProducts = Array.isArray(products)
   </>
 )}
 
+
              {productType !== "kids" && (
   <>
     <div className="space-y-1">
@@ -815,7 +825,7 @@ const trendingProducts = Array.isArray(products)
               </div>
               {/* ================= DYNAMIC EXTRA DETAILS FIELD ================= */}
            {/* ================= DYNAMIC EXTRA DETAILS FIELD ================= */}
-{["rentals", "rings", "bracelets", "necklaces","kids"].includes(productType) && (
+{["rentals", "rings", "bracelets", "necklaces", "kids", "combo"].includes(productType) && (
   <div className="space-y-1 md:col-span-2">
     <label className="text-xs text-gray-500 ml-1">
       {{
@@ -823,7 +833,8 @@ const trendingProducts = Array.isArray(products)
         rings: "Ring Size (Standard)",
         bracelets: "Bracelet / Bangle Size",
         necklaces: "Necklace Chain Length",
-          kids: "Age Group"
+          kids: "Age Group",
+           combo: "Combo Includes"
       }[productType]}
     </label>
 
@@ -837,7 +848,8 @@ const trendingProducts = Array.isArray(products)
         rings: "Ex: 6, 7, 8 (US) or 12, 14 (IN)",
         bracelets: "Ex: 2.4, 2.6, 60mm or Bangle size",
         necklaces: "Ex: 18 inches, 24 inches",
-         kids: "Ex: 0-1 Years, 1-3 Years, 3-5 Years, 5-8 Years"
+         kids: "Ex: 0-1 Years, 1-3 Years, 3-5 Years, 5-8 Years",
+           combo: "Ex: Necklace + Earrings + Maang Tikka + Bangles"
       }[productType]}
       className="w-full p-3 rounded-xl bg-black/40 border border-white/10 text-white focus:border-[#d4af37] outline-none transition placeholder:text-gray-600"
     />
