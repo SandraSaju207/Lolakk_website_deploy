@@ -191,7 +191,7 @@ const isInteracting = useRef(false);
   "
 >
   Book
-  <span className="hidden md:inline"> Appointment</span>
+  {/* <span className="hidden md:inline"> Appointment</span> */}
 </a>
      <div className="flex items-center bg-white/10 border border-white/20 rounded-md overflow-hidden">
 
