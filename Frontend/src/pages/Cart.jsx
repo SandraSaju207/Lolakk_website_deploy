@@ -97,23 +97,26 @@ export default function Cart() {
   }
 };
 
-const fetchInternationalOrders = async()=>{
+const fetchInternationalOrders = async () => {
+  try {
+    const token = localStorage.getItem("token");
 
- const token = localStorage.getItem("token");
+    const res = await fetch(
+      `${API}/api/orders/pending-international`,
+      {
+        headers:{
+          Authorization:`Bearer ${token}`
+        }
+      }
+    );
 
- const res = await fetch(
- `${API}/api/orders/pending-international`,
- {
- headers:{
- Authorization:`Bearer ${token}`
- }
- }
- );
+    const data = await res.json();
 
- const data = await res.json();
+    setInternationalOrders(data);
 
- setInternationalOrders(data);
-
+  } catch(err){
+    console.log(err);
+  }
 };
 
 
@@ -281,6 +284,7 @@ if (addr.country !== "India") {
 
   // Keep cart items until payment is completed
   await fetchInternationalOrders();
+   setCart([]);
 
   return;
 }
@@ -478,72 +482,78 @@ const grandTotal = cartTotal + deliveryCharge;
         
       </div>
 
-      {internationalOrders.map((order)=>(
+ 
 
-<div
-key={order._id}
-className="bg-zinc-900 border border-amber-500 p-5 rounded-xl mb-4"
->
+     {internationalOrders.length > 0 ? (
 
-<h3 className="text-amber-400 text-lg font-semibold">
-International Order
-</h3>
+  <div>
+    {internationalOrders.map((order)=>(
 
+      <div
+        key={order._id}
+        className="bg-zinc-900 border border-amber-500 p-5 rounded-xl mb-4"
+      >
 
-<p className="text-gray-300 mt-2">
-Order ID: {order._id}
-</p>
-
-
-<p className="text-gray-300">
-Status:
-<span className="text-amber-400 ml-2">
-{order.status}
-</span>
-</p>
+        <h3 className="text-amber-400 text-lg font-semibold">
+          International Order
+        </h3>
 
 
-{order.status==="Awaiting Shipping Quote" && (
-
-<p className="text-yellow-400 mt-3">
-Waiting for delivery charge confirmation
-</p>
-
-)}
+        <p className="text-gray-300 mt-2">
+          Order ID: {order._id}
+        </p>
 
 
-{order.status==="Ready For Payment" && (
-
-<>
-
-<p className="text-green-400 mt-3">
-Delivery charge confirmed
-</p>
-
-
-<p className="text-white mt-2">
-Delivery Charge:
-₹{order.deliveryCharge}
-</p>
+        <p className="text-gray-300">
+          Status:
+          <span className="text-amber-400 ml-2">
+            {order.status}
+          </span>
+        </p>
 
 
-<button
-className="mt-3 bg-amber-500 text-black px-5 py-2 rounded"
-onClick={()=>payInternationalOrder(order)}
->
-Pay Now ₹{order.total}
-</button>
+        {order.status === "Awaiting Shipping Quote" && (
 
-</>
+          <p className="text-yellow-400 mt-3">
+            Waiting for delivery charge confirmation
+          </p>
 
-)}
+        )}
 
 
-</div>
+        {order.status === "Ready For Payment" && (
 
-))}
+          <>
 
-      {cart.length === 0 ? (
+          <p className="text-green-400 mt-3">
+            Delivery charge confirmed
+          </p>
+
+
+          <p className="text-white mt-2">
+            Delivery Charge:
+            ₹{order.deliveryCharge}
+          </p>
+
+
+          <button
+            onClick={()=>payInternationalOrder(order)}
+            className="mt-3 bg-amber-500 text-black px-5 py-2 rounded"
+          >
+            Pay Now ₹{order.total}
+          </button>
+
+          </>
+
+        )}
+
+      </div>
+
+    ))}
+  </div>
+
+
+) : cart.length === 0 ? (
         <div className="text-center py-20 glass rounded-3xl border border-white/10">
           <ShoppingBag size={52} className="mx-auto mb-4 text-gray-500" />
           <p className="text-xl text-gray-500">Your cart is empty</p>
