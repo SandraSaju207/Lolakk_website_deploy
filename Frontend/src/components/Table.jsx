@@ -83,8 +83,8 @@ const addDeliveryCharge = async (id) => {
   }
 
 
-  const res = await fetch(
-    `${API}/api/orders/${id}/delivery-charge`,
+ const res = await fetch(
+    `${API}/api/orders/${id}/shipping-charge`,
     {
       method:"PUT",
       headers:{
@@ -574,8 +574,9 @@ item.total
           </span>
 
        <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-        {item.isInternational &&
-item.shippingStatus === "Pending" && (
+       {item.isInternational &&
+!item.shippingChargeAdded &&
+item.status === "Awaiting Shipping Quote" && (
 
 <div className="mb-4 flex gap-2">
 

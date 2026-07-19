@@ -65,7 +65,9 @@ shippingAddress: {
   district: String,
   state: String,
   pincode: String,
-  phone: { type: String, required: true }
+  phone: { type: String, required: true },
+    country: String
+  
 },
 expectedDeliveryDate: {
   type: Date,

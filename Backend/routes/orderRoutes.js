@@ -116,7 +116,7 @@ router.post("/international", protect, async (req, res) => {
 
       customerName,
       customerEmail,
-      customerPhone,
+    
 
       items,
 
@@ -164,11 +164,11 @@ router.put(
         });
       }
 
-      const productTotal = order.items.reduce(
-        (sum, item) =>
-          sum + item.price * item.quantity,
-        0
-      );
+     const productTotal = order.items.reduce(
+  (sum, item) =>
+    sum + item.price * (item.quantity || item.qty || 1),
+  0
+);
 
       order.deliveryCharge = Number(deliveryCharge);
 
