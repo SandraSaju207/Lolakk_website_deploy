@@ -489,67 +489,91 @@ const grandTotal = cartTotal + deliveryCharge;
   <div>
     {internationalOrders.map((order)=>(
 
-      <div
-        key={order._id}
-        className="bg-zinc-900 border border-amber-500 p-5 rounded-xl mb-4"
-      >
+<div
+key={order._id}
+className="bg-zinc-900 border border-amber-500 p-5 rounded-xl mb-4"
+>
 
-        <h3 className="text-amber-400 text-lg font-semibold">
-          International Order
-        </h3>
-
-
-        <p className="text-gray-300 mt-2">
-          Order ID: {order._id}
-        </p>
+<h3 className="text-amber-400 text-lg font-semibold">
+International Order
+</h3>
 
 
-        <p className="text-gray-300">
-          Status:
-          <span className="text-amber-400 ml-2">
-            {order.status}
-          </span>
-        </p>
+{order.items?.map((item,index)=>(
+
+<div
+key={index}
+className="flex gap-4 mt-4"
+>
+
+<img
+src={item.image}
+alt={item.name}
+className="w-24 h-24 rounded-xl object-cover border border-amber-500/20"
+/>
 
 
-        {order.status === "Awaiting Shipping Quote" && (
+<div>
 
-          <p className="text-yellow-400 mt-3">
-            Waiting for delivery charge confirmation
-          </p>
-
-        )}
+<h4 className="text-white font-semibold">
+{item.name}
+</h4>
 
 
-        {order.status === "Ready For Payment" && (
-
-          <>
-
-          <p className="text-green-400 mt-3">
-            Delivery charge confirmed
-          </p>
+<p className="text-gray-400">
+Qty: {item.quantity}
+</p>
 
 
-          <p className="text-white mt-2">
-            Delivery Charge:
-            ₹{order.deliveryCharge}
-          </p>
+<p className="text-amber-400 font-bold">
+₹{item.price * item.quantity}
+</p>
+
+</div>
 
 
-          <button
-            onClick={()=>payInternationalOrder(order)}
-            className="mt-3 bg-amber-500 text-black px-5 py-2 rounded"
-          >
-            Pay Now ₹{order.total}
-          </button>
+</div>
 
-          </>
+))}
 
-        )}
 
-      </div>
+<p className="text-gray-300 mt-4">
+Order ID: {order._id}
+</p>
 
-    ))}
+
+<p className="text-gray-300">
+Status:
+<span className="text-amber-400 ml-2">
+{order.status}
+</span>
+</p>
+
+
+{order.status==="Awaiting Shipping Quote" && (
+
+<p className="text-yellow-400 mt-3">
+Waiting for delivery charge confirmation
+</p>
+
+)}
+
+
+{order.status==="Ready For Payment" && (
+
+<button
+onClick={()=>payInternationalOrder(order)}
+className="mt-3 bg-amber-500 text-black px-5 py-2 rounded"
+>
+Pay Now ₹{order.total}
+</button>
+
+)}
+
+
+</div>
+
+))}
   </div>
 
 
