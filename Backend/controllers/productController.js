@@ -27,7 +27,8 @@ export const addProduct = async (req, res) => {
       description,
       materialType,
       itemType,
-      style
+      style,
+        sizes
     } = req.body;
 
     const imagePath = req.file ? req.file.path : "";
@@ -44,6 +45,7 @@ export const addProduct = async (req, res) => {
       extra,
       description,
       materialType,
+      sizes: sizes ? JSON.parse(sizes) : [],
       image: imagePath
     });
 
@@ -77,6 +79,9 @@ export const updateProduct = async (req, res) => {
     if (updateData.price) updateData.price = Number(updateData.price);
     if (updateData.stock) updateData.stock = Number(updateData.stock);
     if (updateData.trending) updateData.trending = updateData.trending === 'true' || updateData.trending === true;
+    if (updateData.sizes) {
+  updateData.sizes = JSON.parse(updateData.sizes);
+}
 
     // 2. If a new image was uploaded, update the image path
     if (req.file) {

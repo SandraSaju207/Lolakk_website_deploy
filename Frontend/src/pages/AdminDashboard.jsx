@@ -132,7 +132,10 @@ console.log("Products Response:", productRes.data);
       price: product.price,
       audience: product.audience,
       extra: product.extra || "",
-      sizes: product.sizes || [],
+    sizes:
+  typeof product.sizes === "string"
+    ? JSON.parse(product.sizes)
+    : product.sizes || [],
     });
     setProductType(product.type);
     setProductStyle(product.style || "traditional");
@@ -863,7 +866,11 @@ const trendingProducts = Array.isArray(products)
 
     <input
       type="text"
-      value={formData.sizes.join(", ")}
+     value={
+  Array.isArray(formData.sizes)
+    ? formData.sizes.join(", ")
+    : ""
+}
       onChange={(e) =>
         setFormData({
           ...formData,
