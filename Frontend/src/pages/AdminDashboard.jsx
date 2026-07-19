@@ -831,16 +831,16 @@ const trendingProducts = Array.isArray(products)
               </div>
               {/* ================= DYNAMIC EXTRA DETAILS FIELD ================= */}
            {/* ================= DYNAMIC EXTRA DETAILS FIELD ================= */}
-{["rentals", "rings", "bracelets", "necklaces", "kids", "combo"].includes(productType) && (
+{/* Extra field for all except bracelets */}
+{["rentals", "rings", "necklaces", "kids", "combo"].includes(productType) && (
   <div className="space-y-1 md:col-span-2">
     <label className="text-xs text-gray-500 ml-1">
       {{
         rentals: "Rental Period & Rules",
         rings: "Ring Size (Standard)",
-        bracelets: "Bracelet / Bangle Size",
         necklaces: "Necklace Chain Length",
-          kids: "Age Group",
-           combo: "Combo Includes"
+        kids: "Age Group",
+        combo: "Combo Includes",
       }[productType]}
     </label>
 
@@ -849,16 +849,41 @@ const trendingProducts = Array.isArray(products)
       onChange={(e) =>
         setFormData({ ...formData, extra: e.target.value })
       }
-      placeholder={{
-        rentals: "Ex: 3 days minimum, security deposit ₹5000",
-        rings: "Ex: 6, 7, 8 (US) or 12, 14 (IN)",
-        bracelets: "Ex: 2.4, 2.6, 60mm or Bangle size",
-        necklaces: "Ex: 18 inches, 24 inches",
-         kids: "Ex: 0-1 Years, 1-3 Years, 3-5 Years, 5-8 Years",
-           combo: "Ex: Necklace + Earrings + Maang Tikka + Bangles"
-      }[productType]}
-      className="w-full p-3 rounded-xl bg-black/40 border border-white/10 text-white focus:border-[#d4af37] outline-none transition placeholder:text-gray-600"
+      className="w-full p-3 rounded-xl bg-black/40 border border-white/10 text-white"
     />
+  </div>
+)}
+
+{/* Available Sizes for Bangles & Bracelets */}
+{productType === "bracelets" && (
+  <div className="space-y-2 md:col-span-2">
+    <label className="text-xs text-gray-500 ml-1">
+      Available Sizes
+    </label>
+
+    <input
+      type="text"
+      value={formData.sizes.join(", ")}
+      onChange={(e) =>
+        setFormData({
+          ...formData,
+          sizes: e.target.value
+            .split(",")
+            .map((s) => s.trim())
+            .filter(Boolean),
+        })
+      }
+      placeholder={
+        ItemType === "bangle"
+          ? "Example: 2.2, 2.4, 2.6"
+          : "Example: Small, Medium, Large"
+      }
+      className="w-full p-3 rounded-xl bg-black/40 border border-white/10 text-white"
+    />
+
+    <p className="text-xs text-gray-500">
+      Enter sizes separated by commas.
+    </p>
   </div>
 )}
              
