@@ -90,6 +90,51 @@ export const cancelOrder = async (req, res) => {
 };
 
 
+export const cancelInternationalOrder = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    // Only the owner can cancel
+    if (order.userId.toString() !== req.user._id.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
+    // Don't allow cancellation after payment
+    if (order.paymentStatus === "Paid") {
+      return res.status(400).json({
+        success: false,
+        message: "Paid orders cannot be cancelled.",
+      });
+    }
+
+    order.status = "Cancelled";
+    await order.save();
+
+    res.json({
+      success: true,
+      message: "Order cancelled successfully.",
+    });
+  } catch (err) {
+    console.log(err);
+
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+};
+
+
 export const verifyPayment = async (req, res) => {
   try {
     console.log("🔥 VERIFY PAYMENT HIT");

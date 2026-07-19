@@ -1,10 +1,14 @@
 import express from "express";
-import { createOrder } from "../controllers/orderController.js";
+import {
+  createOrder,
+  cancelOrder,
+  cancelInternationalOrder,
+} from "../controllers/orderController.js";
 import { protect } from "../middleware/authMiddleware.js";
 import { adminOnly } from "../middleware/adminMiddleware.js";
 import Order from "../models/Order.js";
 import jwt from "jsonwebtoken";
-import { cancelOrder } from "../controllers/orderController.js";
+
 
 const router = express.Router();
 
@@ -33,6 +37,8 @@ router.get("/pending-international", protect, async (req,res)=>{
   }
 });
 
+
+
 router.get("/test-route", (req, res) => {
   res.json({
     success: true,
@@ -42,6 +48,12 @@ router.get("/test-route", (req, res) => {
 
 
 router.put("/:id/cancel", protect, cancelOrder);
+
+router.put(
+  "/:id/cancel-international",
+  protect,
+  cancelInternationalOrder
+);
 
 router.put(
   "/:id/request-return",

@@ -112,7 +112,9 @@ const fetchInternationalOrders = async () => {
 
     const data = await res.json();
 
-    setInternationalOrders(data);
+    setInternationalOrders(
+  data.filter((order) => order.status !== "Cancelled")
+);
 
   } catch(err){
     console.log(err);
@@ -214,6 +216,29 @@ const payInternationalOrder = async(order)=>{
 
 };
 
+const cancelInternationalOrder = async (id) => {
+  if (!window.confirm("Cancel this order?")) return;
+
+  const token = localStorage.getItem("token");
+
+  const res = await fetch(
+    `${API}/api/orders/${id}/cancel-international`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  const data = await res.json();
+
+  alert(data.message);
+
+  if (data.success) {
+    fetchInternationalOrders();
+  }
+};
   // =========================
   // PAYMENT FIXED
   // =========================
@@ -568,6 +593,16 @@ className="mt-3 bg-amber-500 text-black px-5 py-2 rounded"
 Pay Now ₹{order.total}
 </button>
 
+)}
+
+{order.paymentStatus !== "Paid" &&
+ order.status !== "Cancelled" && (
+  <button
+    onClick={() => cancelInternationalOrder(order._id)}
+    className="mt-3 ml-3 bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded"
+  >
+    Cancel Order
+  </button>
 )}
 
 
