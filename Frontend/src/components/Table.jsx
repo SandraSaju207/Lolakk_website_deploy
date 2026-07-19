@@ -480,92 +480,48 @@ const markReturned = async (id) => {
        
 <div className="mt-4 border-t border-zinc-700 pt-3 text-sm md:text-base">
 
+  <div className="flex justify-between text-gray-400">
+    <span>
+      Product Total
+    </span>
 
-<div className="flex justify-between text-gray-400">
-<span>
-Product Total
-</span>
-
-<span>
-₹
-{
-item.isInternational
-?
-item.total
-:
-item.total - (item.deliveryCharge || 100)
-}
-</span>
-
-</div>
+    <span>
+      ₹
+      {
+        item.total - (item.deliveryCharge || 0)
+      }
+    </span>
+  </div>
 
 
+  <div className="flex justify-between text-gray-400">
+    <span>
+      Delivery Charge
+    </span>
 
-<div className="flex justify-between text-gray-400">
-
-<span>
-Delivery Charge
-</span>
-
-
-<span>
-
-{
-item.isInternational
-
-?
-
-item.deliveryCharge > 0
-
-?
-
-`₹${item.deliveryCharge}`
-
-:
-
-"Pending"
-
-:
-
-`₹${item.deliveryCharge || 100}`
-
-}
-
-</span>
+    <span>
+      {
+        item.isInternational
+          ? item.deliveryCharge > 0
+            ? `₹${item.deliveryCharge}`
+            : "Pending"
+          : `₹${item.deliveryCharge || 100}`
+      }
+    </span>
+  </div>
 
 
-</div>
+  <div className="flex justify-between text-amber-400 font-bold text-lg mt-2">
 
+    <span>
+      Grand Total
+    </span>
 
+    <span>
+      ₹{item.total}
+    </span>
 
-
-<div className="flex justify-between text-amber-400 font-bold text-lg mt-2">
-
-<span>
-Grand Total
-</span>
-
-
-<span>
-
-₹
-{
-item.isInternational
-
-?
-
-item.total + (item.deliveryCharge || 0)
-
-:
-
-item.total
-
-}
-
-</span>
-
-</div>
-
+  </div>
 
 </div>
 <div className="flex flex-col md:flex-row gap-4 md:gap-0 md:items-center md:justify-between">
