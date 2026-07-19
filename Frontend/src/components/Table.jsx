@@ -6,6 +6,7 @@ const API = import.meta.env.VITE_API_URL;
 export function Table({ data, type, refresh }) {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [deliveryCharges, setDeliveryCharges] = useState({});
  
 
 
@@ -68,6 +69,51 @@ const updateTracking = async (
 
   refresh();
 };
+
+const addDeliveryCharge = async (id) => {
+
+  const token = localStorage.getItem("token");
+
+  const charge = deliveryCharges[id];
+
+
+  if(!charge){
+    alert("Enter delivery charge");
+    return;
+  }
+
+
+  const res = await fetch(
+    `${API}/api/orders/${id}/delivery-charge`,
+    {
+      method:"PUT",
+      headers:{
+        "Content-Type":"application/json",
+        Authorization:`Bearer ${token}`,
+      },
+
+      body:JSON.stringify({
+        deliveryCharge:Number(charge)
+      })
+    }
+  );
+
+
+  const data = await res.json();
+
+
+  if(!res.ok){
+    alert(data.message);
+    return;
+  }
+
+
+  alert("Delivery charge added");
+
+  refresh();
+
+};
+
   const filtered = data.filter((item) => {
     const matchSearch =
   item.customerName?.toLowerCase().includes(search.toLowerCase()) ||
@@ -432,22 +478,95 @@ const markReturned = async (id) => {
         </div>
 
        
+<div className="mt-4 border-t border-zinc-700 pt-3 text-sm md:text-base">
 
-       <div className="mt-4 border-t border-zinc-700 pt-3 text-sm md:text-base">
-  <div className="flex justify-between text-gray-400">
-    <span>Product Total</span>
-    <span>₹{item.total - 100}</span>
-  </div>
 
-  <div className="flex justify-between text-gray-400">
-    <span>Delivery Charge</span>
-    <span>₹100</span>
-  </div>
+<div className="flex justify-between text-gray-400">
+<span>
+Product Total
+</span>
 
-  <div className="flex justify-between text-amber-400 font-bold text-lg mt-2">
-    <span>Grand Total</span>
-    <span>₹{item.total}</span>
-  </div>
+<span>
+₹
+{
+item.isInternational
+?
+item.total
+:
+item.total - (item.deliveryCharge || 100)
+}
+</span>
+
+</div>
+
+
+
+<div className="flex justify-between text-gray-400">
+
+<span>
+Delivery Charge
+</span>
+
+
+<span>
+
+{
+item.isInternational
+
+?
+
+item.deliveryCharge > 0
+
+?
+
+`₹${item.deliveryCharge}`
+
+:
+
+"Pending"
+
+:
+
+`₹${item.deliveryCharge || 100}`
+
+}
+
+</span>
+
+
+</div>
+
+
+
+
+<div className="flex justify-between text-amber-400 font-bold text-lg mt-2">
+
+<span>
+Grand Total
+</span>
+
+
+<span>
+
+₹
+{
+item.isInternational
+
+?
+
+item.total + (item.deliveryCharge || 0)
+
+:
+
+item.total
+
+}
+
+</span>
+
+</div>
+
+
 </div>
 <div className="flex flex-col md:flex-row gap-4 md:gap-0 md:items-center md:justify-between">
           <span className="text-white">
@@ -455,6 +574,54 @@ const markReturned = async (id) => {
           </span>
 
        <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+        {item.isInternational &&
+item.shippingStatus === "Pending" && (
+
+<div className="mb-4 flex gap-2">
+
+<input
+
+type="number"
+
+placeholder="Delivery Charge"
+
+value={
+deliveryCharges[item._id] || ""
+}
+
+onChange={(e)=>
+setDeliveryCharges({
+
+...deliveryCharges,
+
+[item._id]:e.target.value
+
+})
+}
+
+className="bg-black border border-zinc-700 p-3 rounded"
+
+/>
+
+
+<button
+
+onClick={()=>
+addDeliveryCharge(item._id)
+}
+
+className="bg-amber-500 text-black px-4 rounded"
+
+>
+
+Add Charge
+
+</button>
+
+
+</div>
+
+)}
   <select
   value={item.status}
   disabled={item.status === "Cancelled"}

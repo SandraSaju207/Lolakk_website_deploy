@@ -442,15 +442,7 @@ const res = await axios.get(
   }
 />
 
-<input
-  type="text"
-  className="w-full p-3 mb-3 rounded bg-zinc-800 text-white"
-  placeholder="Pincode"
-  value={form.pincode}
-  onChange={(e) =>
-    setForm({ ...form, pincode: e.target.value })
-  }
-/>
+
 
 <select
   className="w-full p-3 mb-3 rounded bg-zinc-800 text-white"
@@ -477,47 +469,147 @@ const res = await axios.get(
   <option value="Other">🌍 Other</option>
 </select>
 
-<select
-  className="w-full p-3 mb-3 rounded bg-zinc-800 text-white"
-  value={form.state}
-  onChange={(e) =>
-    setForm({
-      ...form,
-      state: e.target.value,
-      district: "",
-    })
-  }
->
-  <option value="">Select State</option>
-  <option value="Kerala">Kerala</option>
-</select>
+{form.country === "India" ? (
+  <select
+    className="w-full p-3 mb-3 rounded bg-zinc-800 text-white"
+    value={form.state}
+    onChange={(e) =>
+      setForm({
+        ...form,
+        state: e.target.value,
+        district: "",
+      })
+    }
+  >
+    <option value="">Select State / Union Territory</option>
 
-<select
+    <option value="Andhra Pradesh">Andhra Pradesh</option>
+    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+    <option value="Assam">Assam</option>
+    <option value="Bihar">Bihar</option>
+    <option value="Chhattisgarh">Chhattisgarh</option>
+    <option value="Goa">Goa</option>
+    <option value="Gujarat">Gujarat</option>
+    <option value="Haryana">Haryana</option>
+    <option value="Himachal Pradesh">Himachal Pradesh</option>
+    <option value="Jharkhand">Jharkhand</option>
+    <option value="Karnataka">Karnataka</option>
+    <option value="Kerala">Kerala</option>
+    <option value="Madhya Pradesh">Madhya Pradesh</option>
+    <option value="Maharashtra">Maharashtra</option>
+    <option value="Manipur">Manipur</option>
+    <option value="Meghalaya">Meghalaya</option>
+    <option value="Mizoram">Mizoram</option>
+    <option value="Nagaland">Nagaland</option>
+    <option value="Odisha">Odisha</option>
+    <option value="Punjab">Punjab</option>
+    <option value="Rajasthan">Rajasthan</option>
+    <option value="Sikkim">Sikkim</option>
+    <option value="Tamil Nadu">Tamil Nadu</option>
+    <option value="Telangana">Telangana</option>
+    <option value="Tripura">Tripura</option>
+    <option value="Uttar Pradesh">Uttar Pradesh</option>
+    <option value="Uttarakhand">Uttarakhand</option>
+    <option value="West Bengal">West Bengal</option>
+
+    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+    <option value="Chandigarh">Chandigarh</option>
+    <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+    <option value="Delhi">Delhi</option>
+    <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+    <option value="Ladakh">Ladakh</option>
+    <option value="Lakshadweep">Lakshadweep</option>
+    <option value="Puducherry">Puducherry</option>
+  </select>
+) : (
+  <input
+    className="w-full p-3 mb-3 rounded bg-zinc-800 text-white"
+    placeholder="State / Province / Region"
+    value={form.state}
+    onChange={(e) =>
+      setForm({
+        ...form,
+        state: e.target.value,
+      })
+    }
+  />
+)}
+
+<input
+  type="text"
   className="w-full p-3 mb-3 rounded bg-zinc-800 text-white"
-  value={form.district}
+  placeholder={
+    form.country === "India"
+      ? "PIN Code"
+      : form.country === "United States"
+      ? "ZIP Code"
+      : form.country === "United Kingdom"
+      ? "Postcode"
+      : "Postal Code"
+  }
+  value={form.pincode}
   onChange={(e) =>
     setForm({
       ...form,
-      district: e.target.value,
+      pincode: e.target.value,
     })
   }
->
-  <option value="">Select District</option>
-  <option value="Thiruvananthapuram">Thiruvananthapuram</option>
-  <option value="Kollam">Kollam</option>
-  <option value="Pathanamthitta">Pathanamthitta</option>
-  <option value="Alappuzha">Alappuzha</option>
-  <option value="Kottayam">Kottayam</option>
-  <option value="Idukki">Idukki</option>
-  <option value="Ernakulam">Ernakulam</option>
-  <option value="Thrissur">Thrissur</option>
-  <option value="Palakkad">Palakkad</option>
-  <option value="Malappuram">Malappuram</option>
-  <option value="Kozhikode">Kozhikode</option>
-  <option value="Wayanad">Wayanad</option>
-  <option value="Kannur">Kannur</option>
-  <option value="Kasaragod">Kasaragod</option>
-</select>
+/>
+
+{form.country === "India" ? (
+  form.state === "Kerala" ? (
+    <select
+      className="w-full p-3 mb-3 rounded bg-zinc-800 text-white"
+      value={form.district}
+      onChange={(e) =>
+        setForm({
+          ...form,
+          district: e.target.value,
+        })
+      }
+    >
+      <option value="">Select District</option>
+      <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+      <option value="Kollam">Kollam</option>
+      <option value="Pathanamthitta">Pathanamthitta</option>
+      <option value="Alappuzha">Alappuzha</option>
+      <option value="Kottayam">Kottayam</option>
+      <option value="Idukki">Idukki</option>
+      <option value="Ernakulam">Ernakulam</option>
+      <option value="Thrissur">Thrissur</option>
+      <option value="Palakkad">Palakkad</option>
+      <option value="Malappuram">Malappuram</option>
+      <option value="Kozhikode">Kozhikode</option>
+      <option value="Wayanad">Wayanad</option>
+      <option value="Kannur">Kannur</option>
+      <option value="Kasaragod">Kasaragod</option>
+    </select>
+  ) : (
+    <input
+      className="w-full p-3 mb-3 rounded bg-zinc-800 text-white"
+      placeholder="City / District"
+      value={form.district}
+      onChange={(e) =>
+        setForm({
+          ...form,
+          district: e.target.value,
+        })
+      }
+    />
+  )
+) : (
+  <input
+    className="w-full p-3 mb-3 rounded bg-zinc-800 text-white"
+    placeholder="City"
+    value={form.district}
+    onChange={(e) =>
+      setForm({
+        ...form,
+        district: e.target.value,
+      })
+    }
+  />
+)}
 
       <textarea
         className="w-full p-3 mb-3 rounded bg-zinc-800 text-white"
@@ -539,15 +631,22 @@ const res = await axios.get(
 
        <button
   onClick={async () => {
-    if (!/^\d{6}$/.test(form.pincode)) {
-      alert("Please enter a valid 6-digit pincode");
-      return;
-    }
+    if (form.country === "India") {
+  if (!/^\d{6}$/.test(form.pincode)) {
+    alert("Please enter a valid 6-digit PIN Code");
+    return;
+  }
+} else {
+  if (!form.pincode.trim()) {
+    alert("Please enter a valid Postal Code");
+    return;
+  }
+}
 
-    if (!/^\d{10}$/.test(form.phone)) {
-      alert("Please enter a valid 10-digit phone number");
-      return;
-    }
+if (!/^\d{10}$/.test(form.phone)) {
+  alert("Please enter a valid 10-digit phone number");
+  return;
+}
 
     console.log("TOKEN:", token);
     console.log("FORM:", form);

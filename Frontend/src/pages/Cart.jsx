@@ -123,12 +123,76 @@ const proceedToPayment = async (
   return;
 }
 
+// International orders
+if (addr.country !== "India") {
+  const confirmed = window.confirm(
+    "International shipping charges vary by country.\n\nClick OK to submit your order. Our team will calculate the shipping cost and notify you once your order is ready for payment."
+  );
+
+  if (!confirmed) {
+    setLoading(false);
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API}/api/orders/international`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        userId: user._id,
+        customerName: user.name,
+        customerEmail: user.email,
+        customerPhone: addr.phone,
+        items: itemsToPay,
+        shippingAddress: addr,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      alert(
+        "Your international order has been received.\nWe'll calculate shipping charges and notify you once it's ready for payment."
+      );
+
+      if (isSingleItem) {
+        const updatedCart = cart.filter(
+          (item) => item.id !== itemsToPay[0].id
+        );
+        setCart(updatedCart);
+        localStorage.setItem(cartKey, JSON.stringify(updatedCart));
+      } else {
+        setCart([]);
+        localStorage.removeItem(cartKey);
+      }
+
+      navigate("/");
+      return;
+    }
+
+    alert(data.message);
+    return;
+  } catch (err) {
+    console.log(err);
+    alert("Unable to submit order.");
+    return;
+  }
+}
+
      const productTotal = itemsToPay.reduce(
   (acc, item) => acc + item.price * item.qty,
   0
 );
 
-const deliveryCharge = 100;
+const deliveryCharge =
+  addr.country === "India"
+    ? addr.state === "Kerala"
+      ? 100
+      : 200
+    : 0; // Change this if you want international shipping later
 
 const orderTotal = productTotal + deliveryCharge;
 
@@ -209,7 +273,7 @@ const orderData = JSON.parse(orderText);
   customerPhone: addr.phone || "",
 
   amount: orderTotal,
-   deliveryCharge: 100,
+   deliveryCharge,
 }),
               }
             );
@@ -273,12 +337,23 @@ const verifyData =
     0
   );
 
-  const deliveryCharge = cart.length > 0 ? 100 : 0;
+  const defaultAddress =
+  addresses.find((a) => a.isDefault) || addresses[0];
+
+ const deliveryCharge =
+  cart.length > 0
+    ? defaultAddress
+      ? defaultAddress.country === "India"
+        ? defaultAddress.state === "Kerala"
+          ? 100
+          : 200
+        : 0 // International (change later if needed)
+      : 100
+    : 0;
 
 const grandTotal = cartTotal + deliveryCharge;
 
-const defaultAddress =
-  addresses.find((a) => a.isDefault) || addresses[0];
+
 
   if (!isInitialized) return null;
 
@@ -362,13 +437,27 @@ const defaultAddress =
   Product: ₹{item.price * item.qty}
 </p>
 
-<p className="text-gray-400 text-sm">
-  Delivery: ₹100
-</p>
+{defaultAddress?.country === "India" ? (
+  <>
+    <p className="text-gray-400 text-sm">
+      Delivery: ₹{deliveryCharge}
+    </p>
 
-<p className="text-amber-400 font-bold text-base mt-1">
-  Total: ₹{item.price * item.qty + 100}
-</p>
+    <p className="text-amber-400 font-bold text-base mt-1">
+      Total: ₹{item.price * item.qty + deliveryCharge}
+    </p>
+  </>
+) : (
+  <>
+    <p className="text-yellow-400 text-xs">
+      Shipping charges will be calculated after order confirmation.
+    </p>
+
+    <p className="text-amber-400 font-bold text-base mt-1">
+      Product: ₹{item.price * item.qty}
+    </p>
+  </>
+)}
 
                   <button
                    disabled={processingItem === item.id}
@@ -431,13 +520,35 @@ const defaultAddress =
             <p>Items: {cart.length}</p>
            <p>Subtotal: ₹{cartTotal}</p>
 
-<p>Delivery Charge: ₹{deliveryCharge}</p>
+{defaultAddress?.country === "India" ? (
+  <>
+    <p>Delivery Charge: ₹{deliveryCharge}</p>
 
-<hr className="my-3 border-white/10" />
+    <hr className="my-3 border-white/10" />
 
-<p className="font-bold text-amber-500 text-lg">
-  Total: ₹{grandTotal}
-</p>
+    <p className="font-bold text-amber-500 text-lg">
+      Total: ₹{grandTotal}
+    </p>
+  </>
+) : (
+  <>
+    <div className="mt-3 rounded-xl border border-yellow-500/30 bg-yellow-500/10 p-3">
+      <p className="text-yellow-300 text-sm">
+        Shipping charges for international orders vary by destination.
+      </p>
+
+      <p className="text-gray-300 text-xs mt-2">
+        Submit your order now. Our team will calculate the shipping cost and notify you before payment.
+      </p>
+    </div>
+
+    <hr className="my-3 border-white/10" />
+
+    <p className="font-bold text-amber-500 text-lg">
+      Product Total: ₹{cartTotal}
+    </p>
+  </>
+)}
 
             {showAddressWarning && (
   <div className="mb-6 p-5 rounded-xl border border-red-500/30 bg-red-500/10 text-center">
@@ -470,7 +581,11 @@ const defaultAddress =
   onClick={() => proceedToPayment(cart, false)}
   className="hidden md:block w-full mt-4 bg-amber-600 py-3 rounded-xl font-bold"
 >
-              {loading ? "Processing..." : "Pay All"}
+              {loading
+  ? "Processing..."
+  : defaultAddress?.country === "India"
+  ? "Pay All"
+  : "Submit Order"}
             </button>
           </div>
         </div>
@@ -483,7 +598,11 @@ const defaultAddress =
       onClick={() => proceedToPayment(cart, false)}
      className="w-full bg-amber-500 text-black py-4 rounded-2xl font-bold text-lg shadow-lg"
     >
-      {loading ? "Processing..." : `Pay ₹${grandTotal}`}
+      {loading
+  ? "Processing..."
+  : defaultAddress?.country === "India"
+  ? `Pay ₹${grandTotal}`
+  : "Submit Order"}
     </button>
   </div>
 )}

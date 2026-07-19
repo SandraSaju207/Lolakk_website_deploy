@@ -95,6 +95,106 @@ router.get("/", protect, async (req, res) => {
 
 router.post("/", protect, createOrder);
 
+router.post("/international", protect, async (req, res) => {
+  try {
+    const {
+      customerName,
+      customerEmail,
+      customerPhone,
+      items,
+      shippingAddress,
+    } = req.body;
+
+    const productTotal = items.reduce(
+      (sum, item) =>
+        sum + item.price * (item.qty || item.quantity || 1),
+      0
+    );
+
+    const order = await Order.create({
+      userId: req.user.id,
+
+      customerName,
+      customerEmail,
+      customerPhone,
+
+      items,
+
+      total: productTotal,
+
+      deliveryCharge: 0,
+
+      isInternational: true,
+
+      shippingChargeAdded: false,
+
+      shippingAddress,
+
+      status: "Awaiting Shipping Quote",
+
+      paymentStatus: "Pending",
+    });
+
+    res.json({
+      success: true,
+      order,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+});
+
+router.put(
+  "/:id/shipping-charge",
+  protect,
+  adminOnly,
+  async (req, res) => {
+    try {
+      const { deliveryCharge } = req.body;
+
+      const order = await Order.findById(req.params.id);
+
+      if (!order) {
+        return res.status(404).json({
+          success: false,
+          message: "Order not found",
+        });
+      }
+
+      const productTotal = order.items.reduce(
+        (sum, item) =>
+          sum + item.price * item.quantity,
+        0
+      );
+
+      order.deliveryCharge = Number(deliveryCharge);
+
+      order.shippingChargeAdded = true;
+
+      order.total =
+        productTotal + Number(deliveryCharge);
+
+      order.status = "Ready For Payment";
+
+      await order.save();
+
+      res.json({
+        success: true,
+        order,
+      });
+    } catch (err) {
+      res.status(500).json({
+        success: false,
+        message: err.message,
+      });
+    }
+  }
+);
+
+
 router.patch("/:id", protect, adminOnly, async (req, res) => {
   /* your patch code */
 });

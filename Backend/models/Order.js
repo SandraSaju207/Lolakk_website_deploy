@@ -28,10 +28,26 @@ items: [{
   }
 }],
   total: { type: Number, required: true, default: 0 },
+  deliveryCharge: {
+  type: Number,
+  default: 0,
+},
+
+isInternational: {
+  type: Boolean,
+  default: false,
+},
+
+shippingChargeAdded: {
+  type: Boolean,
+  default: false,
+},
   status: { 
     type: String, 
     // Updated to match your specific requirements
    enum: [
+  "Awaiting Shipping Quote",
+  "Ready For Payment",
   "Order Confirmed",
   "Processing",
   "Ready to be Shipped",
@@ -63,7 +79,16 @@ courier: {
   type: String,
   default: "",
 },
-  paymentStatus: { type: String, default: "Unpaid" },
+ paymentStatus: {
+  type: String,
+  enum: [
+    "Pending",
+    "Unpaid",
+    "Paid",
+    "Refunded",
+  ],
+  default: "Pending",
+},
   deliveredAt: { type: Date }, // Needed to calculate the 7-day return window
  returnRequested: {
   type: Boolean,
