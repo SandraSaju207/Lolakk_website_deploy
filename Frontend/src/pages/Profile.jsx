@@ -23,11 +23,12 @@ const [addresses, setAddresses] = useState([]);
 const [showModal, setShowModal] = useState(false);
 const [editing, setEditing] = useState(null);
 const [form, setForm] = useState({
-  name: "", 
+  name: "",
   label: "Home",
+  country: "India",
   state: "",
   phone: "",
-    pincode: "",
+  pincode: "",
   district: "",
   fullAddress: "",
 });
@@ -184,13 +185,13 @@ const res = await axios.get(
     <button
       onClick={() => {
         setEditing(null);
-        setForm({
-           name: "", 
+       setForm({
+  name: "",
   label: "Home",
-  country:"",
+  country: "India",
   state: "",
   phone: "",
-    postelcode: "",
+  pincode: "",
   district: "",
   fullAddress: "",
 });
@@ -239,6 +240,10 @@ const res = await axios.get(
 
 <p className="text-sm text-zinc-500 mt-2">
   {addr.district}, {addr.state}
+</p>
+
+<p className="text-sm text-zinc-400">
+  🌍 {addr.country || "India"}
 </p>
 
 <p className="text-sm text-zinc-400 mt-1">
@@ -446,6 +451,31 @@ const res = await axios.get(
     setForm({ ...form, pincode: e.target.value })
   }
 />
+
+<select
+  className="w-full p-3 mb-3 rounded bg-zinc-800 text-white"
+  value={form.country}
+  onChange={(e) =>
+    setForm({
+      ...form,
+      country: e.target.value,
+      state: "",
+      district: "",
+    })
+  }
+>
+  <option value="India">🇮🇳 India</option>
+  <option value="United States">🇺🇸 United States</option>
+  <option value="United Kingdom">🇬🇧 United Kingdom</option>
+  <option value="Canada">🇨🇦 Canada</option>
+  <option value="Australia">🇦🇺 Australia</option>
+  <option value="UAE">🇦🇪 UAE</option>
+  <option value="Singapore">🇸🇬 Singapore</option>
+  <option value="Malaysia">🇲🇾 Malaysia</option>
+  <option value="Germany">🇩🇪 Germany</option>
+  <option value="France">🇫🇷 France</option>
+  <option value="Other">🌍 Other</option>
+</select>
 
 <select
   className="w-full p-3 mb-3 rounded bg-zinc-800 text-white"

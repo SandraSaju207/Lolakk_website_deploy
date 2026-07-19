@@ -25,13 +25,26 @@ address: [
   {
     name: String,
     label: String,
+
+    country: {
+      type: String,
+      default: "India",
+    },
+
     state: String,
-    phone: String,
-     pincode: String,
+
     district: String,
+
+    pincode: String,
+
+    phone: String,
+
     fullAddress: String,
+
     lat: Number,
+
     lng: Number,
+
     isDefault: {
       type: Boolean,
       default: false,
