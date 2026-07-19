@@ -98,7 +98,7 @@ const sizes = item.sizes || [];
       item.style?.toLowerCase() === filters.style) &&
 
       (filters.size === "all" ||
- sizes.includes(filters.size))
+ sizes.includes(filters.size)) &&
 
     // PRICE (NEW FIXED LOGIC)
     (
