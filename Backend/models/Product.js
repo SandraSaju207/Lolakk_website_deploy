@@ -99,7 +99,7 @@ occasion: {
 },
 sizes: {
   type: [String],
-  default: []
+  default: [],
 },
   extra: { 
     type: String,

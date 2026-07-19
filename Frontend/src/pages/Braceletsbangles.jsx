@@ -22,12 +22,10 @@ export default function BraceletsBangles() {
   const [filters, setFilters] = useState(INITIAL_FILTERS);
   const [sort, setSort] = useState("latest");
 
-  const sizeOptions = [
+ const sizeOptions = [
   "all",
   ...new Set(
-    products
-      .map((p) => p.extra)
-      .filter(Boolean)
+    products.flatMap((p) => p.sizes || [])
   ),
 ];
   
@@ -84,7 +82,7 @@ const clearAllFilters = () => {
 
 const filteredItems = products.filter((item) => {
   const price = parseFloat(item.price) || 0;
-  const size = String(item.extra || "").trim();
+const sizes = item.sizes || [];
 
   return (
     // TYPE
@@ -99,8 +97,8 @@ const filteredItems = products.filter((item) => {
     (filters.style === "all" ||
       item.style?.toLowerCase() === filters.style) &&
 
-       (filters.size === "all" ||
-    size === filters.size) &&
+      (filters.size === "all" ||
+ sizes.includes(filters.size))
 
     // PRICE (NEW FIXED LOGIC)
     (
@@ -131,11 +129,9 @@ const filteredItems = products.filter((item) => {
   // ---------------- MODAL ----------------
   const openModal = (item) => {
     setSelectedProduct(item);
-     setSelectedSize(item.sizes?.[0] || "");
+     setSelectedSize("");
     setShowModal(true);
   };
-
- 
 
   const closeModal = () => {
     setShowModal(false);
@@ -144,10 +140,10 @@ const filteredItems = products.filter((item) => {
 
   // ---------------- CART ----------------
   const addToCart = (item) => {
-     if (item.sizes?.length && !selectedSize) {
-    alert("Please select a size.");
-    return;
-  }
+    if (item.sizes?.length > 0 && !selectedSize) {
+  alert("Please select a size.");
+  return;
+}
   if (!isLoggedIn) {
     window.location.href = "/login";
     return;
@@ -161,20 +157,20 @@ const filteredItems = products.filter((item) => {
     ) || [];
 
   const cartItem = {
-    id: item._id,
-    name: item.name,
-    price: item.price,
-    image: item.image.startsWith("http")
-      ? item.image
-      : `${API_URL}${item.image}`,
-    qty: 1,
-     size: selectedSize,
-  };
+  id: item._id,
+  name: item.name,
+  price: item.price,
+  image: item.image.startsWith("http")
+    ? item.image
+    : `${API_URL}${item.image}`,
+  selectedSize,
+  qty: 1,
+};
 
- const existingItemIndex = currentCart.findIndex(
+  const existingItemIndex = currentCart.findIndex(
   (cartItem) =>
     cartItem.id === item._id &&
-    cartItem.size === selectedSize
+    cartItem.selectedSize === selectedSize
 );
 
   let updatedCart;
@@ -916,33 +912,31 @@ const filteredItems = products.filter((item) => {
                          Exclusive Price
                        </span>
                      </div>
-
-                     {selectedProduct.sizes?.length > 0 && (
-  <div className="mt-6">
-    <label className="block text-amber-400 mb-2 uppercase text-sm">
-      Select Size
-    </label>
-
-    <div className="flex flex-wrap gap-2">
-      {selectedProduct.sizes.map((size) => (
-        <button
-          key={size}
-          onClick={() => setSelectedSize(size)}
-          className={`px-4 py-2 rounded-lg border transition ${
-            selectedSize === size
-              ? "bg-amber-500 text-black border-amber-500"
-              : "border-gray-600 text-white hover:border-amber-400"
-          }`}
-        >
-          {size}
-        </button>
-      ))}
-    </div>
-  </div>
-)}
            
                      {/* BUTTONS */}
                      <div className="mt-8 space-y-3">
+
+                      {selectedProduct.sizes?.length > 0 && (
+  <div className="mt-6">
+    <label className="block text-sm text-gray-400 mb-2">
+      Select Size
+    </label>
+
+    <select
+      value={selectedSize}
+      onChange={(e) => setSelectedSize(e.target.value)}
+      className="w-full p-3 rounded-xl bg-black/40 border border-white/10 text-white"
+    >
+      <option value="">Choose Size</option>
+
+      {selectedProduct.sizes.map((size) => (
+        <option key={size} value={size}>
+          {size}
+        </option>
+      ))}
+    </select>
+  </div>
+)}
                        
                        {/* ADD TO CART */}
                        <button

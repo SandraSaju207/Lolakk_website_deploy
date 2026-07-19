@@ -27,8 +27,7 @@ export const addProduct = async (req, res) => {
       description,
       materialType,
       itemType,
-      style,
-        sizes
+      style
     } = req.body;
 
     const imagePath = req.file ? req.file.path : "";
@@ -39,6 +38,7 @@ export const addProduct = async (req, res) => {
       price: Number(price),
       type,
       style,
+        sizes,
       itemType,
       trending: trending === 'true' || trending === true,
       audience,
@@ -75,13 +75,14 @@ export const updateProduct = async (req, res) => {
     const { id } = req.params;
     const updateData = { ...req.body };
 
+    if (updateData.sizes) {
+  updateData.sizes = JSON.parse(updateData.sizes);
+}
+
     // 1. Handle Number conversions (FormData sends everything as strings)
     if (updateData.price) updateData.price = Number(updateData.price);
     if (updateData.stock) updateData.stock = Number(updateData.stock);
     if (updateData.trending) updateData.trending = updateData.trending === 'true' || updateData.trending === true;
-    if (updateData.sizes) {
-  updateData.sizes = JSON.parse(updateData.sizes);
-}
 
     // 2. If a new image was uploaded, update the image path
     if (req.file) {

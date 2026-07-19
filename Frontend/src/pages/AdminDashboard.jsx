@@ -25,6 +25,7 @@ export default function AdminDashboard() {
   const [savingProduct, setSavingProduct] = useState(false);
   const [stockFilter, setStockFilter] = useState("all");
   const [comboType, setComboType] = useState("bridal");
+  const [sizes, setSizes] = useState("");
 
   const notifications = useNotifications();
 
@@ -53,8 +54,7 @@ export default function AdminDashboard() {
     stock: 0,
     price: 0,
     audience: "Women",
-    extra: "",
-     sizes: [],
+    extra: ""
   });
 
   // State to hold the physical file
@@ -131,11 +131,7 @@ console.log("Products Response:", productRes.data);
       stock: product.stock,
       price: product.price,
       audience: product.audience,
-      extra: product.extra || "",
-    sizes:
-  typeof product.sizes === "string"
-    ? JSON.parse(product.sizes)
-    : product.sizes || [],
+      extra: product.extra || ""
     });
     setProductType(product.type);
     setProductStyle(product.style || "traditional");
@@ -145,6 +141,7 @@ console.log("Products Response:", productRes.data);
     setAccessoryType(product.accessoryType || "bow");
     setOccasion(product.occasion || "daily");
     setComboType(product.comboType || "bridal");
+    setSizes(product.sizes?.join(",") || "");
     setShowModal(true);
   };
 
@@ -191,10 +188,6 @@ const authConfig = {
       formDataToSend.append("extra", formData.extra);
       formDataToSend.append("trending", isTrending);
       formDataToSend.append("materialType", materialType);
-      formDataToSend.append(
-  "sizes",
-  JSON.stringify(formData.sizes)
-);
       
       // ✅ Only send itemType when needed
 if (productType === "kids") {
@@ -220,6 +213,16 @@ if (productType === "hair-accessories") {
 if (productType === "combo") {
   formDataToSend.append("comboType", comboType);
 }
+
+formDataToSend.append(
+  "sizes",
+  JSON.stringify(
+    sizes
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean)
+  )
+);
       
       if (selectedFile) {
         formDataToSend.append("image", selectedFile);
@@ -243,7 +246,8 @@ if (productType === "combo") {
       setEditingProduct(null);
       setSelectedFile(null);
       setComboType("bridal");
-      setFormData({ name: "", stock: 0, price: 0, audience: "Women", extra: "" , sizes: []});
+      setSizes(""); 
+      setFormData({ name: "", stock: 0, price: 0, audience: "Women", extra: "" });
       fetchAll(); 
       
      } catch (err) {
@@ -440,7 +444,7 @@ const trendingProducts = Array.isArray(products)
             <button
               onClick={() => {
                 setEditingProduct(null);
-                setFormData({ name: "", stock: 0, price: 0, audience: "Women", extra: "", sizes: [] });
+                setFormData({ name: "", stock: 0, price: 0, audience: "Women", extra: "" });
                 setProductType("");
                 setProductStyle("traditional");
                 setShowModal(true);
@@ -833,17 +837,38 @@ const trendingProducts = Array.isArray(products)
                 </select>
               </div>
               {/* ================= DYNAMIC EXTRA DETAILS FIELD ================= */}
+
+              {["bracelets", "rings"].includes(productType) && (
+  <div className="space-y-1 md:col-span-2">
+    <label className="text-xs text-gray-500 ml-1">
+      Available Sizes
+    </label>
+
+    <input
+      type="text"
+      value={sizes}
+      onChange={(e) => setSizes(e.target.value)}
+      placeholder="2.2,2.4,2.6,2.8"
+      className="w-full p-3 rounded-xl bg-black/40 border border-white/10 text-white"
+    />
+
+    <p className="text-xs text-gray-500 mt-1">
+      Separate sizes using commas.
+    </p>
+  </div>
+)}
+
            {/* ================= DYNAMIC EXTRA DETAILS FIELD ================= */}
-{/* Extra field for all except bracelets */}
-{["rentals", "rings", "necklaces", "kids", "combo"].includes(productType) && (
+{["rentals", "rings", "bracelets", "necklaces", "kids", "combo"].includes(productType) && (
   <div className="space-y-1 md:col-span-2">
     <label className="text-xs text-gray-500 ml-1">
       {{
         rentals: "Rental Period & Rules",
         rings: "Ring Size (Standard)",
+        bracelets: "Bracelet / Bangle Size",
         necklaces: "Necklace Chain Length",
-        kids: "Age Group",
-        combo: "Combo Includes",
+          kids: "Age Group",
+           combo: "Combo Includes"
       }[productType]}
     </label>
 
@@ -852,45 +877,16 @@ const trendingProducts = Array.isArray(products)
       onChange={(e) =>
         setFormData({ ...formData, extra: e.target.value })
       }
-      className="w-full p-3 rounded-xl bg-black/40 border border-white/10 text-white"
+      placeholder={{
+        rentals: "Ex: 3 days minimum, security deposit ₹5000",
+        rings: "Ex: 6, 7, 8 (US) or 12, 14 (IN)",
+        bracelets: "Ex: 2.4, 2.6, 60mm or Bangle size",
+        necklaces: "Ex: 18 inches, 24 inches",
+         kids: "Ex: 0-1 Years, 1-3 Years, 3-5 Years, 5-8 Years",
+           combo: "Ex: Necklace + Earrings + Maang Tikka + Bangles"
+      }[productType]}
+      className="w-full p-3 rounded-xl bg-black/40 border border-white/10 text-white focus:border-[#d4af37] outline-none transition placeholder:text-gray-600"
     />
-  </div>
-)}
-
-{/* Available Sizes for Bangles & Bracelets */}
-{productType === "bracelets" && (
-  <div className="space-y-2 md:col-span-2">
-    <label className="text-xs text-gray-500 ml-1">
-      Available Sizes
-    </label>
-
-    <input
-      type="text"
-     value={
-  Array.isArray(formData.sizes)
-    ? formData.sizes.join(", ")
-    : ""
-}
-      onChange={(e) =>
-        setFormData({
-          ...formData,
-          sizes: e.target.value
-            .split(",")
-            .map((s) => s.trim())
-            .filter(Boolean),
-        })
-      }
-      placeholder={
-        ItemType === "bangle"
-          ? "Example: 2.2, 2.4, 2.6"
-          : "Example: Small, Medium, Large"
-      }
-      className="w-full p-3 rounded-xl bg-black/40 border border-white/10 text-white"
-    />
-
-    <p className="text-xs text-gray-500">
-      Enter sizes separated by commas.
-    </p>
   </div>
 )}
              
