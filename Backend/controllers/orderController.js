@@ -101,15 +101,25 @@ export const cancelInternationalOrder = async (req, res) => {
       });
     }
 
-    // Only the owner can cancel
-    if (order.userId.toString() !== req.user._id.toString()) {
+    // Get logged in user id from JWT
+    const loggedInUserId = req.user.id || req.user._id;
+
+    if (!loggedInUserId) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid user session",
+      });
+    }
+
+    // Make sure the user owns this order
+    if (order.userId && order.userId.toString() !== loggedInUserId.toString()) {
       return res.status(403).json({
         success: false,
         message: "Unauthorized",
       });
     }
 
-    // Don't allow cancellation after payment
+    // Only unpaid international orders can be cancelled
     if (order.paymentStatus === "Paid") {
       return res.status(400).json({
         success: false,
@@ -118,18 +128,20 @@ export const cancelInternationalOrder = async (req, res) => {
     }
 
     order.status = "Cancelled";
+
     await order.save();
 
     res.json({
       success: true,
       message: "Order cancelled successfully.",
     });
+
   } catch (err) {
-    console.log(err);
+    console.error("Cancel International Order Error:", err);
 
     res.status(500).json({
       success: false,
-      message: "Server error",
+      message: err.message,
     });
   }
 };
