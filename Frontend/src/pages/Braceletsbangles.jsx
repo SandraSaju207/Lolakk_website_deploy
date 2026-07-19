@@ -37,6 +37,7 @@ export default function BraceletsBangles() {
   const [notification, setNotification] = useState(null);
   const [cart, setCart] = useState([]);
 const [showFilters, setShowFilters] = useState(false);
+const [selectedSize, setSelectedSize] = useState("");
 
   const isLoggedIn = !!localStorage.getItem("token");
 
@@ -130,8 +131,11 @@ const filteredItems = products.filter((item) => {
   // ---------------- MODAL ----------------
   const openModal = (item) => {
     setSelectedProduct(item);
+     setSelectedSize(item.sizes?.[0] || "");
     setShowModal(true);
   };
+
+ 
 
   const closeModal = () => {
     setShowModal(false);
@@ -140,6 +144,10 @@ const filteredItems = products.filter((item) => {
 
   // ---------------- CART ----------------
   const addToCart = (item) => {
+     if (item.sizes?.length && !selectedSize) {
+    alert("Please select a size.");
+    return;
+  }
   if (!isLoggedIn) {
     window.location.href = "/login";
     return;
@@ -160,11 +168,14 @@ const filteredItems = products.filter((item) => {
       ? item.image
       : `${API_URL}${item.image}`,
     qty: 1,
+     size: selectedSize,
   };
 
-  const existingItemIndex = currentCart.findIndex(
-    (cartItem) => cartItem.id === item._id
-  );
+ const existingItemIndex = currentCart.findIndex(
+  (cartItem) =>
+    cartItem.id === item._id &&
+    cartItem.size === selectedSize
+);
 
   let updatedCart;
 
@@ -905,6 +916,30 @@ const filteredItems = products.filter((item) => {
                          Exclusive Price
                        </span>
                      </div>
+
+                     {selectedProduct.sizes?.length > 0 && (
+  <div className="mt-6">
+    <label className="block text-amber-400 mb-2 uppercase text-sm">
+      Select Size
+    </label>
+
+    <div className="flex flex-wrap gap-2">
+      {selectedProduct.sizes.map((size) => (
+        <button
+          key={size}
+          onClick={() => setSelectedSize(size)}
+          className={`px-4 py-2 rounded-lg border transition ${
+            selectedSize === size
+              ? "bg-amber-500 text-black border-amber-500"
+              : "border-gray-600 text-white hover:border-amber-400"
+          }`}
+        >
+          {size}
+        </button>
+      ))}
+    </div>
+  </div>
+)}
            
                      {/* BUTTONS */}
                      <div className="mt-8 space-y-3">

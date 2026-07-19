@@ -187,9 +187,10 @@ const res = await axios.get(
         setForm({
            name: "", 
   label: "Home",
+  country:"",
   state: "",
   phone: "",
-    pincode: "",
+    postelcode: "",
   district: "",
   fullAddress: "",
 });

@@ -53,7 +53,8 @@ export default function AdminDashboard() {
     stock: 0,
     price: 0,
     audience: "Women",
-    extra: ""
+    extra: "",
+     sizes: [],
   });
 
   // State to hold the physical file
@@ -130,7 +131,8 @@ console.log("Products Response:", productRes.data);
       stock: product.stock,
       price: product.price,
       audience: product.audience,
-      extra: product.extra || ""
+      extra: product.extra || "",
+      sizes: product.sizes || [],
     });
     setProductType(product.type);
     setProductStyle(product.style || "traditional");
@@ -186,6 +188,10 @@ const authConfig = {
       formDataToSend.append("extra", formData.extra);
       formDataToSend.append("trending", isTrending);
       formDataToSend.append("materialType", materialType);
+      formDataToSend.append(
+  "sizes",
+  JSON.stringify(formData.sizes)
+);
       
       // ✅ Only send itemType when needed
 if (productType === "kids") {
@@ -234,7 +240,7 @@ if (productType === "combo") {
       setEditingProduct(null);
       setSelectedFile(null);
       setComboType("bridal");
-      setFormData({ name: "", stock: 0, price: 0, audience: "Women", extra: "" });
+      setFormData({ name: "", stock: 0, price: 0, audience: "Women", extra: "" , sizes: []});
       fetchAll(); 
       
      } catch (err) {
@@ -431,7 +437,7 @@ const trendingProducts = Array.isArray(products)
             <button
               onClick={() => {
                 setEditingProduct(null);
-                setFormData({ name: "", stock: 0, price: 0, audience: "Women", extra: "" });
+                setFormData({ name: "", stock: 0, price: 0, audience: "Women", extra: "", sizes: [] });
                 setProductType("");
                 setProductStyle("traditional");
                 setShowModal(true);

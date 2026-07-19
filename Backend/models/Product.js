@@ -97,9 +97,9 @@ occasion: {
   lowercase: true,
   default: 'gold'
 },
-size: {
-  type: Number,
-  required: false
+sizes: {
+  type: [String],
+  default: []
 },
   extra: { 
     type: String,
