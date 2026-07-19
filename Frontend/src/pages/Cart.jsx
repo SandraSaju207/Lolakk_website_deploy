@@ -177,6 +177,16 @@ const orderData = JSON.parse(orderText);
 
         handler: async function (response) {
           try {
+
+            const orderItems = itemsToPay.map((item) => ({
+  productId: item.productId || item._id || item.id,
+  name: item.name,
+  quantity: item.qty || item.quantity || 1,
+  price: item.price,
+  image: item.image,
+  size: item.selectedSize || item.size || "",
+}));
+
             const verifyResponse = await fetch(
   `${API}/api/payments/verify-payment`,
               {
@@ -184,12 +194,14 @@ const orderData = JSON.parse(orderText);
                 headers: {
                   "Content-Type": "application/json",
                 },
+
+                
                 body: JSON.stringify({
   ...response,
 
   userId: user._id,
 
-  items: itemsToPay,
+  items: orderItems,
   shippingAddress: addr,
 
   customerName: user.name || "Guest User",

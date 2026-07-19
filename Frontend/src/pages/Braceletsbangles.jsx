@@ -165,6 +165,7 @@ const sizes = item.sizes || [];
     : `${API_URL}${item.image}`,
   selectedSize,
   qty: 1,
+    size: selectedSize || "",
 };
 
   const existingItemIndex = currentCart.findIndex(

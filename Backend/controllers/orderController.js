@@ -24,6 +24,7 @@ export const createOrder = async (req, res) => {
       quantity: item.qty || item.quantity || 1,
       price: item.price || 0,
       image: item.image || "",
+       size: item.size || "",
     }));
 
     // ❌ IMPORTANT FIX:

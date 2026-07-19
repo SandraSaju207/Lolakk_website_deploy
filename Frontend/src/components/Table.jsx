@@ -340,6 +340,15 @@ const markReturned = async (id) => {
   Qty: {item.items?.[0]?.quantity || 1}
 </p>
 
+{item.items?.[0]?.size && (
+  <p className="text-gray-400 text-xs">
+    Size:
+    <span className="text-amber-400 ml-1">
+      {item.items[0].size}
+    </span>
+  </p>
+)}
+
       <p className="text-gray-300 mt-2">
         Customer: {item.userId?.name || item.customerName}
       </p>
