@@ -8,6 +8,31 @@ import { cancelOrder } from "../controllers/orderController.js";
 
 const router = express.Router();
 
+router.get("/pending-international", protect, async (req,res)=>{
+  try {
+
+    const orders = await Order.find({
+      userId:req.user.id,
+      isInternational:true,
+      paymentStatus:{
+        $ne:"Paid"
+      }
+    }).sort({
+      createdAt:-1
+    });
+
+
+    res.json(orders);
+
+  } catch(err){
+
+    res.status(500).json({
+      message:err.message
+    });
+
+  }
+});
+
 router.get("/test-route", (req, res) => {
   res.json({
     success: true,

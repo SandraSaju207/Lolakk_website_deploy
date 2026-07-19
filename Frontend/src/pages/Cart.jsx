@@ -17,6 +17,7 @@ export default function Cart() {
   const [isInitialized, setIsInitialized] = useState(false);
   const [showAddressWarning, setShowAddressWarning] = useState(false);
   const [processingItem, setProcessingItem] = useState(null);
+  const [internationalOrders,setInternationalOrders] = useState([]);
 
   const navigate = useNavigate();
 
@@ -42,6 +43,12 @@ export default function Cart() {
     };
 
     if (token) fetchAddresses();
+  }, []);
+
+    useEffect(() => {
+    if (token) {
+      fetchInternationalOrders();
+    }
   }, []);
 
   useEffect(() => {
@@ -88,6 +95,120 @@ export default function Cart() {
   if (window.confirm("Remove this item from cart?")) {
     setCart((prev) => prev.filter((item) => item.id !== id));
   }
+};
+
+const fetchInternationalOrders = async()=>{
+
+ const token = localStorage.getItem("token");
+
+ const res = await fetch(
+ `${API}/api/orders/pending-international`,
+ {
+ headers:{
+ Authorization:`Bearer ${token}`
+ }
+ }
+ );
+
+ const data = await res.json();
+
+ setInternationalOrders(data);
+
+};
+
+
+const payInternationalOrder = async(order)=>{
+
+  try{
+
+    const razorpayOrder = await fetch(
+      `${API}/api/payments/create-order`,
+      {
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+          amount:order.total,
+          customerName:order.customerName,
+          customerEmail:order.customerEmail,
+          customerPhone:order.shippingAddress.phone
+        })
+      }
+    );
+
+
+    const data = await razorpayOrder.json();
+
+
+    const options = {
+
+      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+
+      amount:data.amount,
+
+      currency:"INR",
+
+      name:"LOLAKK",
+
+      order_id:data.id,
+
+
+      handler:async function(response){
+
+        const verify = await fetch(
+          `${API}/api/payments/verify-payment`,
+          {
+            method:"POST",
+            headers:{
+              "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+
+              ...response,
+
+              userId:userId,
+
+              orderId:order._id,
+
+              amount:order.total
+
+            })
+          }
+        );
+
+
+        const result = await verify.json();
+
+
+        if(result.success){
+
+          alert("Payment successful");
+
+          setCart([]);
+
+          localStorage.removeItem(cartKey);
+
+          fetchInternationalOrders();
+
+        }
+
+      }
+
+    };
+
+
+    const rzp = new window.Razorpay(options);
+
+    rzp.open();
+
+
+  }catch(err){
+
+    console.log(err);
+
+  }
+
 };
 
   // =========================
@@ -153,25 +274,16 @@ if (addr.country !== "India") {
 
     const data = await response.json();
 
-    if (data.success) {
-      alert(
-        "Your international order has been received.\nWe'll calculate shipping charges and notify you once it's ready for payment."
-      );
+   if (data.success) {
+  alert(
+    "Your international order has been received.\nWe'll calculate shipping charges and notify you once it's ready for payment."
+  );
 
-      if (isSingleItem) {
-        const updatedCart = cart.filter(
-          (item) => item.id !== itemsToPay[0].id
-        );
-        setCart(updatedCart);
-        localStorage.setItem(cartKey, JSON.stringify(updatedCart));
-      } else {
-        setCart([]);
-        localStorage.removeItem(cartKey);
-      }
+  // Keep cart items until payment is completed
+  await fetchInternationalOrders();
 
-      navigate("/");
-      return;
-    }
+  return;
+}
 
     alert(data.message);
     return;
@@ -365,6 +477,71 @@ const grandTotal = cartTotal + deliveryCharge;
         </h1>
         
       </div>
+
+      {internationalOrders.map((order)=>(
+
+<div
+key={order._id}
+className="bg-zinc-900 border border-amber-500 p-5 rounded-xl mb-4"
+>
+
+<h3 className="text-amber-400 text-lg font-semibold">
+International Order
+</h3>
+
+
+<p className="text-gray-300 mt-2">
+Order ID: {order._id}
+</p>
+
+
+<p className="text-gray-300">
+Status:
+<span className="text-amber-400 ml-2">
+{order.status}
+</span>
+</p>
+
+
+{order.status==="Awaiting Shipping Quote" && (
+
+<p className="text-yellow-400 mt-3">
+Waiting for delivery charge confirmation
+</p>
+
+)}
+
+
+{order.status==="Ready For Payment" && (
+
+<>
+
+<p className="text-green-400 mt-3">
+Delivery charge confirmed
+</p>
+
+
+<p className="text-white mt-2">
+Delivery Charge:
+₹{order.deliveryCharge}
+</p>
+
+
+<button
+className="mt-3 bg-amber-500 text-black px-5 py-2 rounded"
+onClick={()=>payInternationalOrder(order)}
+>
+Pay Now ₹{order.total}
+</button>
+
+</>
+
+)}
+
+
+</div>
+
+))}
 
       {cart.length === 0 ? (
         <div className="text-center py-20 glass rounded-3xl border border-white/10">
