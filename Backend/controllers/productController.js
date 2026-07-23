@@ -16,38 +16,38 @@ export const addProduct = async (req, res) => {
     console.log("BODY:", req.body);
     console.log("FILE:", req.file);
 
-    const {
-      name,
-      stock,
-      type,
-      price,
-      trending,
-      audience,
-      extra,
-      description,
-      materialType,
-      itemType,
-      style
-    } = req.body;
+   const {
+  name,
+ stock,
+  type,
+  price,
+  trending,
+  audience,
+  extra,
+  description,
+  materialType,
+  itemType,
+  style,
+  sizes
+} = req.body;
 
     const imagePath = req.file ? req.file.path : "";
 
     const product = new Product({
-      name,
-      stock: Number(stock),
-      price: Number(price),
-      type,
-      style,
-        sizes,
-      itemType,
-      trending: trending === 'true' || trending === true,
-      audience,
-      extra,
-      description,
-      materialType,
-      sizes: sizes ? JSON.parse(sizes) : [],
-      image: imagePath
-    });
+  name,
+  stock: Number(stock),
+  price: Number(price),
+  type,
+  style,
+  itemType,
+  trending: trending === "true" || trending === true,
+  audience,
+  extra,
+  description,
+  materialType,
+  sizes: sizes ? JSON.parse(sizes) : [],
+  image: imagePath
+});
 
     const savedProduct = await product.save();
     res.status(201).json(savedProduct);
